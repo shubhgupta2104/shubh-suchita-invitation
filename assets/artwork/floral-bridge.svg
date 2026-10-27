@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+  <defs>
+    <linearGradient id="leaf" x2="1" y2="1"><stop stop-color="#a5a477"/><stop offset="1" stop-color="#566c48"/></linearGradient>
+    <radialGradient id="rose"><stop stop-color="#a65c60"/><stop offset="1" stop-color="#d89c88"/></radialGradient>
+    <g id="l"><path d="M0 0C-8-19-2-36 11-43C25-19 18-3 0 0Z" fill="url(#leaf)" stroke="#72815a" stroke-width=".7"/><path d="M0 0 10-37M3-10l11-12M6-20-4-10" fill="none" stroke="#c3bf91" stroke-width=".8"/></g>
+    <g id="branch"><path d="M0 0q45-28 100-4" fill="none" stroke="#6b7953" stroke-width="2"/><use href="#l" transform="translate(15 -7) rotate(-35)"/><use href="#l" transform="translate(37 -13) rotate(23)"/><use href="#l" transform="translate(56 -12) rotate(112)"/><use href="#l" transform="translate(80 -9) rotate(15)"/><use href="#l" transform="translate(88 -6) rotate(119)"/></g>
+    <g id="r"><path d="M-4-31C-22-41-37-22-30-10C-45 3-29 25-16 23C-9 40 17 36 23 23C44 20 42-1 31-10C36-30 14-41 4-30Z" fill="url(#rose)" stroke="#a96561"/>
+      <g fill="none" stroke="#ecc2a8" stroke-width="1.5"><path d="M-25-10C-13-30 16-28 26-10M-29 3C-20 23 9 30 25 9M-20 0C-16-18 17-22 20-3C23 13 1 23-10 10C-26-2-7-17 5-11C21-6 10 14 0 8C-13 2-1-12 5-3"/></g>
+      <path d="M-16-18q15-9 25 0M-16 11q9 9 19 5" fill="none" stroke="#ad6864"/></g>
+    <g id="m"><path d="M0-19C10-31 22-21 20-11C34-9 30 5 23 9C24 24 10 29 3 21C-7 32-21 23-20 14C-34 11-32-3-22-8C-26-21-9-29 0-19Z" fill="#d9a254" stroke="#ad7c38"/><path d="M-13-8C0-24 23-10 15 3C14 17-6 19-12 6C-25-1-11-18 0-9C18-6 8 14-1 6C-12 4-6-10 3-3" fill="none" stroke="#f0c980" stroke-width="2"/><circle r="4" fill="#ae7832"/></g>
+    <g id="pendant"><path d="M0 0q-12 39 5 86" stroke="#87905d" fill="none"/><g fill="#b46c6c" stroke="#9e5d60" stroke-width=".6"><ellipse cx="-5" cy="15" rx="7" ry="10" transform="rotate(-25 -5 15)"/><ellipse cx="7" cy="21" rx="7" ry="10" transform="rotate(28 7 21)"/><ellipse cx="-6" cy="34" rx="6" ry="9" transform="rotate(-20 -6 34)"/><ellipse cx="6" cy="40" rx="6" ry="9" transform="rotate(30 6 40)"/><ellipse cx="-3" cy="52" rx="5" ry="8" transform="rotate(-22 -3 52)"/><ellipse cx="7" cy="58" rx="5" ry="8" transform="rotate(25 7 58)"/><ellipse cx="2" cy="70" rx="4" ry="7"/><ellipse cx="6" cy="82" rx="3" ry="5"/></g></g>
+  </defs>
+  <path d="M-30 110Q600 205 1230 110" fill="none" stroke="#a69364" stroke-width="2"/>
+  <path d="M-20 126Q600 223 1220 126" fill="none" stroke="#c8ac75" stroke-width="1"/>
+  <g>
+    <use href="#branch" transform="translate(-10 113) rotate(7)"/><use href="#branch" transform="translate(85 126) rotate(6)"/><use href="#branch" transform="translate(181 138) rotate(5)"/><use href="#branch" transform="translate(278 147) rotate(4)"/><use href="#branch" transform="translate(375 155) rotate(3)"/><use href="#branch" transform="translate(473 160) rotate(1)"/><use href="#branch" transform="translate(570 162)"/><use href="#branch" transform="translate(668 162) rotate(-2)"/><use href="#branch" transform="translate(766 156) rotate(-3)"/><use href="#branch" transform="translate(864 149) rotate(-5)"/><use href="#branch" transform="translate(961 140) rotate(-6)"/><use href="#branch" transform="translate(1058 128) rotate(-8)"/><use href="#branch" transform="translate(1154 113) rotate(-9)"/>
+  </g>
+  <g>
+    <use href="#pendant" transform="translate(107 138) scale(.8)"/><use href="#pendant" transform="translate(295 162) scale(.95)"/><use href="#pendant" transform="translate(506 174) scale(.8)"/><use href="#pendant" transform="translate(704 175)"/><use href="#pendant" transform="translate(911 155) scale(.85)"/><use href="#pendant" transform="translate(1108 132) scale(.8)"/>
+  </g>
+  <g>
+    <use href="#r" transform="translate(38 94) rotate(-12)"/><use href="#m" transform="translate(104 116) scale(.85)"/><use href="#r" transform="translate(174 123) rotate(23) scale(.9)"/><use href="#m" transform="translate(236 141) scale(.85)"/>
+    <use href="#r" transform="translate(310 140) rotate(-19)"/><use href="#r" transform="translate(366 160) rotate(10) scale(.7)"/><use href="#m" transform="translate(425 152) scale(.95)"/>
+    <use href="#r" transform="translate(496 156) rotate(25)"/><use href="#m" transform="translate(557 174) scale(.7)"/><use href="#r" transform="translate(616 152) rotate(-15) scale(1.05)"/>
+    <use href="#m" transform="translate(681 168) scale(.85)"/><use href="#r" transform="translate(746 153) rotate(30)"/><use href="#r" transform="translate(801 165) rotate(-9) scale(.65)"/>
+    <use href="#m" transform="translate(858 146)"/><use href="#r" transform="translate(926 143) rotate(-20)"/><use href="#m" transform="translate(985 138) scale(.8)"/><use href="#r" transform="translate(1048 115) rotate(24)"/><use href="#m" transform="translate(1110 119) scale(.8)"/><use href="#r" transform="translate(1174 98) rotate(-11)"/>
+  </g>
+  <g opacity=".8"><use href="#branch" transform="translate(240 118) rotate(-145) scale(.75)"/><use href="#branch" transform="translate(440 130) rotate(-140) scale(.65)"/><use href="#branch" transform="translate(780 126) rotate(-30) scale(.7)"/><use href="#branch" transform="translate(1004 104) rotate(-25) scale(.7)"/></g>
+</svg>

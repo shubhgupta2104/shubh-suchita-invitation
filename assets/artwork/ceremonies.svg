@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brass" x2="1" y2=".3"><stop stop-color="#9c7139"/><stop offset=".25" stop-color="#dbb875"/><stop offset=".48" stop-color="#f0d99c"/><stop offset=".72" stop-color="#b98c48"/><stop offset="1" stop-color="#896132"/></linearGradient>
+    <linearGradient id="silk" x2="1" y2="1"><stop stop-color="#ad6267"/><stop offset=".45" stop-color="#813d4d"/><stop offset="1" stop-color="#5a2334"/></linearGradient>
+    <linearGradient id="leaf" x2="1" y2="1"><stop stop-color="#9a9e6d"/><stop offset="1" stop-color="#586c44"/></linearGradient>
+    <linearGradient id="flame" x2=".2" y2="1"><stop stop-color="#edce85"/><stop offset=".6" stop-color="#d99a4b"/><stop offset="1" stop-color="#b66638"/></linearGradient>
+    <g id="sprig">
+      <path d="M0 0C10-31 13-58 6-84" fill="none" stroke="#6e784d" stroke-width="1.5"/>
+      <g fill="url(#leaf)" stroke="#6c774d" stroke-width=".5">
+        <path d="M8-23C-16-27-16-47-10-51C7-46 12-36 8-23Z"/>
+        <path d="M11-38C28-43 36-60 29-65C12-62 9-52 11-38Z"/>
+        <path d="M11-57C-5-60-7-76-2-83C11-78 13-66 11-57Z"/>
+        <path d="M8-73C17-78 20-91 15-98C5-92 5-80 8-73Z"/>
+      </g>
+      <path d="M8-23-8-46M11-38 27-59M11-57-1-77" stroke="#c2bd8c" fill="none"/>
+    </g>
+    <g id="marigold">
+      <path d="M0-12C5-20 12-17 13-10C22-9 23 0 16 4C20 12 13 19 7 15C3 23-5 21-8 14C-16 18-22 11-17 5C-25 0-22-9-15-9C-15-18-6-21 0-12Z" fill="#d69c4e" stroke="#ad7936" stroke-width=".8"/>
+      <path d="M-10-5C-10-13 2-12 6-6C18-4 12 9 5 8C1 17-11 10-9 4C-17-2-7-9-2-4C5-10 10 1 4 4C-5 10-6 1-2-1" fill="none" stroke="#edc178" stroke-width="1.6"/>
+      <circle r="3" fill="#a16b32"/>
+    </g>
+    <g id="petals" fill="#c39147" stroke="#a56e35" stroke-width=".5"><path d="m0 0 8-5 5 5-8 3Zm28 3 4-6 6 3-5 5Zm-15 10 7-5 4 4-6 5Zm31 12 6-5 5 4-6 3Z"/></g>
+  </defs>
+  <symbol id="haldi" viewBox="0 0 300 260">
+    <ellipse cx="149" cy="225" rx="112" ry="12" fill="#b6a780" opacity=".18"/>
+    <use href="#sprig" transform="translate(64 198) rotate(-35)"/>
+    <use href="#sprig" transform="translate(231 212) rotate(34) scale(.8)"/>
+    <path d="M80 172Q149 154 222 172L240 225Q151 241 58 221Z" fill="#ead4aa" stroke="#bd9b64"/>
+    <path d="M72 204Q145 225 233 208M68 212Q147 233 236 216" fill="none" stroke="#a9773f" stroke-width="1"/>
+    <path d="m103 215 5-6 5 6-5 5Zm26 4 5-6 5 6-5 5Zm27 0 5-6 5 6-5 5Zm26-1 5-6 5 6-5 5Z" fill="none" stroke="#a9773f"/>
+    <path d="M99 142h104Q198 184 150 189Q103 183 99 142Z" fill="url(#brass)" stroke="#9d753a" stroke-width="1.3"/>
+    <ellipse cx="151" cy="142" rx="54" ry="13" fill="#c99a48" stroke="#e7ca8b" stroke-width="4"/>
+    <path d="M103 142Q149 124 198 142Q150 152 103 142Z" fill="#dcaa4b"/>
+    <path d="M120 139Q132 132 140 138M148 139q10-6 20-1M171 143l11-3" stroke="#f0c66b" fill="none"/>
+    <path d="m162 137 47-51q8-7 11 0l-47 55" fill="#bc8d4a" stroke="#8d693b"/>
+    <path d="m169 134 44-47" stroke="#e4c487"/>
+    <path d="M123 183h55v8h-55Z" fill="url(#brass)" stroke="#ac864d"/>
+    <use href="#marigold" x="85" y="195"/><use href="#marigold" transform="translate(214 200) scale(.85)"/>
+    <use href="#marigold" transform="translate(66 214) scale(.65)"/><use href="#petals" x="104" y="202"/>
+    <path d="M51 128Q83 104 89 68M217 143q29-32 27-65" fill="none" stroke="#b39a60" stroke-width=".8"/>
+    <g fill="#e6c286" stroke="#b48b50" stroke-width=".5"><circle cx="88" cy="71" r="3"/><circle cx="242" cy="81" r="3"/><circle cx="244" cy="91" r="3"/></g>
+  </symbol>
+  <symbol id="sangeet" viewBox="0 0 300 260">
+    <ellipse cx="150" cy="225" rx="110" ry="12" fill="#b6a780" opacity=".18"/>
+    <use href="#sprig" transform="translate(75 208) rotate(-34)"/>
+    <use href="#sprig" transform="translate(230 214) rotate(32) scale(.75)"/>
+    <g transform="translate(155 148) rotate(-16)">
+      <path d="M-60-37Q0-54 59-37L59 32Q0 52-60 32Z" fill="url(#silk)" stroke="#6b3542" stroke-width="1.5"/>
+      <path d="m-47-39 17 77 17-82 18 83 17-82 17 78" fill="none" stroke="#d6b879" stroke-width="2.1"/>
+      <path d="m-45-29 17 59 16-65 17 65 17-65 15 61" fill="none" stroke="#a58250" stroke-width=".7"/>
+      <ellipse cx="-60" cy="-2" rx="14" ry="36" fill="#dbc198" stroke="#9e7d4d" stroke-width="3"/>
+      <ellipse cx="-60" cy="-2" rx="9" ry="28" fill="#efdbb6" stroke="#b79a6f"/>
+      <ellipse cx="59" cy="-2" rx="15" ry="36" fill="#e8ce9f" stroke="#9e7d4d" stroke-width="3"/>
+      <ellipse cx="59" cy="-2" rx="10" ry="29" fill="#f2dfb6" stroke="#b79a6f"/>
+      <ellipse cx="59" cy="-2" rx="4" ry="13" fill="#bca27b"/>
+      <path d="M-52-35v68M50-36v70" stroke="#d7bd85" stroke-width="3"/>
+    </g>
+    <path d="M100 112 83 65q-2-7 3-7t6 6l15 47M182 105l36-35q5-4 8 0t-4 7l-36 33" fill="#b38950" stroke="#8d683a"/>
+    <g fill="none" stroke="url(#brass)" stroke-width="5">
+      <ellipse cx="126" cy="210" rx="19" ry="14" transform="rotate(-16 126 210)"/>
+      <ellipse cx="153" cy="212" rx="19" ry="14" transform="rotate(18 153 212)"/>
+    </g>
+    <path d="m148 197 6-8 7 8-7 5Z" fill="#efe3c8" stroke="#b58c49" stroke-width="1.2"/>
+    <path d="m148 197 13 0m-7-8v13" stroke="#bfac8a" stroke-width=".8"/>
+    <use href="#marigold" transform="translate(213 214) scale(.75)"/><use href="#marigold" transform="translate(75 219) scale(.6)"/>
+    <use href="#petals" x="169" y="222"/>
+  </symbol>
+  <symbol id="baraat" viewBox="0 0 300 260">
+    <ellipse cx="153" cy="239" rx="109" ry="9" fill="#b6a780" opacity=".18"/>
+    <use href="#sprig" transform="translate(41 224) rotate(-32) scale(.6)"/>
+    <path d="M214 111Q248 111 240 158Q235 172 244 187Q228 184 225 165Q230 135 214 133" fill="#9b816a" stroke="#80614c"/>
+    <path d="M90 128Q118 108 148 117Q178 102 217 118L224 160Q201 181 174 172L119 167Q91 159 84 146Z" fill="#e6d6b8" stroke="#ad9474" stroke-width="1.3"/>
+    <path d="m109 156-8 47-10 31H80l6-40-2-41M132 167l4 34 12 30h-11l-19-29-8-34M199 163l-5 31 10 38h-11l-14-36 1-33M217 155l-2 43 12 33h-11l-19-33 4-35" fill="#e6d6b8" stroke="#ad9474" stroke-width="1.3"/>
+    <path d="m79 231-2 7h15l1-6m42-1 2 7h16l-5-7m43 0 1 7h15l-4-7m12-1 1 7h16l-5-7" fill="#8c7155"/>
+    <path d="M84 153Q75 134 81 105L72 82 56 85Q44 82 48 72L73 44 82 29 91 31 101 61Q107 91 120 117" fill="#edddc1" stroke="#ad9474" stroke-width="1.3"/>
+    <path d="m75 45 7-24 6 5 1 21" fill="#d0b998" stroke="#a88a6a"/>
+    <path d="m82 39 3-10 1 11" stroke="#b0886e"/>
+    <path d="M94 41Q113 57 115 82T127 115L115 122Q101 95 102 78T92 47" fill="#a4896c" stroke="#886b52"/>
+    <path d="M101 51q8 6 9 13M104 69q9 7 9 13M107 86q8 7 9 14" stroke="#d6ba94" fill="none"/>
+    <path d="M51 72 68 78 90 52M65 79q14 15 36 11" fill="none" stroke="#a35650" stroke-width="3"/>
+    <circle cx="72" cy="57" r="2" fill="#544536"/><path d="m67 53 9-1" stroke="#9d805f" fill="none"/>
+    <path d="M117 117Q155 126 195 114L204 170Q158 186 112 165Z" fill="url(#silk)" stroke="#c49a55" stroke-width="2"/>
+    <path d="M124 124Q155 133 190 123L197 163Q158 175 120 159Z" fill="none" stroke="#d9b677" stroke-width="1"/>
+    <path d="M120 168q42 20 83 3" fill="none" stroke="#bd965a" stroke-width="6" stroke-dasharray="2 5"/>
+    <g fill="none" stroke="#d7b16b" stroke-width=".8">
+      <path d="M151 160C135 146 149 135 155 144C163 130 177 147 158 160ZM154 144v16"/>
+      <path d="m128 141 4-4 4 4-4 4Zm53 0 4-4 4 4-4 4Z"/>
+    </g>
+    <path d="M91 96q-4 21-2 30" fill="none" stroke="#d19c4b" stroke-width="7" stroke-dasharray="3 2"/>
+    <path d="M91 98q18 4 25 14" fill="none" stroke="#d19c4b" stroke-width="7" stroke-dasharray="3 2"/>
+    <path d="M84 36Q77 12 89 5Q99 18 90 33" fill="#b86b64" stroke="#86414c"/>
+    <path d="m87 30 3-18" stroke="#dcac88"/>
+    <use href="#marigold" transform="translate(66 231) scale(.55)"/><use href="#petals" x="159" y="232"/>
+  </symbol>
+  <symbol id="phere" viewBox="0 0 300 260">
+    <ellipse cx="151" cy="228" rx="108" ry="12" fill="#b6a780" opacity=".18"/>
+    <use href="#sprig" transform="translate(63 206) rotate(-27)"/>
+    <use href="#sprig" transform="translate(240 213) rotate(36) scale(.8)"/>
+    <path d="m71 198 79-31 81 32-80 35Z" fill="#c38f65" stroke="#9b694a"/>
+    <path d="m71 198 80 30v12l-80-30Zm80 30 80-29v12l-80 29Z" fill="#ba825c" stroke="#956044"/>
+    <path d="m86 181 64-25 65 25-65 28Z" fill="#dfb180" stroke="#9c6e4b"/>
+    <path d="m86 181 64 25v15l-64-25Zm64 25 65-25v15l-65 25Z" fill="#c58f60" stroke="#9c6e4b"/>
+    <path d="m102 165 48-18 49 18-49 21Z" fill="#e0b784" stroke="#9c6e4b"/>
+    <path d="m102 165 48 18v14l-48-18Zm48 18 49-18v14l-49 18Z" fill="url(#brass)" stroke="#9c6e4b"/>
+    <path d="m114 166 36-13 36 13-36 14Z" fill="#785342"/>
+    <path d="m125 164 49 4m-43 5 37-14" stroke="#9b7352" stroke-width="6"/>
+    <path d="M151 170C119 172 116 151 127 136C135 125 130 115 130 115C145 122 149 135 143 144C168 123 140 104 154 76C155 97 174 100 178 120C184 137 166 145 171 153C182 148 181 136 183 131C204 159 180 176 151 170Z" fill="url(#flame)" stroke="#b57f40" stroke-width=".8"/>
+    <path d="M152 167C137 160 146 148 152 142C161 133 156 120 158 113C173 134 163 145 164 151C169 165 161 170 152 167Z" fill="#f1d892"/>
+    <path d="M104 211Q145 238 204 213" fill="none" stroke="#c99749" stroke-width="9" stroke-dasharray="5 2"/>
+    <use href="#marigold" transform="translate(83 217) scale(.7)"/><use href="#marigold" transform="translate(222 218) scale(.7)"/>
+    <use href="#petals" x="109" y="233"/>
+    <g fill="none" stroke="#ad9261" stroke-width=".8"><path d="M127 110q-10-10-5-22M183 105q9-14 3-25"/><path d="m114 78 2-5m65-10 2-6"/></g>
+  </symbol>
+</svg>

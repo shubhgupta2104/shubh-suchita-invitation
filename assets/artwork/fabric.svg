@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="520" viewBox="0 0 380 520">
+  <defs>
+    <linearGradient id="silk">
+      <stop stop-color="#390e1b"/><stop offset=".14" stop-color="#5a1b2c"/><stop offset=".35" stop-color="#87344a"/><stop offset=".47" stop-color="#9a4657"/><stop offset=".6" stop-color="#752439"/><stop offset=".78" stop-color="#4f1526"/><stop offset="1" stop-color="#390e1b"/>
+    </linearGradient>
+    <pattern id="folds" width="95" height="520" patternUnits="userSpaceOnUse"><path fill="url(#silk)" d="M0 0h95v520H0z"/><path d="M44 0Q35 180 47 340T41 520" fill="none" stroke="#f1b6a4" stroke-width=".6" opacity=".12"/></pattern>
+    <g id="sprig" fill="none" stroke="#d7ad69" stroke-width=".75">
+      <path d="M0 13C-4 4 2-1 0-13M0 7C-10 5-12-3-7-8C-1-8 0-1 0 2M0 3C10 0 12-6 7-10C2-9 1-3 0-1"/>
+      <path d="M0-12C-9-17-7-25 0-28C7-25 9-17 0-12Z"/>
+      <path d="M0-13V-25M-3-15-5-21M3-15 5-21M-8-7-2 2M8-9 2-1"/>
+      <path d="m-4 15 4 3 4-3M-5 21h10"/>
+      <circle cy="25" r="1.5" fill="#d7ad69"/>
+    </g>
+    <pattern id="brocade" width="190" height="130" patternUnits="userSpaceOnUse">
+      <use href="#sprig" x="48" y="46" opacity=".55"/>
+      <use href="#sprig" x="143" y="111" opacity=".45"/>
+    </pattern>
+    <filter id="weave"><feTurbulence baseFrequency=".7 .18" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <path fill="url(#folds)" d="M0 0h380v520H0z"/>
+  <path fill="url(#brocade)" d="M0 0h380v520H0z"/>
+  <path opacity=".07" filter="url(#weave)" d="M0 0h380v520H0z"/>
+</svg>

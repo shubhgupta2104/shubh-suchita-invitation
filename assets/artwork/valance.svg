@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="200" viewBox="0 0 1440 200" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="velvet" x2=".15" y2="1">
+      <stop stop-color="#441221"/><stop offset=".35" stop-color="#8e3b4e"/><stop offset=".7" stop-color="#681e2e"/><stop offset="1" stop-color="#46101d"/>
+    </linearGradient>
+    <g id="swag">
+      <path d="M0-10H480C448 50 402 162 242 168C82 162 32 50 0-10Z" fill="url(#velvet)" stroke="#ae844c" stroke-width="2"/>
+      <g fill="none" stroke="#c18480" stroke-width="2" opacity=".6">
+        <path d="M8 0C95 142 359 154 472 0"/><path d="M12 0C103 119 365 138 468 0"/>
+        <path d="M18 0C112 95 370 113 462 0"/><path d="M28 0C138 72 350 88 452 0"/>
+        <path d="M42 0C157 49 334 62 438 0"/>
+      </g>
+      <path d="M0 0C53 97 103 154 242 161C381 154 431 97 480 0" fill="none" stroke="#d7b575" stroke-width="3"/>
+      <path d="M0 8C53 105 103 163 242 171C381 163 431 105 480 8" fill="none" stroke="#c9a362" stroke-width="7" stroke-dasharray="1 5"/>
+    </g>
+    <g id="tassel" fill="#c49a58" stroke="#84532f" stroke-width=".8">
+      <path d="M-5 0Q0 22 5 0L6 40H-6Z"/><ellipse cy="41" rx="8" ry="7"/>
+      <path d="M-6 46Q-5 66-12 83Q0 90 12 83Q5 66 6 46Z"/>
+      <path d="M-4 49-6 82M0 48V84M4 49 6 82" fill="none"/>
+    </g>
+  </defs>
+  <use href="#swag"/><use href="#swag" x="480"/><use href="#swag" x="960"/>
+  <use href="#tassel" x="480" y="24"/><use href="#tassel" x="960" y="24"/>
+  <path d="M0 3h1440" stroke="#d6b77c" stroke-width="5"/>
+</svg>

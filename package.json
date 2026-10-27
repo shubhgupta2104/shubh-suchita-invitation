@@ -1,0 +1,22 @@
+{
+  "name": "shubh-suchita-invitation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "node tools/build_site.mjs",
+    "lint": "node --check app.js && node --check server.mjs && node --check tools/build_site.mjs",
+    "test": "playwright test",
+    "check": "npm run lint && node --test tests/content.test.mjs tests/build.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "volta": {
+    "node": "22.23.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
