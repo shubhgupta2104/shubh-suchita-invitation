@@ -25,6 +25,8 @@ test("closed entrance, keyboard trap, animated opening and focus", async ({ page
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(page.locator("dialog")).toBeVisible();
+  await expect(page.locator("#entrance-welcome")).toContainText("we warmly invite you to our wedding.");
+  await expect(page.locator("dialog")).toHaveAttribute("aria-describedby", "entrance-welcome entrance-description");
   await expect(page.getByRole("button", { name: "Open invitation" })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(page.locator("dialog button")).toHaveCount(1);
@@ -180,9 +182,15 @@ for (const width of [320, 390, 768, 1440, 1920]) {
     await page.setViewportSize({ width, height: width > 700 ? 1000 : 844 });
     await page.goto("/");
     await page.evaluate(() => document.fonts.ready);
+    await expect(page.locator("#entrance-welcome")).toBeInViewport();
+    const welcomeBounds = await page.locator("#entrance-welcome").boundingBox();
+    expect(welcomeBounds.x).toBeGreaterThanOrEqual(0);
+    expect(welcomeBounds.x + welcomeBounds.width).toBeLessThanOrEqual(width);
     await page.screenshot({ path: resolve(screenshots, `curtain-${width}.png`) });
     await open(page);
     await page.evaluate(() => document.fonts.ready);
+    const invitationFont = await page.locator(".hero__intro").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+    expect(invitationFont).toBeGreaterThanOrEqual(width <= 350 ? 10 : width <= 700 ? 11 : 12);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
     expect(overflow).toBe(false);
     const clippedText = await page.evaluate(() => [...document.querySelectorAll(

@@ -88,7 +88,7 @@ nav a:hover { text-decoration: underline; }
 .hero__drape--left { left: 0; }
 .hero__drape--right { right: 0; transform: scaleX(-1); }
 .hero__copy { position: relative; z-index: 1; }
-.hero__intro { margin-bottom: 25px; color: var(--wine); }
+.hero__intro { margin-bottom: 25px; color: var(--wine); font-size: 12px; letter-spacing: 1.8px; text-wrap: balance; }
 h1 { display: flex; flex-direction: column; align-items: center; }
 .name { font-size: clamp(76px, 8vw, 108px); line-height: .88; color: var(--wine); letter-spacing: -3px; }
 .parentage { font: 13px/1.6 Georgia, serif; color: var(--ink); margin-top: 14px; letter-spacing: .1px; }
@@ -204,7 +204,7 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
 .curtain--right { right: 0; border-left: 3px double #c49c59; box-shadow: inset 22px 0 35px #22091077; }
 .entrance__valance { height: 150px; z-index: 1; filter: drop-shadow(0 9px 5px #20061066); }
 .entrance__content { position: relative; min-height: 650px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 24px 80px; text-align: center; }
-.entrance .eyebrow { color: #f4dec2; margin-bottom: 24px; }
+.entrance__invitation { max-width: 32ch; color: #f4dec2; font: italic 500 26px/1.35 var(--serif); margin-bottom: 26px; text-wrap: balance; }
 .crest { display: block; position: relative; width: 235px; padding: 12px; background: #f7e8e1; border-radius: 48% 48% 45% 45%; border: 1px solid #dcb777; box-shadow: 0 0 0 6px #681e2e, 0 0 0 7px #c49c59, 0 16px 35px #21070e66; transition: transform .3s ease; }
 .crest::after { content: ""; position: absolute; inset: -14px; border: 1px dotted #e8c986; border-radius: inherit; pointer-events: none; }
 .crest img { width: 100%; height: auto; border-radius: 40%; }
@@ -234,7 +234,7 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
   .hero__drape { width: 49px; height: 345px; }
   .hero__valance { height: 75px; width: 160%; left: -30%; }
   .hero__toran { width: 640px; max-width: 135%; top: 17px; }
-  .hero__intro { font-size: 8px; letter-spacing: 1.7px; margin-bottom: 26px; }
+  .hero__intro { max-width: 260px; margin-inline: auto; font-size: 11px; letter-spacing: 1.4px; margin-bottom: 26px; }
   .name { font-size: 78px; }
   .parentage { font-size: 12px; line-height: 1.7; margin-top: 11px; }
   .ampersand { font-size: 33px; margin: 12px 0 10px; }
@@ -295,7 +295,7 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
   .rsvp__intro { font-size: 13px; }
   .entrance__valance { width: 160%; left: -30%; height: 120px; }
   .entrance__content { padding-top: 110px; }
-  .entrance .eyebrow { font-size: 9px; letter-spacing: 1.8px; margin-bottom: 26px; }
+  .entrance__invitation { font-size: 22px; }
   .crest { width: 210px; padding: 10px; }
   .entrance h2 { font-size: 38px; margin-top: 24px; }
   #entrance-description { font-size: 11px; }
@@ -304,7 +304,8 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
 
 @media (max-width: 350px) {
   nav { gap: 18px; }
-  .hero__intro { font-size: 7px; letter-spacing: 1.4px; }
+  .hero__intro { max-width: 230px; font-size: 10px; letter-spacing: 1.2px; }
+  .entrance__invitation { font-size: 19px; }
   .parentage { font-size: 11px; }
   .welcome { padding-inline: 29px; }
   .welcome h2 { font-size: 33px; }
