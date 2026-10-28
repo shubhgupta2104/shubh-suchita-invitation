@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const soundtrack = "/assets/audio/ivory-evening.m4a";
+const soundtrack = "/assets/audio/vaaroon-forever.m4a";
 
 async function openWithMusic(page) {
   await page.getByRole("button", { name: "Open invitation" }).click();
@@ -25,8 +25,8 @@ test("music is lazy, user-started, looped and reset by refresh", async ({ page }
   }));
   expect(media.paused).toBe(false);
   // Chromium's media duration includes AAC padding; decoded PCM is checked separately.
-  expect(media.duration).toBeGreaterThanOrEqual(51.2);
-  expect(media.duration).toBeLessThan(51.35);
+  expect(media.duration).toBeGreaterThanOrEqual(61);
+  expect(media.duration).toBeLessThan(61.15);
   expect(media.volume).toBe(0.65);
   expect(media.loop).toBe(true);
   await page.locator("#schedule").scrollIntoViewIfNeeded();
@@ -99,7 +99,7 @@ test("returning during the curtain animation resumes music after the reveal", as
   await expect.poll(() => page.locator("audio").evaluate((audio) => !audio.paused && audio.currentTime > 0.1)).toBe(true);
 });
 
-test("the encoded recording decodes to stereo with safe levels and a smooth loop boundary", async ({ page }) => {
+test("the 61-second excerpt decodes with safe levels and faded edges", async ({ page }) => {
   await page.goto("/");
   const audio = await page.evaluate(async (url) => {
     const response = await fetch(url);
@@ -108,9 +108,13 @@ test("the encoded recording decodes to stereo with safe levels and a smooth loop
     let peak = 0;
     let squares = 0;
     let boundary = 0;
+    let edgePeak = 0;
     for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
       const samples = decoded.getChannelData(channel);
       boundary = Math.max(boundary, Math.abs(samples[0] - samples[samples.length - 1]));
+      for (let index = 0; index < decoded.sampleRate * 0.05; index++) {
+        edgePeak = Math.max(edgePeak, Math.abs(samples[index]), Math.abs(samples[samples.length - 1 - index]));
+      }
       for (const sample of samples) {
         peak = Math.max(peak, Math.abs(sample));
         squares += sample * sample;
@@ -118,16 +122,17 @@ test("the encoded recording decodes to stereo with safe levels and a smooth loop
     }
     return {
       channels: decoded.numberOfChannels, duration: decoded.duration,
-      peak, rms: Math.sqrt(squares / (decoded.length * decoded.numberOfChannels)), boundary
+      peak, rms: Math.sqrt(squares / (decoded.length * decoded.numberOfChannels)), boundary, edgePeak
     };
   }, soundtrack);
   console.log("Decoded soundtrack:", JSON.stringify(audio));
   expect(audio.channels).toBe(2);
-  expect(audio.duration).toBeCloseTo(51.2, 1);
+  expect(audio.duration).toBeCloseTo(61, 2);
   expect(audio.peak).toBeLessThan(0.6);
   expect(audio.rms).toBeGreaterThan(0.03);
   expect(audio.rms).toBeLessThan(0.15);
   expect(audio.boundary).toBeLessThan(0.03);
+  expect(audio.edgePeak).toBeLessThan(0.01);
 });
 
 test("audio delivery supports browser byte ranges and rejects invalid requests", async ({ request }) => {
@@ -148,5 +153,5 @@ test("audio delivery supports browser byte ranges and rejects invalid requests",
   for (const range of ["bytes=9000000-", "bytes=-0", "bytes=-", "bytes=8-2", "bytes=0-1,4-5"]) {
     expect((await request.get(soundtrack, { headers: { Range: range } })).status()).toBe(416);
   }
-  expect((await request.get("/tools/render_music.py")).status()).toBe(404);
+  expect((await request.get("/tools/prepare_music.py")).status()).toBe(404);
 });

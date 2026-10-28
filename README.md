@@ -1,7 +1,7 @@
 # Shubh & Suchita's invitation
 
 Owner: Shubh & Suchita  
-Date: 27 October 2026
+Date: 28 October 2026
 
 ## TL;DR
 
@@ -28,7 +28,7 @@ The curtain uses a native modal dialog, activated only after its keyboard and Es
 
 The wedding countdown reads its target directly from the Phere entry's `datetime` in the canonical programme: 26 January 2027 at 4:00 PM IST. It stops ticking offscreen or in a hidden tab. Without JavaScript, the confirmed date remains visible.
 
-The original instrumental, "Ivory Evening", starts only when a guest activates the crest. No audio is downloaded before that action. It loops quietly, pauses in a hidden tab, resumes when the guest returns, and resets with the entrance on refresh. There are no music switches or extra music labels, as requested. Browser or device playback restrictions may keep it silent without affecting the invitation. The AAC file is served with byte-range support.
+The user-authorised "Vaaroon Forever" excerpt starts only when a guest activates the crest. It uses the requested 00:18 to 01:19 section, with two-second fades and a quiet, matched volume. No audio is downloaded before opening. It loops, pauses in a hidden tab, resumes when the guest returns, and resets with the entrance on refresh. There are no music switches or extra music labels, as requested. Browser or device playback restrictions may keep it silent without affecting the invitation. The AAC file is served with byte-range support.
 
 | File | Edit here |
 |---|---|
@@ -37,10 +37,10 @@ The original instrumental, "Ivory Evening", starts only when a guest activates t
 | `app.js` | Entrance and music lifecycle, countdown and deferred form embed |
 | `assets/artwork/` | Local logo and original SVG illustrations |
 | `assets/fonts/` | Local Cormorant font files and their OFL licence |
-| `assets/audio/ivory-evening.m4a` | Original 51.2-second instrumental with synthesized plucked strings, flute-like melody and light percussion |
-| `tools/render_music.py` | Reproducible score and synthesis source, using Python's standard library and macOS `afconvert` |
+| `assets/audio/vaaroon-forever.m4a` | User-authorised 61-second excerpt of the supplied recording |
+| `tools/prepare_music.py` | Reproducible extraction, fades and volume matching, using Python's standard library and macOS `afconvert` |
 
-To regenerate the audio on macOS, run `python3 tools/render_music.py`. No external recordings, samples, music service, executable downloads or additional packages are needed.
+To regenerate the audio on macOS, run `python3 tools/prepare_music.py /path/to/authorised-source.mp3`. The full source recording stays outside the repository and is not modified. The couple confirmed permission for public website use on 28 October 2026.
 
 ### RSVP form
 

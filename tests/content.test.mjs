@@ -50,7 +50,7 @@ test("only the user-approved responder URL ships, without editor or private refe
 
 test("countdown subtitle is removed and music has no autoplay or controls", () => {
   assert.doesNotMatch(html, /countdown__date|4:00 PM IST/);
-  assert.match(html, /<audio[^>]+data-src="assets\/audio\/ivory-evening\.m4a"/);
+  assert.match(html, /<audio[^>]+data-src="assets\/audio\/vaaroon-forever\.m4a"/);
   assert.doesNotMatch(html, /<audio[^>]+\s(?:controls|autoplay)(?:\s|>)/);
 });
 

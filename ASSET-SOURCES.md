@@ -1,7 +1,7 @@
 # Invitation asset sources
 
 Owner: Shubh & Suchita  
-Date: 27 October 2026
+Date: 28 October 2026
 
 ## TL;DR
 
@@ -9,7 +9,7 @@ Date: 27 October 2026
 - All scenery, textile and ceremony SVGs were authored for this invitation.
 - Cormorant fonts retain their existing SIL Open Font License.
 - Reference photographs and video frames are not shipped.
-- The soundtrack is an original composition and synthesized recording, not a commercial song or sampled recording.
+- The soundtrack is a user-supplied "Vaaroon Forever" excerpt, with public website permission confirmed by the couple.
 
 ## Why this matters
 
@@ -27,13 +27,13 @@ The visual references guide the composition, not the reuse or tracing of another
 | `ceremonies.svg` | Original matching Haldi bowl, rings and dhol, decorated horse, and Phere fire illustrations. No downloaded icons or illustration libraries. |
 | `floral-bridge.svg` | Original continuous rose, marigold, foliage and hanging-flower border joining the garden and following scenes. |
 | `textile.svg` | Original low-opacity procedural fibre texture. The invitation uses a warm woven textile ground following visual feedback. |
-| `audio/ivory-evening.m4a` | Original "Ivory Evening" score and synthesis in `tools/render_music.py`. A 51.2-second, 75 BPM instrumental with pentatonic flute-like phrases, plucked strings, open harmonies and light percussion. Rendered locally with Python, encoded to stereo AAC with macOS `afconvert`. No external samples or recordings. |
+| `audio/vaaroon-forever.m4a` | User-supplied "Vaaroon Forever" by Anand Bhaskar, Romy, Shreya Ghoshal and Ginny Diwan. The couple confirmed permission for public website use on 28 October 2026 and selected 00:18 to 01:19. `tools/prepare_music.py` extracts that 61-second section, applies two-second fades and matches background volume before AAC encoding. The supplied full recording is unchanged and is not included in the repository. No broader redistribution licence is asserted. |
 
 The private reference film and its contact sheet informed the curtain-to-hero flow and continuous floral paper composition only. They were not copied into the project or used as website images.
 
 ## Impact
 
-Fonts, illustrations and music are local. The 608 KB soundtrack loads only after opening the invitation. The user-approved Google Forms embed loads near the RSVP section; the directions link opens Google Maps on request. Neither receives the private reference media.
+Fonts, illustrations and music are local. The 611 KB soundtrack loads only after opening the invitation. The user-approved Google Forms embed loads near the RSVP section; the directions link opens Google Maps on request. Neither receives the private reference media.
 
 ## Risks and open questions
 
