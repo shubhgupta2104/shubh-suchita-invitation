@@ -1,6 +1,6 @@
 @font-face {
   font-family: Cormorant;
-  src: url("assets/fonts/cormorant-garamond-medium.ttf") format("truetype");
+  src: url("assets/fonts/cormorant-garamond-medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: Cormorant;
-  src: url("assets/fonts/cormorant-garamond-italic.ttf") format("truetype");
+  src: url("assets/fonts/cormorant-garamond-italic.woff") format("woff");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -22,9 +22,13 @@
   --gold: #a78245;
   --leaf: #58644a;
   --serif: Cormorant, Georgia, serif;
+  --scene-height: 100svh;
+  --scene-width: 100vw;
+  --scene-ratio: .5;
+  scrollbar-gutter: stable both-edges;
   font-family: Georgia, "Times New Roman", serif;
   color: var(--ink);
-  background: #572435 url("assets/artwork/fabric.svg") center top / 380px auto;
+  background: #000;
 }
 
 * { box-sizing: border-box; }
@@ -44,7 +48,7 @@ h2 { color: var(--wine); font-size: clamp(36px, 4vw, 58px); line-height: 1.05; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .invitation {
   position: relative;
-  max-width: 1120px;
+  width: 100%;
   margin: 0 auto;
   overflow: clip;
   background-color: var(--paper);
@@ -60,10 +64,13 @@ h2 { color: var(--wine); font-size: clamp(36px, 4vw, 58px); line-height: 1.05; }
   justify-content: space-between;
   min-height: 62px;
   max-width: 1440px;
-  margin: auto;
+  margin: 0 auto -62px;
   padding: 0 44px;
-  background: var(--paper) url("assets/artwork/textile.svg");
+  color: #f1d8be;
+  background: linear-gradient(#19060df2, #19060dc7);
+  transition: opacity .35s ease;
 }
+.entrance-closed .site-header { opacity: 0; }
 main { position: relative; }
 main::before, main::after { content: ""; position: absolute; top: 1300px; bottom: 60px; width: 35px; background: url("assets/artwork/vine-border.svg") center top / 35px auto repeat-y; opacity: .65; pointer-events: none; }
 main::before { left: max(14px, calc(50% - 590px)); }
@@ -73,44 +80,27 @@ main::after { right: max(14px, calc(50% - 590px)); transform: scaleX(-1); }
 nav { display: flex; gap: 30px; }
 nav a { display: grid; place-items: center; min-height: 44px; font-size: 12px; text-decoration: none; }
 nav a:hover { text-decoration: underline; }
-.hero { position: relative; text-align: center; padding-top: 152px; }
-.hero__valance, .entrance__valance {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 130px;
-  background: url("assets/artwork/valance.svg") center top / 100% 100% no-repeat;
-  pointer-events: none;
-}
-.hero__toran { position: absolute; width: 760px; max-width: 80%; height: auto; top: 38px; left: 50%; transform: translateX(-50%); }
-.hero__drape { position: absolute; top: 0; width: 100px; height: 490px; z-index: 2; background: url("assets/artwork/side-drape.svg") center top / 100% 100% no-repeat; pointer-events: none; }
-.hero__drape--left { left: 0; }
-.hero__drape--right { right: 0; transform: scaleX(-1); }
-.hero__copy { position: relative; z-index: 1; }
-.hero__intro { margin-bottom: 25px; color: var(--wine); font-size: 12px; letter-spacing: 1.8px; text-wrap: balance; }
-h1 { display: flex; flex-direction: column; align-items: center; }
-.name { font-size: clamp(76px, 8vw, 108px); line-height: .88; color: var(--wine); letter-spacing: -3px; }
-.parentage { font: 13px/1.6 Georgia, serif; color: var(--ink); margin-top: 14px; letter-spacing: .1px; }
-.ampersand { font-size: 44px; font-style: italic; line-height: .9; color: #97733e; margin: 12px 0 10px; }
-.wedding-date { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 30px 0 8px; }
-.wedding-date time { font-family: var(--serif); font-size: 27px; color: var(--wine); }
-.wedding-date__rule { height: 1px; width: 44px; background: var(--gold); }
+.site-header a:focus-visible, .hero a:focus-visible { outline-color: #edccad; }
+.hero { position: relative; isolation: isolate; overflow: clip; min-height: var(--scene-height); text-align: center; padding: 0 28px 22px; color: #f6dfc7; background: #000; }
+.hero__copy { position: relative; z-index: 1; max-width: 520px; margin: auto; padding: 88px 12px 0; text-align: center; text-shadow: 0 2px 18px #120208; }
+.hero__intro { margin-bottom: 18px; color: #e8c9b0; font-size: 12px; letter-spacing: 1.8px; text-wrap: balance; }
+.couple-names { display: flex; flex-direction: column; align-items: center; font-family: var(--serif); font-weight: 500; }
+.name { font-size: clamp(64px, 6vw, 82px); font-style: italic; line-height: .9; color: #ffecd7; letter-spacing: -2px; }
+.parentage { font: 12px/1.6 Georgia, serif; color: #e2c6b5; margin-top: 8px; letter-spacing: .1px; }
+.ampersand { font-size: 29px; font-style: italic; line-height: .9; color: #d3a68a; margin: 8px 0; }
+.wedding-date { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 18px 0 8px; }
+.wedding-date time { font-family: var(--serif); font-size: 27px; color: #f0ceb0; }
+.wedding-date__rule { height: 1px; width: 28px; background: #bd8a6966; }
 .hero__location { font-size: 12px; letter-spacing: .7px; }
 .hero__location span { margin: 0 6px; }
-.hero__botanical { position: absolute; width: 245px; max-width: 25%; height: auto; top: 145px; opacity: .8; pointer-events: none; }
-.hero__botanical--left { left: -45px; transform: rotate(12deg); }
-.hero__botanical--right { right: -45px; transform: scaleX(-1) rotate(12deg); }
-.garden { position: relative; height: clamp(300px, 37vw, 500px); max-width: 1440px; margin: -20px auto 0; pointer-events: none; }
-.garden__scene { position: absolute; width: 100%; max-width: none; height: 100%; left: 50%; transform: translateX(-50%); object-fit: fill; }
-.garden__flowers { position: absolute; width: 30%; max-width: 330px; height: auto; bottom: -50px; }
-.garden__flowers--left { left: -15px; transform: rotate(40deg); }
-.garden__flowers--right { right: -15px; transform: scaleX(-1) rotate(40deg); }
-.scene-seam { position: relative; height: 190px; margin-top: -150px; pointer-events: none; }
-.scene-seam img { position: absolute; width: 100%; max-width: none; height: 100%; object-fit: fill; }
-.scroll-invitation { position: relative; z-index: 1; display: inline-flex; flex-direction: column; align-items: center; gap: 12px; margin-top: -27px; padding: 12px 20px; text-decoration: none; font-size: 11px; font-style: italic; color: var(--leaf); }
-.scroll-invitation > span:last-child { font-style: normal; font-size: 23px; }
-.welcome { position: relative; text-align: center; max-width: 1200px; margin: 0 auto; padding: 75px 120px 55px; }
+.hero__stage { position: absolute; top: 0; left: 50%; width: var(--scene-width); height: var(--scene-height); transform: translateX(-50%); z-index: -1; pointer-events: none; }
+.hero__scene, .entrance__film { position: absolute; left: 50%; top: 50%; display: block; width: min(var(--scene-width), calc(var(--scene-height) * var(--scene-ratio))); height: min(var(--scene-height), calc(var(--scene-width) / var(--scene-ratio))); max-width: none; transform: translate(-50%, -50%); object-fit: contain; mask-image: linear-gradient(to right, transparent, #000 1.5%, #000 98.5%, transparent), linear-gradient(to bottom, transparent, #000 1.5%, #000 97%, transparent); mask-composite: intersect; }
+.scroll-invitation { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: 16px; width: max-content; min-height: 48px; padding: 9px 18px; border: 1px solid #d8b98d66; border-radius: 30px; background: #16060dc9; text-decoration: none; font-size: 12px; letter-spacing: .5px; color: #f5dfc2; }
+.scroll-invitation > span:last-child { font-size: 24px; line-height: 1; }
+.invitation-ready .scroll-invitation > span:last-child { animation: scroll-cue 1.3s ease-in-out 3; }
+@keyframes scroll-cue { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
+.welcome { position: relative; text-align: center; max-width: 1200px; margin: 0 auto; padding: 125px 120px 55px; }
+.welcome::before { content: ""; position: absolute; inset: 0 0 auto; height: 100px; background: linear-gradient(#000, #a7776966 45%, transparent); pointer-events: none; }
 .welcome__flower { width: 63px; height: 63px; margin: 0 auto 23px; }
 .welcome .eyebrow { margin-bottom: 18px; }
 .welcome h2 { font-style: italic; }
@@ -142,9 +132,9 @@ h1 { display: flex; flex-direction: column; align-items: center; }
 .timeline { position: relative; list-style: none; padding: 38px 0 0; margin: 0 auto; max-width: 620px; }
 .timeline::before { content: ""; position: absolute; top: 44px; bottom: 20px; left: 50%; width: 1px; background: repeating-linear-gradient(to bottom, #b5925a 0 3px, transparent 3px 8px); }
 .timeline li { position: relative; font-size: 14px; line-height: 1.6; }
-.timeline li[data-kind="meal"] { display: flex; justify-content: center; align-items: center; gap: 20px; width: fit-content; margin: 0 auto; padding: 13px 15px; background: var(--paper); }
-.timeline li[data-kind="meal"]::before { content: ""; position: absolute; top: 50%; left: -9px; width: 5px; height: 5px; border: 1px solid var(--gold); transform: rotate(45deg); }
-.timeline li[data-kind="function"] { display: grid; align-items: center; grid-template-columns: 1fr 1fr; gap: 30px; padding: 24px 0; color: var(--wine); text-align: left; }
+.timeline li[data-kind="meal"]:not(.timeline__featured) { display: flex; justify-content: center; align-items: center; gap: 20px; width: fit-content; margin: 0 auto; padding: 13px 15px; background: var(--paper); }
+.timeline li[data-kind="meal"]:not(.timeline__featured)::before { content: ""; position: absolute; top: 50%; left: -9px; width: 5px; height: 5px; border: 1px solid var(--gold); transform: rotate(45deg); }
+.timeline li:is([data-kind="function"], .timeline__featured) { display: grid; align-items: center; grid-template-columns: 1fr 1fr; gap: 30px; padding: 24px 0; color: var(--wine); text-align: left; }
 .timeline time { font-size: 12px; }
 .ceremony-art { display: block; width: 100%; max-width: 260px; justify-self: center; }
 .function { padding-left: 20px; }
@@ -183,77 +173,87 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
   margin: 0;
   padding: 0;
   border: 0;
-  background: transparent;
+  background: #000;
   color: #f7ebdd;
-  overflow: auto;
+  overflow: hidden;
+  touch-action: none;
+  opacity: 1;
+  transition: opacity .4s ease;
 }
-.entrance::backdrop { background: transparent; }
+.entrance::backdrop { background: #000; transition: opacity .4s ease; }
+.entrance::before { content: ""; position: absolute; inset: 0; background: #000 var(--closed-curtain, url("assets/artwork/curtain-closed.jpg")) center top / 100% calc(100% + 60px); opacity: var(--curtain-edge-opacity, 1); pointer-events: none; }
 .entrance-closed { overflow: hidden; }
 .entrance-closed body { overflow: hidden; }
-.curtain {
-  position: absolute;
-  inset-block: 0;
-  width: 50.2%;
-  min-height: 700px;
-  background-color: #681e2e;
-  background-image: url("assets/artwork/fabric.svg");
-  background-size: 380px 520px;
-  transition: transform 1.25s cubic-bezier(.65, 0, .25, 1);
-}
-.curtain--left { left: 0; border-right: 3px double #c49c59; box-shadow: inset -22px 0 35px #22091077; }
-.curtain--right { right: 0; border-left: 3px double #c49c59; box-shadow: inset 22px 0 35px #22091077; }
-.entrance__valance { height: 150px; z-index: 1; filter: drop-shadow(0 9px 5px #20061066); }
-.entrance__content { position: relative; min-height: 650px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 24px 80px; text-align: center; }
-.entrance__invitation { max-width: 32ch; color: #f4dec2; font: italic 500 26px/1.35 var(--serif); margin-bottom: 26px; text-wrap: balance; }
-.crest { display: block; position: relative; width: 235px; padding: 12px; background: #f7e8e1; border-radius: 48% 48% 45% 45%; border: 1px solid #dcb777; box-shadow: 0 0 0 6px #681e2e, 0 0 0 7px #c49c59, 0 16px 35px #21070e66; transition: transform .3s ease; }
-.crest::after { content: ""; position: absolute; inset: -14px; border: 1px dotted #e8c986; border-radius: inherit; pointer-events: none; }
-.crest img { width: 100%; height: auto; border-radius: 40%; }
-.entrance h2 { color: #f8ead8; font-size: 43px; font-style: italic; margin: 32px 0 12px; }
-#entrance-description { font-size: 12px; line-height: 1.7; color: #f5dfc6; }
-#entrance-description span { margin: 0 4px; }
-.open-invitation { display: flex; flex-direction: column; align-items: center; gap: 26px; background: none; color: #f5dfc6; border: 0; padding: 12px; }
-.seal-caption { font-family: var(--serif); font-size: 25px; font-style: italic; border-bottom: 1px solid #d9b06b77; padding-bottom: 3px; }
-.open-invitation:hover .crest { transform: scale(1.025); }
+.entrance__film { pointer-events: none; }
+.entrance__content { position: relative; height: 100%; padding: 0 24px; text-align: center; pointer-events: none; transition: opacity .45s ease, transform .65s ease; text-shadow: 0 2px 24px #150107, 0 1px 5px #150107; }
+.entrance__invitation { position: absolute; top: 12%; left: 24px; right: 24px; max-width: 34ch; margin: auto; color: #f6dac4; font: italic 500 24px/1.4 var(--serif); text-wrap: balance; }
+.entrance__signature { position: absolute; bottom: 17%; left: 24px; right: 24px; }
+.entrance h2 { color: #fff0dd; font-size: clamp(40px, 6vw, 65px); font-style: italic; line-height: 1.2; margin-bottom: 14px; }
+#entrance-description { font-size: 12px; line-height: 1.7; letter-spacing: 1.6px; color: #f0ceb6; }
+.open-invitation { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; touch-action: none; }
 .open-invitation:focus-visible { outline: none; }
-.open-invitation:focus-visible .crest { outline: 1px dashed #e7c68c; outline-offset: 18px; }
-.entrance__foot { position: absolute; left: 0; right: 0; bottom: 25px; text-align: center; font-size: 9px; text-transform: uppercase; letter-spacing: 2.4px; color: #e2c29d; }
-.entrance__content, .entrance__foot, .entrance__valance { transition: opacity .35s ease; }
-.is-opening .curtain--left { transform: translateX(-101%); }
-.is-opening .curtain--right { transform: translateX(101%); }
-.is-opening .entrance__content, .is-opening .entrance__foot, .is-opening .entrance__valance { opacity: 0; }
+.has-keyboard-focus .open-invitation:focus-visible { outline: 1px solid #f0c99b; outline-offset: -14px; border-radius: 4px; }
+.is-playing .entrance__content { opacity: 0; transform: translateY(-10px); }
+.is-settling { opacity: 0; }
+.is-settling::backdrop { opacity: 0; }
+.entrance__reveal-copy { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.has-scene-copy .entrance__reveal-copy { opacity: 1; }
+.has-scene-copy .hero__copy > *, .has-scene-copy .couple-names > * { animation: reveal-writing .7s ease both; }
+.has-scene-copy .hero__copy > .couple-names { animation: none; }
+.has-scene-copy .couple-names > :nth-child(2) { animation-delay: .12s; }
+.has-scene-copy .couple-names > :nth-child(3) { animation-delay: .2s; }
+.has-scene-copy .couple-names > :nth-child(4) { animation-delay: .3s; }
+.has-scene-copy .couple-names > :nth-child(5) { animation-delay: .4s; }
+.has-scene-copy .wedding-date, .has-scene-copy .hero__location { animation-delay: .5s; }
+.entrance__butterfly { position: absolute; width: clamp(82px, 12vw, 112px); height: auto; top: 48%; left: 50%; transform: translate(-50%, -50%) rotate(-12deg); filter: drop-shadow(0 1px 6px #f8d2a455); pointer-events: none; overflow: visible; }
+.entrance__trail, .entrance__glints { position: absolute; inset: 0; pointer-events: none; }
+.entrance__trail { width: 100%; height: 100%; }
+.spark { position: absolute; display: block; width: 5px; height: 5px; opacity: 0; }
+.spark i { display: block; width: 100%; height: 100%; background: #ffe6b4; clip-path: polygon(50% 0, 61% 37%, 100% 50%, 61% 63%, 50% 100%, 39% 63%, 0 50%, 39% 37%); filter: drop-shadow(0 0 2px #f1ba6d); }
+.entrance__glints { left: 50%; top: 50%; width: min(var(--scene-width), calc(var(--scene-height) * var(--scene-ratio))); height: min(var(--scene-height), calc(var(--scene-width) / var(--scene-ratio))); transform: translate(-50%, -50%); }
+.entrance__glints .spark:nth-child(1) { left: 28%; top: 59%; }
+.entrance__glints .spark:nth-child(2) { left: 72%; top: 62%; }
+.entrance__glints .spark:nth-child(3) { left: 38%; top: 78%; }
+.entrance__glints .spark:nth-child(4) { left: 65%; top: 83%; }
+.entrance__glints .spark:nth-child(5) { left: 22%; top: 73%; }
+.entrance__glints .spark:nth-child(6) { left: 77%; top: 76%; }
+.entrance__glints .spark:nth-child(7) { left: 54%; top: 90%; }
+.is-playing .entrance__glints .spark { animation: scene-glint 2.2s ease-in-out calc(1.8s + var(--spark-index) * .2s) 1 both; }
+@keyframes scene-glint { 0%, 100% { opacity: 0; transform: scale(.4); } 45% { opacity: .55; transform: scale(1); } }
+.butterfly-wing { transform-box: view-box; transform-origin: 100px 80px; }
+.is-playing .entrance__butterfly { animation: butterfly-flight var(--reveal-duration, 4s) cubic-bezier(.35, 0, .25, 1) both; }
+.is-playing .butterfly-wing--left { animation: butterfly-left .45s ease-in-out 20; }
+.is-playing .butterfly-wing--right { animation: butterfly-right .45s ease-in-out 20; }
+@keyframes butterfly-left { 0%, 100% { transform: perspective(180px) rotateY(8deg); } 50% { transform: perspective(180px) rotateY(64deg); } }
+@keyframes butterfly-right { 0%, 100% { transform: perspective(180px) rotateY(-8deg); } 50% { transform: perspective(180px) rotateY(-64deg); } }
+@keyframes butterfly-flight {
+  0% { transform: translate(-50%, -50%) rotate(-12deg); opacity: 1; }
+  25% { transform: translate(calc(-50% - 12vw), calc(-50% - 6vh)) rotate(18deg); opacity: 1; }
+  55% { transform: translate(calc(-50% + 12vw), calc(-50% - 19vh)) rotate(-18deg) scale(.9); opacity: 1; }
+  82% { transform: translate(calc(-50% + 3vw), calc(-50% - 32vh)) rotate(10deg) scale(.7); opacity: .8; }
+  100% { transform: translate(calc(-50% + 14vw), calc(-50% - 44vh)) rotate(-8deg) scale(.45); opacity: 0; }
+}
+@keyframes reveal-writing { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 700px) {
   main::before, main::after { top: 900px; width: 17px; background-size: 17px auto; opacity: .5; }
   main::before { left: 3px; }
   main::after { right: 3px; }
-  .site-header { padding: 0 23px; min-height: 55px; }
+  .site-header { padding: 0 23px; min-height: 55px; margin-bottom: -55px; }
   nav { gap: 24px; }
   nav a { font-size: 11px; }
   .wordmark img { width: 44px; height: 44px; }
-  .hero { padding-top: 102px; }
-  .hero__drape { width: 49px; height: 345px; }
-  .hero__valance { height: 75px; width: 160%; left: -30%; }
-  .hero__toran { width: 640px; max-width: 135%; top: 17px; }
-  .hero__intro { max-width: 260px; margin-inline: auto; font-size: 11px; letter-spacing: 1.4px; margin-bottom: 26px; }
-  .name { font-size: 78px; }
-  .parentage { font-size: 12px; line-height: 1.7; margin-top: 11px; }
-  .ampersand { font-size: 33px; margin: 12px 0 10px; }
-  .wedding-date { margin-top: 25px; gap: 14px; }
-  .wedding-date time { font-size: 26px; }
-  .wedding-date__rule { width: 28px; }
+  .hero { padding: 0 20px 14px; }
+  .hero__copy { max-width: 350px; padding-top: 82px; }
+  .hero__intro { max-width: 260px; margin-inline: auto; font-size: 11px; letter-spacing: 1.4px; margin-bottom: 16px; }
+  .name { font-size: 64px; }
+  .parentage { font-size: 11px; line-height: 1.6; margin-top: 8px; }
+  .ampersand { font-size: 24px; margin: 7px 0; }
+  .wedding-date { margin-top: 16px; gap: 14px; }
+  .wedding-date time { font-size: 25px; }
+  .wedding-date__rule { width: 20px; }
   .hero__location { font-size: 10px; letter-spacing: .5px; }
-  .hero__botanical { top: 170px; width: 105px; max-width: none; opacity: .65; }
-  .hero__botanical--left { left: -74px; }
-  .hero__botanical--right { right: -74px; }
-  .garden { height: 280px; margin-top: -10px; }
-  .garden__scene { width: 680px; }
-  .garden__flowers { width: 150px; bottom: -5px; }
-  .garden__flowers--left { left: -57px; transform: rotate(32deg); }
-  .garden__flowers--right { right: -57px; transform: scaleX(-1) rotate(32deg); }
-  .scene-seam { height: 135px; margin-top: -65px; }
-  .scene-seam img { width: 650px; height: auto; left: 50%; transform: translateX(-50%); top: -25px; }
-  .scroll-invitation { margin-top: -15px; font-size: 10px; gap: 8px; }
-  .welcome { padding: 53px 37px 25px; }
+  .welcome { padding: 110px 37px 25px; }
   .welcome h2 { font-size: 38px; }
   .welcome .eyebrow { font-size: 8px; letter-spacing: 1.9px; }
   .welcome__message { font-size: 14px; line-height: 1.9; margin-top: 22px; }
@@ -279,9 +279,9 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
   .programme__days h3 .day__number { font-size: 78px; }
   .timeline { padding-top: 30px; }
   .timeline::before { left: 42%; }
-  .timeline li[data-kind="function"] { grid-template-columns: 42% 58%; gap: 0; padding: 32px 0; }
-  .timeline li[data-kind="meal"] { margin-left: calc(42% - 34px); gap: 15px; padding: 10px; font-size: 12px; }
-  .timeline li[data-kind="meal"]::before { left: -8px; }
+  .timeline li:is([data-kind="function"], .timeline__featured) { grid-template-columns: 42% 58%; gap: 0; padding: 32px 0; }
+  .timeline li[data-kind="meal"]:not(.timeline__featured) { margin-left: calc(42% - 34px); gap: 15px; padding: 10px; font-size: 12px; }
+  .timeline li[data-kind="meal"]:not(.timeline__featured)::before { left: -8px; }
   .timeline time { font-size: 11px; }
   .ceremony-art { width: 135%; max-width: none; margin-left: -10%; }
   .function { padding-left: 22px; }
@@ -293,13 +293,8 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
   .rsvp { padding: 28px 26px 15px; }
   .rsvp .eyebrow { font-size: 9px; letter-spacing: 1.8px; }
   .rsvp__intro { font-size: 13px; }
-  .entrance__valance { width: 160%; left: -30%; height: 120px; }
-  .entrance__content { padding-top: 110px; }
   .entrance__invitation { font-size: 22px; }
-  .crest { width: 210px; padding: 10px; }
-  .entrance h2 { font-size: 38px; margin-top: 24px; }
   #entrance-description { font-size: 11px; }
-  .curtain { background-size: 260px auto; }
 }
 
 @media (max-width: 350px) {
@@ -309,10 +304,7 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
   .parentage { font-size: 11px; }
   .welcome { padding-inline: 29px; }
   .welcome h2 { font-size: 33px; }
-  .entrance h2 { font-size: 30px; }
-  .crest { width: 185px; }
-  .entrance__content { min-height: 610px; }
-  .curtain { min-height: 660px; }
+  .entrance h2 { font-size: 38px; }
   .function h4 { font-size: 26px; }
   .function p { font-size: 11px; }
   .programme { padding-inline: 23px; }
@@ -323,4 +315,22 @@ footer span { display: block; font-size: 10px; letter-spacing: 1px; margin-top: 
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0s !important; animation: none !important; }
+}
+
+@media (min-aspect-ratio: 1/1) {
+  :root { --scene-ratio: 1.7777777778; }
+}
+
+@media (max-height: 650px) {
+  .hero__copy { padding-top: 64px; }
+  .hero__intro { display: none; }
+  .name { font-size: 50px; }
+  .parentage { font-size: 10px; line-height: 1.5; margin-top: 5px; }
+  .ampersand { font-size: 20px; margin: 5px 0; }
+  .wedding-date { margin-top: 8px; }
+  .wedding-date time { font-size: 22px; }
+}
+
+@media (max-height: 650px) and (max-width: 700px) {
+  .scroll-invitation { left: auto; right: 8px; bottom: 10px; transform: none; flex-direction: column; width: 62px; gap: 3px; padding: 8px 5px; font-size: 10px; line-height: 1.4; text-align: center; border-radius: 22px; }
 }

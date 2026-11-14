@@ -4,7 +4,7 @@ const soundtrack = "/assets/audio/vaaroon-forever.m4a";
 
 async function openWithMusic(page) {
   await page.getByRole("button", { name: "Open invitation" }).click();
-  await expect(page.locator("dialog")).not.toBeVisible();
+  await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await expect.poll(() => page.locator("audio").evaluate((audio) => audio.currentTime)).toBeGreaterThan(0.1);
 }
 
@@ -17,7 +17,7 @@ test("music is lazy, user-started, looped and reset by refresh", async ({ page }
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator("audio")).not.toHaveAttribute("src", /./);
   expect(musicRequests).toEqual([]);
-  await expect(page.locator(".seal-caption")).toHaveText("Open our invitation");
+  await expect(page.locator(".seal-caption")).toHaveCount(0);
   await expect(page.locator("audio[controls], audio[autoplay]")).toHaveCount(0);
   await openWithMusic(page);
   const media = await page.locator("audio").evaluate((audio) => ({
@@ -40,7 +40,7 @@ test("music is lazy, user-started, looped and reset by refresh", async ({ page }
 test("Escape and script failure keep the soundtrack silent", async ({ page }) => {
   await page.goto("/");
   await page.keyboard.press("Escape");
-  await expect(page.locator("dialog")).not.toBeVisible();
+  await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await expect(page.locator("audio")).not.toHaveAttribute("src", /./);
   await page.route("**/app.js", (route) => route.abort());
   await page.reload();
@@ -49,7 +49,7 @@ test("Escape and script failure keep the soundtrack silent", async ({ page }) =>
   expect(await page.locator("audio").evaluate((audio) => audio.paused)).toBe(true);
 });
 
-test("hidden tabs pause music and restored documents wait for the crest", async ({ page }) => {
+test("hidden tabs pause music and restored documents wait for interaction", async ({ page }) => {
   await page.goto("/");
   await openWithMusic(page);
   await page.evaluate(() => {
@@ -77,7 +77,7 @@ test("audio failure cannot block the invitation", async ({ page }) => {
   await page.route(`**${soundtrack}`, (route) => route.abort());
   await page.goto("/");
   await page.getByRole("button", { name: "Open invitation" }).click();
-  await expect(page.locator("dialog")).not.toBeVisible();
+  await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await page.getByRole("link", { name: "Schedule", exact: true }).click();
   await expect(page.locator("#schedule")).toBeInViewport();
   await expect.poll(() => warnings.some((message) => message.includes("Invitation music could not"))).toBe(true);
@@ -95,7 +95,7 @@ test("returning during the curtain animation resumes music after the reveal", as
     return opening;
   });
   expect(duringReveal).toBe(true);
-  await expect(page.locator("dialog")).not.toBeVisible();
+  await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await expect.poll(() => page.locator("audio").evaluate((audio) => !audio.paused && audio.currentTime > 0.1)).toBe(true);
 });
 

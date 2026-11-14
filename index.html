@@ -8,35 +8,44 @@
     <title>Shubh &amp; Suchita | 26 January 2027</title>
     <meta name="description" content="Join Shubh and Suchita for their wedding celebrations on 25 and 26 January 2027 at Evara Resort, Jim Corbett, Uttarakhand.">
     <link rel="icon" href="data:,">
-    <link rel="preload" href="assets/fonts/cormorant-garamond-medium.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/fonts/cormorant-garamond-medium.woff" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
   </head>
   <body>
     <dialog class="entrance" aria-labelledby="entrance-title" aria-describedby="entrance-welcome entrance-description">
-      <div class="curtain curtain--left" aria-hidden="true"></div>
-      <div class="curtain curtain--right" aria-hidden="true"></div>
-      <div class="entrance__valance" aria-hidden="true"></div>
+      <video class="entrance__film" width="720" height="1440" muted playsinline preload="none"
+        poster="assets/artwork/curtain-closed.jpg"
+        data-poster="assets/artwork/curtain-closed.jpg"
+        data-poster-wide="assets/artwork/curtain-closed-wide.jpg"
+        data-src-wide="assets/video/curtain-reveal-wide.mp4"
+        data-curtains-clear="2.5"
+        data-src="assets/video/curtain-reveal.mp4" aria-hidden="true"></video>
+      <div class="entrance__reveal-copy" aria-hidden="true"></div>
+      <div class="entrance__glints" aria-hidden="true"></div>
+      <canvas class="entrance__trail" aria-hidden="true"></canvas>
+      <svg class="entrance__butterfly" viewBox="0 0 200 160" aria-hidden="true">
+        <g class="butterfly-wing butterfly-wing--left"><use href="assets/artwork/butterfly.svg#wing"></use></g>
+        <g class="butterfly-wing butterfly-wing--right"><use href="assets/artwork/butterfly.svg#wing" transform="translate(200 0) scale(-1 1)"></use></g>
+        <use href="assets/artwork/butterfly.svg#body"></use>
+      </svg>
       <div class="entrance__content">
         <p class="entrance__invitation" id="entrance-welcome">Together with our families,<br>we warmly invite you to our wedding.</p>
-        <button class="open-invitation" type="button" aria-label="Open invitation" autofocus>
-          <span class="crest">
-            <img src="assets/artwork/monogram.jpg" width="640" height="640" alt="Shubh and Suchita's pink monogram, with flowers, two dogs, a teacup and a city bridge." fetchpriority="high">
-          </span>
-          <span class="seal-caption">Open our invitation</span>
-        </button>
-        <h2 id="entrance-title">Shubh &amp; Suchita</h2>
-        <p id="entrance-description">26 January 2027</p>
-        <span class="sr-only">Press Escape to open without animation or music.</span>
+        <div class="entrance__signature">
+          <h2 id="entrance-title">Shubh &amp; Suchita</h2>
+          <p id="entrance-description">26 January 2027</p>
+        </div>
       </div>
-      <p class="entrance__foot">Jim Corbett, Uttarakhand</p>
+      <button class="open-invitation" type="button" aria-label="Open invitation" autofocus>
+        <span class="sr-only">Open invitation. Press Escape to open without animation or music.</span>
+      </button>
     </dialog>
     <audio id="invitation-music" data-src="assets/audio/vaaroon-forever.m4a" preload="none" loop hidden></audio>
 
     <div class="invitation" id="top">
       <header class="site-header">
         <a class="wordmark" href="#top" aria-label="Shubh and Suchita, back to top">
-          <img src="assets/artwork/monogram.jpg" width="640" height="640" alt="Shubh and Suchita's logo">
+          <img src="assets/artwork/monogram.jpg" width="400" height="400" alt="Shubh and Suchita's logo">
         </a>
         <nav aria-label="Invitation">
           <a href="#schedule">Schedule</a>
@@ -47,15 +56,13 @@
 
       <main>
         <section class="hero" aria-labelledby="invitation">
-          <div class="hero__valance" aria-hidden="true"></div>
-          <div class="hero__drape hero__drape--left" aria-hidden="true"></div>
-          <div class="hero__drape hero__drape--right" aria-hidden="true"></div>
-          <img class="hero__toran" src="assets/artwork/toran.svg" width="1200" height="180" alt="">
-          <img class="hero__botanical hero__botanical--left" src="assets/artwork/botanical.svg" width="300" height="560" alt="">
-          <img class="hero__botanical hero__botanical--right" src="assets/artwork/botanical.svg" width="300" height="560" alt="">
+          <picture class="hero__stage" aria-hidden="true">
+            <source media="(min-aspect-ratio: 1/1)" srcset="assets/artwork/curtain-open-wide.jpg">
+            <img class="hero__scene" src="assets/artwork/curtain-open.jpg" width="720" height="1440" alt="" fetchpriority="high">
+          </picture>
           <div class="hero__copy">
             <p class="eyebrow hero__intro">With love, we invite you to celebrate</p>
-            <h1 id="invitation" tabindex="-1">
+            <h1 class="couple-names" id="invitation" tabindex="-1">
               <span class="name">Shubh</span>
               <span class="parentage" aria-label="Son of Rekha Gupta and Ajay Gupta">S/O Rekha Gupta and Ajay Gupta</span>
               <span class="ampersand">&amp;</span>
@@ -69,13 +76,7 @@
             </div>
             <p class="hero__location">Evara Resort <span aria-hidden="true">&middot;</span> Jim Corbett</p>
           </div>
-          <div class="garden" aria-hidden="true">
-            <img class="garden__scene" src="assets/artwork/evara-garden.svg" width="1440" height="660" alt="">
-            <img class="garden__flowers garden__flowers--left" src="assets/artwork/botanical.svg" width="300" height="560" alt="">
-            <img class="garden__flowers garden__flowers--right" src="assets/artwork/botanical.svg" width="300" height="560" alt="">
-          </div>
-          <div class="scene-seam" aria-hidden="true"><img src="assets/artwork/floral-bridge.svg" width="1200" height="300" alt=""></div>
-          <a class="scroll-invitation" href="#welcome"><span>Come, celebrate with us</span><span aria-hidden="true">&#8595;</span></a>
+          <a class="scroll-invitation" href="#welcome"><span>Scroll to go down</span><span aria-hidden="true">&#8595;</span></a>
         </section>
 
         <section class="welcome" aria-labelledby="welcome">
@@ -135,11 +136,18 @@
                   <div class="function"><time datetime="2027-01-26T12:00:00+05:30">12:00 PM</time><h4>Baraat</h4><p>Bring your joy.<br>We'll bring the celebration.</p></div>
                 </li>
                 <li data-kind="meal"><time datetime="2027-01-26T13:00:00+05:30">1:00 PM</time><span>Lunch</span></li>
+                <li data-kind="function" data-event="jai-mala">
+                  <svg class="ceremony-art" viewBox="0 0 300 260" aria-hidden="true"><use href="assets/artwork/ceremonies.svg#jai-mala"></use></svg>
+                  <div class="function"><time datetime="2027-01-26T15:00:00+05:30">3:00 PM</time><h4>Jai Mala</h4><p>Two garlands,<br>one beautiful beginning.</p></div>
+                </li>
                 <li data-kind="function" data-event="phere">
                   <svg class="ceremony-art" viewBox="0 0 300 260" aria-hidden="true"><use href="assets/artwork/ceremonies.svg#phere"></use></svg>
-                  <div class="function"><time datetime="2027-01-26T16:00:00+05:30">4:00 PM</time><h4>Phere</h4><p>A lifetime of togetherness,<br>with your love and blessings.</p></div>
+                  <div class="function"><time datetime="2027-01-26T16:30:00+05:30">4:30 PM</time><h4>Phere</h4><p>A lifetime of togetherness,<br>with your love and blessings.</p></div>
                 </li>
-                <li data-kind="meal"><time datetime="2027-01-26T20:00:00+05:30">8:00 PM</time><span>Dinner</span></li>
+                <li class="timeline__featured" data-kind="meal" data-event="gala-dinner">
+                  <svg class="ceremony-art" viewBox="0 0 300 260" aria-hidden="true"><use href="assets/artwork/ceremonies.svg#gala-dinner"></use></svg>
+                  <div class="function"><time datetime="2027-01-26T19:00:00+05:30">7:00 PM</time><h4>Gala Dinner</h4><p>A joyful evening,<br>shared around the table.</p></div>
+                </li>
               </ol>
             </section>
           </div>
@@ -166,7 +174,7 @@
         </section>
       </main>
       <footer>
-        <img src="assets/artwork/monogram.jpg" width="640" height="640" alt="Shubh and Suchita's monogram" loading="lazy">
+        <img src="assets/artwork/monogram.jpg" width="400" height="400" alt="Shubh and Suchita's monogram" loading="lazy">
         <p>With love, Shubh &amp; Suchita</p>
         <span>25 &amp; 26 January 2027</span>
       </footer>

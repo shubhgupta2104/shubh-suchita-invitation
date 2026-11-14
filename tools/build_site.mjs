@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const output = join(root, "dist");
-const extensions = new Set([".svg", ".jpg", ".ttf", ".txt", ".m4a"]);
+const extensions = new Set([".svg", ".jpg", ".woff", ".txt", ".m4a", ".mp4"]);
 
 async function copyAssets(directory) {
   await mkdir(join(output, directory), { recursive: true });
@@ -26,7 +26,7 @@ await mkdir(output);
 for (const name of ["index.html", "styles.css", "app.js"]) {
   await copyFile(join(root, name), join(output, name));
 }
-for (const directory of ["assets/artwork", "assets/fonts", "assets/audio"]) {
+for (const directory of ["assets/artwork", "assets/fonts", "assets/audio", "assets/video"]) {
   await copyAssets(directory);
 }
 await writeFile(join(output, ".nojekyll"), "");

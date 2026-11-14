@@ -20,6 +20,29 @@
       <circle r="3" fill="#a16b32"/>
     </g>
     <g id="petals" fill="#c39147" stroke="#a56e35" stroke-width=".5"><path d="m0 0 8-5 5 5-8 3Zm28 3 4-6 6 3-5 5Zm-15 10 7-5 4 4-6 5Zm31 12 6-5 5 4-6 3Z"/></g>
+    <g id="jasmine" fill="#f3e7d4" stroke="#c6ad85" stroke-width=".55">
+      <path d="M0-3C-8-12-13-3-7 1C-14 8-4 12 0 6C7 14 13 4 6 0C11-9 2-12 0-3Z"/>
+      <circle r="2" fill="#d4ac64"/>
+    </g>
+    <g id="garland-rose">
+      <path d="M-2-9C-8-13-13-6-9-2C-15 5-7 11-2 8C4 15 13 7 9 2C15-4 7-12 2-8Z" fill="#a75b60" stroke="#803c4b" stroke-width=".6"/>
+      <path d="M-7-2C-5-9 8-7 7 0C12 6 0 10-4 5C-11 0-2-7 3-2C8 3-3 7-3 1" fill="none" stroke="#e8b3a0" stroke-width=".8"/>
+    </g>
+    <g id="garland">
+      <path d="M0 0C-30 139 40 170 89 3" fill="none" stroke="#7d8656" stroke-width="2"/>
+      <use href="#garland-rose" x="0" y="0"/>
+      <use href="#jasmine" x="-4" y="17"/><use href="#jasmine" x="-7" y="33"/>
+      <use href="#marigold" transform="translate(-7 50) scale(.3)"/>
+      <use href="#jasmine" x="-6" y="66"/><use href="#garland-rose" x="-1" y="83"/>
+      <use href="#jasmine" x="7" y="101"/><use href="#jasmine" x="18" y="115"/>
+      <use href="#garland-rose" x="33" y="123"/><use href="#jasmine" x="48" y="117"/>
+      <use href="#jasmine" x="59" y="102"/><use href="#garland-rose" x="68" y="84"/>
+      <use href="#jasmine" x="74" y="65"/>
+      <use href="#marigold" transform="translate(80 45) scale(.3)"/>
+      <use href="#jasmine" x="84" y="24"/><use href="#garland-rose" x="89" y="3"/>
+      <path d="m-4-10 5 7 6-7M84-8l5 8 7-8" fill="none" stroke="#75824e" stroke-width="2"/>
+      <path d="M32 132v15m-4-9v7m8-7v7" stroke="#c79b56" stroke-width="1.5"/>
+    </g>
   </defs>
   <symbol id="haldi" viewBox="0 0 300 260">
     <ellipse cx="149" cy="225" rx="112" ry="12" fill="#b6a780" opacity=".18"/>
@@ -110,5 +133,59 @@
     <use href="#marigold" transform="translate(83 217) scale(.7)"/><use href="#marigold" transform="translate(222 218) scale(.7)"/>
     <use href="#petals" x="109" y="233"/>
     <g fill="none" stroke="#ad9261" stroke-width=".8"><path d="M127 110q-10-10-5-22M183 105q9-14 3-25"/><path d="m114 78 2-5m65-10 2-6"/></g>
+  </symbol>
+  <symbol id="jai-mala" viewBox="0 0 300 260">
+    <ellipse cx="149" cy="228" rx="105" ry="12" fill="#b6a780" opacity=".18"/>
+    <use href="#sprig" transform="translate(56 203) rotate(-30) scale(.7)"/>
+    <use href="#sprig" transform="translate(244 208) rotate(34) scale(.65)"/>
+    <path d="M75 216Q148 200 225 216L218 224Q149 237 82 224Z" fill="url(#brass)" stroke="#a07c43" stroke-width="1"/>
+    <ellipse cx="150" cy="215" rx="74" ry="10" fill="#e1c797" stroke="#af8d52"/>
+    <path d="M83 214q68-12 134 0" fill="none" stroke="#f4e0b3" stroke-width="1.2"/>
+    <use href="#garland" transform="translate(74 60) rotate(-12)"/>
+    <use href="#garland" transform="translate(147 62) rotate(13)"/>
+    <path d="M70 52q-9-22-21-19 4 16 21 19m2-2q2-18 15-19 0 14-15 19M233 71q19-16 29-8-9 12-29 8m-2-3q-2-20 8-25 7 13-8 25" fill="url(#leaf)" stroke="#748158" stroke-width=".6"/>
+    <path d="M75 50q21-24 34-17M151 52q17-17 31-15" fill="none" stroke="#b89961" stroke-width=".8"/>
+    <use href="#garland-rose" transform="translate(92 217) scale(.7)"/>
+    <use href="#jasmine" transform="translate(204 217) scale(.75)"/>
+    <use href="#petals" x="125" y="231"/>
+  </symbol>
+  <symbol id="gala-dinner" viewBox="0 0 300 260">
+    <ellipse cx="150" cy="231" rx="107" ry="12" fill="#b6a780" opacity=".18"/>
+    <path d="M68 151H233L223 231H79Z" fill="url(#silk)" stroke="#773747" stroke-width="1"/>
+    <path d="M77 164q9 31 8 64m23-64q-6 35-5 68m32-68v69m30-69q8 35 6 69m28-69q-3 35 4 67m21-67-11 65" fill="none" stroke="#c58d85" stroke-width="1.1" opacity=".65"/>
+    <path d="M79 224q72 14 145 0" fill="none" stroke="#d7b676" stroke-width="2"/>
+    <path d="M79 229q72 14 145 0" fill="none" stroke="#b88e51" stroke-width="3" stroke-dasharray="1 3"/>
+    <path d="M62 145Q147 121 239 145L229 173Q212 188 197 174Q180 194 165 179Q148 196 132 179Q115 193 100 176Q84 188 71 171Z" fill="#f0ddba" stroke="#c5a876"/>
+    <ellipse cx="150" cy="145" rx="89" ry="23" fill="#f6e8cd" stroke="#b69a68" stroke-width="1.2"/>
+    <path d="M66 145q83 27 168 0" fill="none" stroke="#dfc798" stroke-width="1"/>
+    <g fill="#f9eedb" stroke="#b5945d" stroke-width="1">
+      <ellipse cx="104" cy="148" rx="24" ry="10"/><ellipse cx="104" cy="148" rx="18" ry="6.5"/>
+      <ellipse cx="195" cy="148" rx="24" ry="10"/><ellipse cx="195" cy="148" rx="18" ry="6.5"/>
+    </g>
+    <path d="m96 146 8-7 10 9-9 6Zm91 0 8-7 10 9-9 6Z" fill="#a86668" stroke="#84434f" stroke-width=".6"/>
+    <path d="m104 139 1 15m90-15 2 15" stroke="#d9b795" stroke-width=".7"/>
+    <g fill="none" stroke="#b08b4d" stroke-linecap="round">
+      <path d="M74 139v19m-3-19v6q3 4 6 0v-6m-3 0v8M132 139v19m-2-19q6 4 2 9M165 139v19m-3-19v6q3 4 6 0v-6m-3 0v8M225 139v19m-2-19q6 4 2 9" stroke-width="1.1"/>
+    </g>
+    <g fill="#e9e3ce" fill-opacity=".5" stroke="#b9a67c" stroke-width=".8">
+      <path d="M79 111h14l-2 15q-5 6-10 0Zm127 0h14l-2 15q-5 6-10 0Z"/>
+      <path d="M86 130v9m-6 1h12m121-10v9m-6 1h12" fill="none"/>
+    </g>
+    <g fill="url(#brass)" stroke="#9e7a41" stroke-width=".8">
+      <path d="M143 142h15l-4-5h-7ZM148 137h5V98h-5Z"/>
+      <path d="M150 123q-23 0-24-20h4q0 15 20 15m0 3q23 0 25-22h-4q-1 16-21 17Z"/>
+      <path d="M120 101h15v4h-15m35-6h15v4h-15"/>
+    </g>
+    <g fill="#f3e3c4" stroke="#c6aa79" stroke-width=".7">
+      <path d="M123 80h9v21h-9ZM146 75h9v24h-9ZM171 80h9v19h-9Z"/>
+    </g>
+    <g fill="url(#flame)" stroke="#d0a15b" stroke-width=".5">
+      <path d="M127 78q-7-6 0-15 6 9 0 15ZM150 73q-7-7 0-16 7 10 0 16ZM175 78q-7-6 0-15 6 9 0 15Z"/>
+    </g>
+    <use href="#sprig" transform="translate(149 143) rotate(-65) scale(.38)"/>
+    <use href="#sprig" transform="translate(154 143) rotate(70) scale(.38)"/>
+    <use href="#garland-rose" transform="translate(147 141) scale(.8)"/>
+    <use href="#jasmine" transform="translate(160 142) scale(.6)"/>
+    <use href="#jasmine" transform="translate(136 145) scale(.55)"/>
   </symbol>
 </svg>

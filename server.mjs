@@ -12,7 +12,8 @@ const types = {
   ".svg": "image/svg+xml",
   ".jpg": "image/jpeg",
   ".m4a": "audio/mp4",
-  ".ttf": "font/ttf",
+  ".mp4": "video/mp4",
+  ".woff": "font/woff",
   ".txt": "text/plain; charset=utf-8"
 };
 const pages = new Set(["/index.html", "/styles.css", "/app.js"]);
@@ -34,7 +35,7 @@ const server = http.createServer(async (request, response) => {
     return;
   }
   if (pathname === "/") pathname = "/index.html";
-  const asset = /^\/assets\/(?:artwork|fonts|audio)\/[a-zA-Z0-9._-]+\.(?:svg|jpg|ttf|txt|m4a)$/.test(pathname);
+  const asset = /^\/assets\/(?:artwork|fonts|audio|video)\/[a-zA-Z0-9._-]+\.(?:svg|jpg|woff|txt|m4a|mp4)$/.test(pathname);
   if (!pages.has(pathname) && !asset) {
     respond(404, "Not found");
     return;
@@ -53,7 +54,7 @@ const server = http.createServer(async (request, response) => {
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "strict-origin-when-cross-origin"
     };
-    if (extname(file) === ".m4a") {
+    if ([".m4a", ".mp4"].includes(extname(file))) {
       headers["Accept-Ranges"] = "bytes";
       if (request.headers.range) {
         const range = /^bytes=(\d*)-(\d*)$/.exec(request.headers.range);
