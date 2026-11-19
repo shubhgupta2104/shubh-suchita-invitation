@@ -9,18 +9,18 @@
     <meta name="description" content="Join Shubh and Suchita for their wedding celebrations on 25 and 26 January 2027 at Evara Resort, Jim Corbett, Uttarakhand.">
     <link rel="icon" href="data:,">
     <link rel="preload" href="assets/fonts/cormorant-garamond-medium.woff" as="font" type="font/woff" crossorigin>
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="styles.css?v=free-dance-candidate-v11">
+    <script src="app.js?v=free-dance-candidate-v3" defer></script>
   </head>
   <body>
     <dialog class="entrance" aria-labelledby="entrance-title" aria-describedby="entrance-welcome entrance-description">
       <video class="entrance__film" width="720" height="1440" muted playsinline preload="none"
-        poster="assets/artwork/curtain-closed.jpg"
-        data-poster="assets/artwork/curtain-closed.jpg"
-        data-poster-wide="assets/artwork/curtain-closed-wide.jpg"
-        data-src-wide="assets/video/curtain-reveal-wide.mp4"
+        poster="assets/artwork/curtain-closed.jpg?v=free-dance-candidate-v3"
+        data-poster="assets/artwork/curtain-closed.jpg?v=free-dance-candidate-v3"
+        data-poster-wide="assets/artwork/curtain-closed-wide.jpg?v=free-dance-candidate-v3"
+        data-src-wide="assets/video/curtain-reveal-wide.mp4?v=free-dance-candidate-v3"
         data-curtains-clear="2.5"
-        data-src="assets/video/curtain-reveal.mp4" aria-hidden="true"></video>
+        data-src="assets/video/curtain-reveal.mp4?v=free-dance-candidate-v3" aria-hidden="true"></video>
       <div class="entrance__reveal-copy" aria-hidden="true"></div>
       <div class="entrance__glints" aria-hidden="true"></div>
       <canvas class="entrance__trail" aria-hidden="true"></canvas>
@@ -29,6 +29,7 @@
         <g class="butterfly-wing butterfly-wing--right"><use href="assets/artwork/butterfly.svg#wing" transform="translate(200 0) scale(-1 1)"></use></g>
         <use href="assets/artwork/butterfly.svg#body"></use>
       </svg>
+      <p class="entrance__status" role="status" hidden>Preparing your invitation...</p>
       <div class="entrance__content">
         <p class="entrance__invitation" id="entrance-welcome">Together with our families,<br>we warmly invite you to our wedding.</p>
         <div class="entrance__signature">
@@ -40,15 +41,14 @@
         <span class="sr-only">Open invitation. Press Escape to open without animation or music.</span>
       </button>
     </dialog>
-    <audio id="invitation-music" data-src="assets/audio/vaaroon-forever.m4a" preload="none" loop hidden></audio>
+    <audio id="invitation-music" data-src="assets/audio/ishq-wala-love-instrumental-v3.m4a" preload="none" loop hidden></audio>
 
     <div class="invitation" id="top">
       <header class="site-header">
         <a class="wordmark" href="#top" aria-label="Shubh and Suchita, back to top">
-          <img src="assets/artwork/monogram.jpg" width="400" height="400" alt="Shubh and Suchita's logo">
+          <img src="assets/artwork/monogram.jpg?v=logo-v2" width="400" height="400" alt="Shubh and Suchita's logo">
         </a>
         <nav aria-label="Invitation">
-          <a href="#schedule">Schedule</a>
           <a href="#venue">Venue</a>
           <a href="#rsvp">RSVP</a>
         </nav>
@@ -57,8 +57,8 @@
       <main>
         <section class="hero" aria-labelledby="invitation">
           <picture class="hero__stage" aria-hidden="true">
-            <source media="(min-aspect-ratio: 1/1)" srcset="assets/artwork/curtain-open-wide.jpg">
-            <img class="hero__scene" src="assets/artwork/curtain-open.jpg" width="720" height="1440" alt="" fetchpriority="high">
+            <source media="(min-aspect-ratio: 1/1)" srcset="assets/artwork/curtain-open-wide.jpg?v=free-dance-candidate-v3">
+            <img class="hero__scene" src="assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3" width="720" height="1440" alt="" fetchpriority="high">
           </picture>
           <div class="hero__copy">
             <p class="eyebrow hero__intro">With love, we invite you to celebrate</p>
@@ -126,7 +126,7 @@
                 <li data-kind="meal"><time datetime="2027-01-25T20:00:00+05:30">8:00 PM</time><span>Dinner</span></li>
               </ol>
             </section>
-            <div class="day-interlude" aria-hidden="true"><img src="assets/artwork/toran.svg" width="1200" height="180" alt="" loading="lazy"></div>
+            <div class="day-interlude" aria-hidden="true"><img src="assets/artwork/toran.svg?v=floral-v2" width="1200" height="300" alt="" loading="lazy"></div>
             <section class="day" aria-labelledby="day-two">
               <h3 id="day-two"><span class="day__number">26</span> <span>January 2027</span></h3>
               <ol class="timeline">
@@ -142,11 +142,11 @@
                 </li>
                 <li data-kind="function" data-event="phere">
                   <svg class="ceremony-art" viewBox="0 0 300 260" aria-hidden="true"><use href="assets/artwork/ceremonies.svg#phere"></use></svg>
-                  <div class="function"><time datetime="2027-01-26T16:30:00+05:30">4:30 PM</time><h4>Phere</h4><p>A lifetime of togetherness,<br>with your love and blessings.</p></div>
+                  <div class="function"><time datetime="2027-01-26T16:00:00+05:30">4:00 PM</time><h4>Phere</h4><p>A lifetime of togetherness,<br>with your love and blessings.</p></div>
                 </li>
                 <li class="timeline__featured" data-kind="meal" data-event="gala-dinner">
                   <svg class="ceremony-art" viewBox="0 0 300 260" aria-hidden="true"><use href="assets/artwork/ceremonies.svg#gala-dinner"></use></svg>
-                  <div class="function"><time datetime="2027-01-26T19:00:00+05:30">7:00 PM</time><h4>Gala Dinner</h4><p>A joyful evening,<br>shared around the table.</p></div>
+                  <div class="function"><time datetime="2027-01-26T20:00:00+05:30">8:00 PM</time><h4>Gala Dinner</h4><p>A joyful evening,<br>shared around the table.</p></div>
                 </li>
               </ol>
             </section>
@@ -162,21 +162,35 @@
           <img class="venue__landscape" src="assets/artwork/evara-garden.svg" width="1440" height="660" alt="An original illustration inspired by cream cottages, wooded hills, lawns and a pool at Evara Resort." loading="lazy">
         </section>
 
-        <section class="rsvp" aria-labelledby="rsvp">
-          <img class="rsvp__flower" src="assets/artwork/flower.svg" width="100" height="100" alt="" loading="lazy">
-          <p class="eyebrow">The celebration needs you</p>
-          <h2 id="rsvp" tabindex="-1">Will you join us?</h2>
-          <p class="rsvp__intro">We would love to celebrate with you.</p>
-          <p class="rsvp__help">Please follow the <a href="#schedule">schedule above</a> for the latest celebration timings.</p>
+        <section class="rsvp" id="rsvp" tabindex="-1" aria-labelledby="rsvp-title">
+          <div class="rsvp__card">
+            <div class="rsvp__art" aria-hidden="true">
+              <img src="assets/artwork/rsvp-envelope-top.webp?v=envelope-v1" width="960" height="265" alt="" loading="lazy" decoding="async">
+              <span class="rsvp__letter-extension"></span>
+              <img src="assets/artwork/rsvp-envelope-middle.webp?v=envelope-v1" width="960" height="345" alt="" loading="lazy" decoding="async">
+              <img class="rsvp__art-bottom" src="assets/artwork/rsvp-envelope-bottom.webp?v=envelope-v1" width="960" height="110" alt="" loading="lazy" decoding="async">
+            </div>
+            <div class="rsvp__letter">
+              <h2 id="rsvp-title">Will you join us?</h2>
+              <p class="rsvp__intro">We'd love to celebrate with you.</p>
+              <span class="rsvp__rule" aria-hidden="true"></span>
+              <p class="rsvp__signature"><span>With love,</span><strong>Shubh &amp; Suchita</strong></p>
+              <p class="rsvp__details"><time datetime="2027-01-26">26 January 2027</time><span>Evara Resort &middot; Jim Corbett</span></p>
+            </div>
+          </div>
           <a id="rsvp-link" class="text-link" href="https://docs.google.com/forms/d/e/1FAIpQLSf_344lGr0NDc0JVhV59THlmWfkQJUz_X-Tk1L3YIpR10HnkA/viewform" target="_blank" rel="noopener noreferrer">Open RSVP form <span aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a>
           <p class="rsvp__pending" role="status">RSVP is temporarily unavailable. Please try again later.</p>
           <div id="rsvp-embed"></div>
         </section>
       </main>
       <footer>
-        <img src="assets/artwork/monogram.jpg" width="400" height="400" alt="Shubh and Suchita's monogram" loading="lazy">
+        <img src="assets/artwork/monogram.jpg?v=logo-v2" width="400" height="400" alt="Shubh and Suchita's monogram" loading="lazy">
         <p>With love, Shubh &amp; Suchita</p>
         <span>25 &amp; 26 January 2027</span>
+        <details class="artwork-credit">
+          <summary>Credits</summary>
+          <p>Couple model: <a href="https://www.thingiverse.com/thing:3181273" target="_blank" rel="noopener noreferrer">Dancing wedding couple</a> by Timo77, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Adapted with newly authored materials, pose and rig-weight changes, scene lighting and gentle face-to-face sway.</p>
+        </details>
       </footer>
     </div>
   </body>

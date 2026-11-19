@@ -87,7 +87,7 @@ test("reduced motion retains the entrance and skips the rendered animation", asy
   await expect(page.locator("dialog")).toBeVisible();
   await open(page, false);
   await expect(page.locator(".entrance__film")).not.toHaveAttribute("src", /./);
-  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg");
+  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3");
   await page.reload();
   await expect(page.locator("dialog")).toBeVisible();
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
@@ -99,7 +99,7 @@ test("disabled JavaScript leaves all content and directions usable", async ({ br
   await page.goto("http://127.0.0.1:4197");
   await expect(page.locator("dialog")).not.toBeVisible();
   await expect(page.locator("h1")).toBeVisible();
-  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg");
+  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3");
   await expect(page.locator(".entrance__film")).not.toHaveAttribute("src", /./);
   await expect(page.locator('[data-kind="function"]')).toHaveCount(5);
   await expect(page.locator('[data-kind="meal"]')).toHaveCount(6);
@@ -108,13 +108,13 @@ test("disabled JavaScript leaves all content and directions usable", async ({ br
   await expect(page.locator("#rsvp-link")).toHaveAttribute("href", /\/viewform$/);
   await expect(page.locator("iframe")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /Find your way/ })).toHaveAttribute("href", "https://maps.app.goo.gl/PL4M48uGDFwTjAJs6");
-  await page.getByRole("link", { name: "Schedule", exact: true }).click();
-  await expect(page.locator("#schedule")).toBeInViewport();
+  await page.getByRole("link", { name: "Venue", exact: true }).click();
+  await expect(page.locator("#venue")).toBeInViewport();
   await context.close();
 });
 
 test("failed JavaScript never covers or locks the invitation", async ({ page }) => {
-  await page.route("**/app.js", (route) => route.abort());
+  await page.route("**/app.js*", (route) => route.abort());
   await page.goto("/");
   await expect(page.locator("dialog")).not.toBeVisible();
   await expect(page.locator("h1")).toBeVisible();
@@ -176,7 +176,7 @@ test("invalid form URL fails visibly and never creates an iframe", async ({ page
 });
 
 test("only intended public files can be served", async ({ request }) => {
-  for (const path of ["/package.json", "/README.md", "/server.mjs", "/tests/invitation.spec.js", "/assets/", "/../plan.md", "/%2e%2e/plan.md"]) {
+  for (const path of ["/package.json", "/README.md", "/server.mjs", "/tests/invitation.spec.js", "/tools/import_colored_vrml.py", "/source/para2.wrl", "/assets/", "/../plan.md", "/%2e%2e/plan.md"]) {
     expect((await request.get(path)).status()).toBe(404);
   }
 });
@@ -241,7 +241,7 @@ test("touch opening and all navigation anchors work without forced scrolling", a
   await page.goto("http://127.0.0.1:4197");
   await page.getByRole("button", { name: "Open invitation" }).tap();
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
-  for (const [label, target] of [["Schedule", "#schedule"], ["Venue", "#venue"], ["RSVP", "#rsvp"]]) {
+  for (const [label, target] of [["Venue", "#venue"], ["RSVP", "#rsvp"]]) {
     await page.getByRole("link", { name: label, exact: true }).tap();
     await expect(page.locator(target)).toBeInViewport();
   }
@@ -288,7 +288,7 @@ test("monogram returns to the complete top scene without heading outlines", asyn
   await page.goto("/");
   await open(page);
   await expect(page.locator(".wordmark")).toHaveText("");
-  await expect(page.locator(".wordmark img")).toHaveAttribute("src", "assets/artwork/monogram.jpg");
+  await expect(page.locator(".wordmark img")).toHaveAttribute("src", "assets/artwork/monogram.jpg?v=logo-v2");
   await expect(page.getByRole("img", { name: "Shubh and Suchita's logo", exact: true })).toBeVisible();
   await page.locator("#day-two").scrollIntoViewIfNeeded();
   await page.getByRole("link", { name: "Shubh and Suchita, back to top" }).click();
@@ -301,7 +301,7 @@ test("monogram returns to the complete top scene without heading outlines", asyn
 });
 
 test("countdown uses the confirmed Phere timestamp and updates only while visible", async ({ page }) => {
-  await page.clock.setFixedTime(new Date("2027-01-25T10:59:55Z"));
+  await page.clock.setFixedTime(new Date("2027-01-25T10:29:55Z"));
   await page.goto("/");
   await open(page);
   await page.locator(".countdown").scrollIntoViewIfNeeded();
@@ -309,29 +309,33 @@ test("countdown uses the confirmed Phere timestamp and updates only while visibl
   await expect(page.locator('[data-unit="hours"]')).toHaveText("00");
   await expect(page.locator('[data-unit="minutes"]')).toHaveText("00");
   await expect(page.locator('[data-unit="seconds"]')).toHaveText("05");
-  await page.clock.setFixedTime(new Date("2027-01-25T10:59:57Z"));
+  await page.clock.setFixedTime(new Date("2027-01-25T10:29:57Z"));
   await expect(page.locator('[data-unit="seconds"]')).toHaveText("03");
   await page.locator("#day-two").scrollIntoViewIfNeeded();
   await page.waitForTimeout(100);
   const prior = await page.locator('[data-unit="seconds"]').textContent();
-  await page.clock.setFixedTime(new Date("2027-01-25T10:59:59Z"));
+  await page.clock.setFixedTime(new Date("2027-01-25T10:29:59Z"));
   await page.waitForTimeout(1200);
   await expect(page.locator('[data-unit="seconds"]')).toHaveText(prior);
   await page.locator(".countdown").scrollIntoViewIfNeeded();
   await expect(page.locator('[data-unit="seconds"]')).toHaveText("01");
 });
 
-test("countdown remains active until the revised 4:30 PM Phere time", async ({ page }) => {
-  await page.clock.setFixedTime(new Date("2027-01-26T10:30:00Z"));
+test("countdown ends exactly at the revised 4:00 PM Phere time", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2027-01-26T10:29:59Z"));
   await page.goto("/");
   await open(page);
+  await page.locator(".countdown").scrollIntoViewIfNeeded();
   await expect(page.locator(".countdown__numbers")).toBeVisible();
-  await expect(page.locator('[data-unit="minutes"]')).toHaveText("30");
-  await expect(page.locator('[data-unit="seconds"]')).toHaveText("00");
+  await expect(page.locator('[data-unit="minutes"]')).toHaveText("00");
+  await expect(page.locator('[data-unit="seconds"]')).toHaveText("01");
+  await page.clock.setFixedTime(new Date("2027-01-26T10:30:00Z"));
+  await expect(page.locator(".countdown__numbers")).toBeHidden();
+  await expect(page.locator(".countdown__fallback")).toHaveText("Celebrating Shubh & Suchita.");
 });
 
 test("countdown never becomes negative after the wedding", async ({ page }) => {
-  await page.clock.setFixedTime(new Date("2027-01-26T11:00:01Z"));
+  await page.clock.setFixedTime(new Date("2027-01-26T10:30:01Z"));
   await page.goto("/");
   await open(page);
   await expect(page.locator(".countdown__numbers")).toBeHidden();
@@ -342,15 +346,49 @@ test("26 January has the revised ordered itinerary with featured Gala Dinner", a
   await page.goto("/");
   await open(page);
   const day = page.locator('section[aria-labelledby="day-two"]');
-  await expect(day.locator("time")).toHaveText(["8:00 AM", "12:00 PM", "1:00 PM", "3:00 PM", "4:30 PM", "7:00 PM"]);
+  await expect(day.locator("time")).toHaveText(["8:00 AM", "12:00 PM", "1:00 PM", "3:00 PM", "4:00 PM", "8:00 PM"]);
   await expect(day.locator('li[data-event="jai-mala"] h4')).toHaveText("Jai Mala");
-  await expect(day.locator('li[data-event="phere"] time')).toHaveAttribute("datetime", "2027-01-26T16:30:00+05:30");
+  await expect(day.locator('li[data-event="phere"] time')).toHaveAttribute("datetime", "2027-01-26T16:00:00+05:30");
   await expect(day.locator('li[data-event="gala-dinner"]')).toHaveAttribute("data-kind", "meal");
   await expect(day.locator('li[data-event="gala-dinner"]')).toHaveClass("timeline__featured");
   for (const event of ["jai-mala", "gala-dinner"]) {
     await expect(day.locator(`[data-event="${event}"] .ceremony-art use`)).toHaveAttribute("href", `assets/artwork/ceremonies.svg#${event}`);
   }
-  await expect(day).not.toContainText("8:00 PM");
+  await expect(day.locator('[data-event="gala-dinner"] time')).toHaveAttribute("datetime", "2027-01-26T20:00:00+05:30");
+});
+
+test("the header omits Schedule without removing the programme", async ({ page }) => {
+  await page.goto("/");
+  await open(page);
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.getByRole("navigation", { name: "Invitation" }).getByRole("link")).toHaveText(["Venue", "RSVP"]);
+  await expect(page.getByRole("link", { name: "Schedule", exact: true })).toHaveCount(0);
+  await mkdir(screenshots, { recursive: true });
+  await page.locator(".site-header").screenshot({ path: resolve(screenshots, "header-without-schedule.png") });
+  await page.locator("#schedule").scrollIntoViewIfNeeded();
+  await expect(page.locator("#schedule")).toBeInViewport();
+});
+
+test("required attribution is collapsed by default and accessible with the keyboard", async ({ page }) => {
+  await page.goto("/");
+  await open(page);
+  await page.locator("footer").scrollIntoViewIfNeeded();
+  const credits = page.locator("details.artwork-credit");
+  await expect(credits).not.toHaveAttribute("open");
+  await expect(credits.locator("p")).toBeHidden();
+  await expect(credits.locator("summary")).toHaveText("Credits");
+  await mkdir(screenshots, { recursive: true });
+  await page.locator("footer").screenshot({ path: resolve(screenshots, "footer-collapsed-credits.png") });
+  await credits.locator("summary").press("Enter");
+  await expect(credits.locator("p")).toBeVisible();
+  await expect(credits).toContainText("by Timo77");
+  await expect(credits.getByRole("link", { name: "Dancing wedding couple" }))
+    .toHaveAttribute("href", "https://www.thingiverse.com/thing:3181273");
+  await expect(credits.getByRole("link", { name: "CC BY 4.0" }))
+    .toHaveAttribute("href", "https://creativecommons.org/licenses/by/4.0/");
+  await expect(credits).toContainText("Adapted with newly authored materials");
+  await credits.locator("summary").press("Enter");
+  await expect(credits.locator("p")).toBeHidden();
 });
 
 test("relative assets, entrance and RSVP work under a GitHub Pages project path", async ({ page }) => {

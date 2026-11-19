@@ -1,0 +1,80 @@
+{
+  "measurement": "Union of evaluated original Timo77 mesh geometry over all162 candidate poses.",
+  "asset": {
+    "title": "Dancing wedding couple 1/87 scale (H0)",
+    "creator": "Timo77",
+    "sourceUrl": "https://www.thingiverse.com/thing:3181273",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "sourceSha256": "d58634e129cc237104a471f419cd9a8a85c01b77bb908a6ae6ab4b73416407f9"
+  },
+  "timeline": {
+    "fps": 24,
+    "frames": 162,
+    "durationSeconds": 6.75,
+    "turnStartFrame": 49,
+    "curtainsClearFrame": 61,
+    "turnEndFrame": 145,
+    "turnDegrees": 75,
+    "finalHoldSeconds": 0.75
+  },
+  "portrait": {
+    "width": 720,
+    "height": 1440,
+    "bounds": [
+      0.2650991710437316,
+      0.6167514280817722,
+      0.7365336869327959,
+      0.9593805146259496
+    ],
+    "posesMeasured": 162,
+    "viewArcDegrees": [
+      150,
+      225
+    ],
+    "cameraStageAndLightsUnchanged": true,
+    "placementScale": 1.0168653114886743,
+    "placementLocation": [
+      0.0,
+      -0.029343295842409134,
+      0.05700000002980232
+    ],
+    "maximumWristTargetError": 8.179638155567178e-06,
+    "sceneSha256": "b793eb0999f00846c6b35b4d3349145e9054664ad2ff94330b20ae2684ba6bb8",
+    "movie": "assets/video/curtain-reveal.mp4",
+    "movieSha256": "f0d8941dc3aa5ddbf0d013fd1b1fcad0c9b90fa4e752a4c37b6f93dad617dd11",
+    "poster": "assets/artwork/curtain-open.jpg",
+    "posterSha256": "d98a56e146648b5fb56dbcea7f06ed1be3aca2eaad99f5388aedafe7d5a69694",
+    "closedPoster": "assets/artwork/curtain-closed.jpg",
+    "closedPosterSha256": "0f4d4a72f2e3883c7cf8e45782571adef872806ac7a0cf73d455b9c4d408cd17"
+  },
+  "landscape": {
+    "width": 1600,
+    "height": 900,
+    "bounds": [
+      0.43393414298114436,
+      0.6167514280817722,
+      0.5665250983169332,
+      0.9593805146259496
+    ],
+    "posesMeasured": 162,
+    "viewArcDegrees": [
+      150,
+      225
+    ],
+    "cameraStageAndLightsUnchanged": true,
+    "placementScale": 1.0168653114886743,
+    "placementLocation": [
+      0.0,
+      -0.029343295842409134,
+      0.05700000002980232
+    ],
+    "maximumWristTargetError": 8.179638155567178e-06,
+    "sceneSha256": "afe09cededf520a384dbb54d0c5bd35317b4d9437192110dcc3e2e045b000586",
+    "movie": "assets/video/curtain-reveal-wide.mp4",
+    "movieSha256": "0503fba62357eef7df6ca12bf4b2cedfc9c2ede6f2da1a0e4d30d48c052941aa",
+    "poster": "assets/artwork/curtain-open-wide.jpg",
+    "posterSha256": "144d0c51afa6bcc9fd8ac57c36b470106362b71316202c75a2ebad366d7f9746",
+    "closedPoster": "assets/artwork/curtain-closed-wide.jpg",
+    "closedPosterSha256": "461c111c8c10aec9c0a45d747f4ca5e831aeae8c2f04bc31ce8f378d89ca28cb"
+  }
+}

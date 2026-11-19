@@ -12,6 +12,7 @@
   const butterfly = document.querySelector(".entrance__butterfly");
   const trail = document.querySelector(".entrance__trail");
   const sceneGlints = document.querySelector(".entrance__glints");
+  const preparationStatus = document.querySelector(".entrance__status");
   const wideScene = window.matchMedia("(min-aspect-ratio: 1/1)");
   if (!entrance || !openButton || !heading ||
       typeof entrance.showModal !== "function") return;
@@ -25,6 +26,20 @@
   let decoderCleanupFrame;
   let awaitingPoster = false;
   let resumeMusic = false;
+  let resumeFilm = false;
+  let musicStarted = false;
+  let primerUrl;
+  let preparationController;
+  let preparationPromise;
+  let preparationSource;
+  let preparedMovieUrl;
+  let preparationTimer;
+  let preparationFeedbackTimer;
+  let preparationSequence = 0;
+  let playbackSequence = 0;
+  let lastPlaybackTime = 0;
+  let closedPosterSource;
+  let closedPosterSequence = 0;
   let revealSequence = 0;
   let videoFrame;
   let butterflyAnimations = [];
@@ -38,10 +53,13 @@
 
   if (trail && !trailContext) console.warn("The butterfly dust effect is unavailable; the invitation remains usable.");
   if (sceneGlints) {
-    for (let index = 0; index < 7; index++) {
+    for (let index = 0; index < 24; index++) {
       const spark = document.createElement("span");
       spark.className = "spark";
       spark.style.setProperty("--spark-index", index);
+      spark.style.left = `${index % 2 ? 74 + index % 6 * 2.8 : 11 + index % 6 * 3.1}%`;
+      spark.style.top = `${53 + index * 13 % 43}%`;
+      spark.style.setProperty("--spark-size", `${3 + index % 4 * 1.1}px`);
       spark.append(document.createElement("i"));
       sceneGlints.append(spark);
     }
@@ -73,65 +91,71 @@
     if (trailTime !== null && (time < trailTime || time - trailTime > .3)) clearTrail();
     const elapsed = trailTime === null ? 0 : Math.max(0, time - trailTime);
     const previous = trailPoints.at(-1) || point;
-    const emit = time < film.duration * .8 ? Math.min(6, Math.ceil(elapsed * 65)) : 0;
+    const emit = time < film.duration * .76 ? Math.min(12, Math.ceil(elapsed * 180)) : 0;
     for (let index = 0; index < emit; index++) {
       const between = Math.random();
       const angle = Math.random() * Math.PI * 2;
-      const spread = Math.sqrt(Math.random()) * 13;
+      const spread = Math.sqrt(Math.random()) * 15;
       trailDust.push({
         x: previous.x + (point.x - previous.x) * between + Math.cos(angle) * spread,
         y: previous.y + (point.y - previous.y) * between + Math.sin(angle) * spread,
-        vx: (Math.random() - .5) * 22, vy: (Math.random() - .3) * 18,
-        size: .45 + Math.random() ** 2 * 1.9,
-        born: time, life: .4 + Math.random() * .8,
-        strength: .2 + Math.random() * .65,
-        glint: Math.random() > .87
+        vx: (Math.random() - .5) * 28, vy: (Math.random() - .25) * 22,
+        size: .6 + Math.random() ** 2 * 2.7,
+        born: time, life: 1.1 + Math.random() * .9,
+        strength: .5 + Math.random() * .45,
+        phase: Math.random() * Math.PI,
+        glint: Math.random() > .8
       });
     }
     trailTime = time;
     trailPoints.push(point);
-    trailPoints = trailPoints.filter(item => time - item.time < .8);
-    trailDust = trailDust.filter(item => time - item.born < item.life).slice(-120);
-    const fade = Math.min(1, time / .3) * Math.max(0, Math.min(1, (film.duration * .94 - time) / .6));
+    trailPoints = trailPoints.filter(item => time - item.time < 1.5);
+    trailDust = trailDust.filter(item => time - item.born < item.life).slice(-320);
+    const fade = Math.min(1, time / .25) * Math.max(0, Math.min(1, (film.duration * .93 - time) / .7));
     trailContext.clearRect(0, 0, trailWidth, trailHeight);
+    trailContext.globalCompositeOperation = "lighter";
     trailContext.lineCap = "round";
-    trailContext.shadowColor = "#f4cc91";
-    trailContext.shadowBlur = 7;
     for (let index = 1; index < trailPoints.length; index++) {
       const from = trailPoints[index - 1];
       const to = trailPoints[index];
-      const age = (time - to.time) / .8;
-      trailContext.strokeStyle = `rgba(255, 230, 186, ${.1 * (1 - age) * fade})`;
-      trailContext.lineWidth = 1.6;
-      trailContext.beginPath();
-      trailContext.moveTo(from.x, from.y);
-      trailContext.lineTo(to.x, to.y);
-      trailContext.stroke();
-    }
-    trailContext.shadowBlur = 0;
-    for (const dust of trailDust) {
-      const age = time - dust.born;
-      const opacity = (1 - age / dust.life) ** 2 * dust.strength * fade;
-      const x = dust.x + dust.vx * age;
-      const y = dust.y + dust.vy * age;
-      const radius = dust.size * (1 + age * .2);
-      const glow = trailContext.createRadialGradient(x, y, 0, x, y, radius * 3);
-      glow.addColorStop(0, `rgba(255, 247, 223, ${opacity})`);
-      glow.addColorStop(.25, `rgba(246, 215, 164, ${opacity * .5})`);
-      glow.addColorStop(1, "rgba(227, 184, 124, 0)");
-      trailContext.fillStyle = glow;
-      trailContext.fillRect(x - radius * 3, y - radius * 3, radius * 6, radius * 6);
-      if (dust.glint) {
-        trailContext.strokeStyle = `rgba(255, 239, 201, ${opacity * .7})`;
-        trailContext.lineWidth = .6;
+      const strength = (1 - (time - to.time) / 1.5) ** 1.5 * fade;
+      for (const [width, alpha, color] of [
+        [13, .045, "236, 173, 83"], [5, .15, "255, 218, 145"], [1.4, .45, "255, 249, 222"]
+      ]) {
+        trailContext.strokeStyle = `rgba(${color}, ${alpha * strength})`;
+        trailContext.lineWidth = width;
         trailContext.beginPath();
-        trailContext.moveTo(x - radius * 1.8, y);
-        trailContext.lineTo(x + radius * 1.8, y);
-        trailContext.moveTo(x, y - radius * 1.8);
-        trailContext.lineTo(x, y + radius * 1.8);
+        trailContext.moveTo(from.x, from.y);
+        trailContext.lineTo(to.x, to.y);
         trailContext.stroke();
       }
     }
+    for (const dust of trailDust) {
+      const age = time - dust.born;
+      const twinkle = .65 + .35 * Math.sin(age * 5 + dust.phase) ** 2;
+      const opacity = (1 - age / dust.life) ** 1.3 * dust.strength * twinkle * fade;
+      const x = dust.x + dust.vx * age;
+      const y = dust.y + dust.vy * age;
+      const radius = dust.size * (1 + age * .2);
+      const glow = trailContext.createRadialGradient(x, y, 0, x, y, radius * 4);
+      glow.addColorStop(0, `rgba(255, 252, 235, ${opacity})`);
+      glow.addColorStop(.18, `rgba(255, 229, 174, ${opacity * .8})`);
+      glow.addColorStop(.48, `rgba(239, 181, 87, ${opacity * .25})`);
+      glow.addColorStop(1, "rgba(227, 168, 75, 0)");
+      trailContext.fillStyle = glow;
+      trailContext.fillRect(x - radius * 4, y - radius * 4, radius * 8, radius * 8);
+      if (dust.glint) {
+        trailContext.strokeStyle = `rgba(255, 246, 214, ${opacity * .9})`;
+        trailContext.lineWidth = .8;
+        trailContext.beginPath();
+        trailContext.moveTo(x - radius * 1.8, y);
+        trailContext.lineTo(x + radius * 1.8, y);
+        trailContext.moveTo(x, y - radius * 2.6);
+        trailContext.lineTo(x, y + radius * 2.6);
+        trailContext.stroke();
+      }
+    }
+    trailContext.globalCompositeOperation = "source-over";
   }
 
   function sizeScene() {
@@ -148,7 +172,19 @@
     const poster = useWide ? film.dataset.posterWide : film.dataset.poster;
     if (poster) {
       film.poster = poster;
-      entrance.style.setProperty("--closed-curtain", `url("${poster}")`);
+      if (poster !== closedPosterSource) {
+        closedPosterSource = poster;
+        const sequence = ++closedPosterSequence;
+        entrance.style.setProperty("--closed-curtain", "none");
+        const image = new Image();
+        image.fetchPriority = "high";
+        image.src = poster;
+        image.decode().then(() => {
+          if (sequence === closedPosterSequence) entrance.style.setProperty("--closed-curtain", `url("${poster}")`);
+        }).catch(error => {
+          if (sequence === closedPosterSequence) console.warn("The curtain image could not load. Using the fabric fallback.", error);
+        });
+      }
     }
     return useWide ? film.dataset.srcWide : film.dataset.src;
   }
@@ -176,6 +212,15 @@
     butterflyAnimations = [];
   }
 
+  function startVisualSync() {
+    if (butterfly && typeof film?.requestVideoFrameCallback === "function") {
+      butterflyAnimations = [butterfly, sceneGlints].filter(Boolean)
+        .flatMap(element => element.getAnimations({ subtree: true }));
+      for (const animation of butterflyAnimations) animation.pause();
+      syncVisuals();
+    }
+  }
+
   function syncVisuals() {
     for (const animation of butterflyAnimations) animation.currentTime = film.currentTime * 1000;
     drawTrail(film.currentTime);
@@ -189,9 +234,42 @@
     }
   }
 
+  function releasePrimer() {
+    if (primerUrl) URL.revokeObjectURL(primerUrl);
+    primerUrl = undefined;
+  }
+
+  function unlockMusic() {
+    if (!music || primerUrl) return;
+    // Unlock this audio element on the gesture without competing with the movie download.
+    const silence = new Uint8Array(204);
+    const header = new DataView(silence.buffer);
+    silence.set(new TextEncoder().encode("RIFF"), 0);
+    header.setUint32(4, 196, true);
+    silence.set(new TextEncoder().encode("WAVEfmt "), 8);
+    header.setUint32(16, 16, true);
+    header.setUint16(20, 1, true);
+    header.setUint16(22, 1, true);
+    header.setUint32(24, 8000, true);
+    header.setUint32(28, 16000, true);
+    header.setUint16(32, 2, true);
+    header.setUint16(34, 16, true);
+    silence.set(new TextEncoder().encode("data"), 36);
+    header.setUint32(40, 160, true);
+    primerUrl = URL.createObjectURL(new Blob([silence], { type: "audio/wav" }));
+    music.src = primerUrl;
+    music.loop = false;
+    music.play().catch(error => {
+      if (error.name !== "AbortError") console.warn("Music could not be prepared on this device.", error);
+    });
+  }
+
   function playMusic() {
     if (!music) return;
-    if (!music.hasAttribute("src")) music.src = music.dataset.src;
+    musicStarted = true;
+    if (music.getAttribute("src") !== music.dataset.src) music.src = music.dataset.src;
+    releasePrimer();
+    music.loop = true;
     music.volume = 0.65;
     music.play().catch((error) => {
       if (error.name === "AbortError") {
@@ -200,6 +278,98 @@
         resumeMusic = false;
         console.warn("Invitation music could not play. The invitation remains available.", error);
       }
+    });
+  }
+
+  function cancelPreparation() {
+    preparationSequence++;
+    preparationController?.abort();
+    preparationController = undefined;
+    clearTimeout(preparationTimer);
+    preparationPromise = undefined;
+    preparationSource = undefined;
+  }
+
+  function releasePreparedMovie() {
+    if (preparedMovieUrl) URL.revokeObjectURL(preparedMovieUrl);
+    preparedMovieUrl = undefined;
+  }
+
+  function prepareMovie() {
+    const source = selectScene();
+    if (!film || !source || motion.matches) return Promise.resolve(null);
+    if (preparationPromise && preparationSource === source) return preparationPromise;
+    cancelPreparation();
+    releasePreparedMovie();
+    preparationSource = source;
+    const sequence = preparationSequence;
+    preparationController = new AbortController();
+    const controller = preparationController;
+    preparationTimer = window.setTimeout(() => controller.abort(), 30000);
+    preparationPromise = fetch(source, { signal: controller.signal, priority: "low" })
+      .then(response => {
+        if (!response.ok) throw new Error(`Opening movie request failed (${response.status}).`);
+        return response.blob();
+      })
+      .then(blob => {
+        if (sequence !== preparationSequence || !entrance.open) return null;
+        clearTimeout(preparationTimer);
+        if (!blob.size) throw new Error("The opening movie was empty.");
+        preparedMovieUrl = URL.createObjectURL(blob);
+        return preparedMovieUrl;
+      })
+      .catch(error => {
+        if (sequence !== preparationSequence) return null;
+        clearTimeout(preparationTimer);
+        console.warn("The rendered opening could not be downloaded. The invitation remains available.", error);
+        return null;
+      });
+    return preparationPromise;
+  }
+
+  function stopPreparationFeedback() {
+    clearTimeout(preparationFeedbackTimer);
+    entrance.classList.remove("is-preparing");
+    openButton.removeAttribute("aria-busy");
+    if (preparationStatus) preparationStatus.hidden = true;
+  }
+
+  function watchPlayback() {
+    clearTimeout(closeTimer);
+    lastPlaybackTime = film.currentTime;
+    closeTimer = window.setTimeout(() => {
+      if (!closing || document.hidden || awaitingPoster || entrance.classList.contains("is-settling")) return;
+      if (film.currentTime > lastPlaybackTime + .01) watchPlayback();
+      else {
+        console.warn("The prepared opening stopped responding. Showing the invitation.");
+        finishOpening(true);
+      }
+    }, 8000);
+  }
+
+  function beginPlayback(url, sequence) {
+    if (!closing || sequence !== revealSequence || document.hidden) return;
+    if (!url) {
+      if (!musicStarted) playMusic();
+      finishOpening(true);
+      return;
+    }
+    if (film.getAttribute("src") !== url) film.src = url;
+    const playback = ++playbackSequence;
+    watchPlayback();
+    film.play().then(() => {
+      if (sequence !== revealSequence || playback !== playbackSequence || !closing || document.hidden) return;
+      stopPreparationFeedback();
+      const duration = Number.isFinite(film.duration) ? film.duration : 6.75;
+      entrance.style.setProperty("--reveal-duration", `${duration}s`);
+      entrance.classList.add("is-playing");
+      if (!musicStarted) playMusic();
+      startVisualSync();
+    }).catch(error => {
+      if (sequence !== revealSequence || playback !== playbackSequence || !closing) return;
+      console.warn("The prepared opening could not play. Showing the invitation.", error);
+      if (!musicStarted) playMusic();
+      finishOpening(true);
     });
   }
 
@@ -227,20 +397,30 @@
     clearTimeout(posterWaitTimer);
     cancelAnimationFrame(decoderCleanupFrame);
     awaitingPoster = false;
+    resumeFilm = false;
+    stopPreparationFeedback();
+    cancelPreparation();
     stopVisualSync();
     clearTrail();
     const sequence = ++revealSequence;
     film?.pause();
     entrance.close();
+    if (!musicStarted && music) {
+      music.pause();
+      music.removeAttribute("src");
+      music.load();
+      releasePrimer();
+    }
     revealCopy?.replaceChildren();
     document.documentElement.classList.remove("entrance-closed");
     document.documentElement.classList.add("invitation-ready");
-    entrance.classList.remove("is-opening", "is-playing", "has-scene-copy", "is-settling", "has-keyboard-focus");
+    entrance.classList.remove("is-opening", "is-playing", "is-paused", "has-scene-copy", "is-settling", "has-keyboard-focus");
     closing = false;
     const releaseDecoder = () => {
       if (film && !entrance.open && sequence === revealSequence) {
         film.removeAttribute("src");
         film.load();
+        releasePreparedMovie();
       }
       decoderCleanupFrame = undefined;
     };
@@ -291,36 +471,19 @@
     if (closing) return;
     closing = true;
     if (skipAnimation || motion.matches) {
+      if (!musicStarted) playMusic();
       finishOpening(true);
       return;
     }
-    entrance.classList.add("is-opening");
+    entrance.classList.add("is-opening", "is-preparing");
+    openButton.setAttribute("aria-busy", "true");
     const sequence = ++revealSequence;
-    closeTimer = window.setTimeout(() => {
-      console.warn("The rendered opening did not finish in time. Showing the invitation.");
-      finishOpening(true);
-    }, 10500);
-    if (!film) {
-      finishOpening(true);
-      return;
-    }
-    film.src = selectScene();
-    film.play().then(() => {
-      if (sequence !== revealSequence || !closing) return;
-      const duration = Number.isFinite(film.duration) ? film.duration : 4;
-      entrance.style.setProperty("--reveal-duration", `${duration}s`);
-      entrance.classList.add("is-playing");
-      if (butterfly && typeof film.requestVideoFrameCallback === "function") {
-        butterflyAnimations = [butterfly, sceneGlints].filter(Boolean)
-          .flatMap(element => element.getAnimations({ subtree: true }));
-        for (const animation of butterflyAnimations) animation.pause();
-        syncVisuals();
+    preparationFeedbackTimer = window.setTimeout(() => {
+      if (closing && sequence === revealSequence && entrance.classList.contains("is-preparing") && preparationStatus) {
+        preparationStatus.hidden = false;
       }
-    }).catch(error => {
-      if (sequence !== revealSequence || !closing) return;
-      console.warn("The rendered opening could not play. Showing the invitation.", error);
-      finishOpening(true);
-    });
+    }, 400);
+    prepareMovie().then(url => beginPlayback(url, sequence));
   }
 
   function showEntrance() {
@@ -329,6 +492,10 @@
     clearTimeout(posterWaitTimer);
     cancelAnimationFrame(decoderCleanupFrame);
     awaitingPoster = false;
+    resumeFilm = false;
+    musicStarted = false;
+    stopPreparationFeedback();
+    cancelPreparation();
     stopVisualSync();
     revealSequence++;
     if (film) {
@@ -336,14 +503,19 @@
       film.removeAttribute("src");
       film.load();
     }
+    releasePreparedMovie();
     resumeMusic = false;
     if (music) {
       music.pause();
+      music.removeAttribute("src");
+      music.load();
       music.currentTime = 0;
+      music.loop = true;
     }
+    releasePrimer();
     closing = false;
     entrance.style.removeProperty("--curtain-edge-opacity");
-    entrance.classList.remove("is-opening", "is-playing", "has-scene-copy", "is-settling", "has-keyboard-focus");
+    entrance.classList.remove("is-opening", "is-playing", "is-paused", "has-scene-copy", "is-settling", "has-keyboard-focus");
     prepareRevealCopy();
     destination = window.location.hash;
     // Keep an initial anchor for after opening, without browser scroll restoration.
@@ -356,7 +528,10 @@
     sizeScene();
     openButton.focus({ preventScroll: true });
     requestAnimationFrame(() => {
-      if (entrance.open) resetScroll();
+      if (entrance.open) {
+        resetScroll();
+        if (!motion.matches) prepareMovie();
+      }
     });
   }
 
@@ -364,7 +539,8 @@
     if (closing || !entrance.open) return;
     if (event.type === "pointerup" && (event.button !== 0 || !event.isPrimary)) return;
     entrance.classList.remove("has-keyboard-focus");
-    playMusic();
+    if (motion.matches || preparedMovieUrl) playMusic();
+    else unlockMusic();
     openInvitation();
   }
 
@@ -375,7 +551,10 @@
   });
   wideScene.addEventListener("change", () => {
     if (closing) finishOpening(true);
-    selectScene();
+    if (entrance.open) {
+      selectScene();
+      if (!motion.matches) prepareMovie();
+    }
   });
   film?.addEventListener("ended", () => {
     if (closing) finishOpening();
@@ -397,18 +576,39 @@
     console.warn("Invitation music could not load. The invitation remains available.", music.error);
   });
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden && closing) finishOpening(true);
-    if (!music) return;
     if (document.hidden) {
-      resumeMusic = !music.paused;
-      music.pause();
-    } else if (resumeMusic && !entrance.open) {
-      resumeMusic = false;
-      playMusic();
+      if (closing && (awaitingPoster || entrance.classList.contains("is-settling"))) finishOpening(true);
+      else if (closing) {
+        resumeFilm = Boolean(film && !film.paused);
+        playbackSequence++;
+        film?.pause();
+        clearTimeout(closeTimer);
+        stopVisualSync();
+        entrance.classList.add("is-paused");
+      }
+      resumeMusic = Boolean(musicStarted && music && !music.paused);
+      if (musicStarted) music?.pause();
+    } else {
+      entrance.classList.remove("is-paused");
+      if (closing && resumeFilm) {
+        resumeFilm = false;
+        beginPlayback(preparedMovieUrl, revealSequence);
+      } else if (closing && !entrance.classList.contains("is-playing")) {
+        const sequence = revealSequence;
+        prepareMovie().then(url => beginPlayback(url, sequence));
+      }
+      if (resumeMusic) {
+        resumeMusic = false;
+        playMusic();
+      }
     }
   });
   window.addEventListener("pagehide", () => {
     if (closing) closeEntrance();
+    else {
+      cancelPreparation();
+      releasePreparedMovie();
+    }
     resumeMusic = false;
     music?.pause();
   });
@@ -425,6 +625,12 @@
   });
   motion.addEventListener("change", () => {
     if (closing && motion.matches) finishOpening(true);
+    else if (entrance.open) {
+      if (motion.matches) {
+        cancelPreparation();
+        releasePreparedMovie();
+      } else prepareMovie();
+    }
   });
   window.addEventListener("pageshow", (event) => {
     if (event.persisted) showEntrance();

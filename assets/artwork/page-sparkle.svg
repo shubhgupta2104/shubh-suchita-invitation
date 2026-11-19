@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="900" viewBox="0 0 100 900">
+  <defs>
+    <radialGradient id="glow">
+      <stop stop-color="#ffe9ad" stop-opacity=".4"/>
+      <stop offset=".4" stop-color="#e4bc70" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#d5aa5e" stop-opacity="0"/>
+    </radialGradient>
+    <g id="glint">
+      <circle r="11" fill="url(#glow)"/>
+      <path d="M0-6 1.1-1.1 6 0 1.1 1.1 0 6-1.1 1.1-6 0-1.1-1.1Z" fill="#efd08d" fill-opacity=".95"/>
+      <circle r=".9" fill="#fff8dc"/>
+    </g>
+  </defs>
+  <use href="#glint" x="14" y="90"/>
+  <g transform="translate(22 255) scale(.8)"><use href="#glint"/></g>
+  <g transform="translate(12 430) scale(1.15)"><use href="#glint"/></g>
+  <g transform="translate(24 617) scale(.72)"><use href="#glint"/></g>
+  <use href="#glint" x="16" y="812"/>
+  <g transform="translate(86 175) scale(.9)"><use href="#glint"/></g>
+  <use href="#glint" x="78" y="358"/>
+  <g transform="translate(91 528) scale(1.12)"><use href="#glint"/></g>
+  <g transform="translate(80 713) scale(.74)"><use href="#glint"/></g>
+  <use href="#glint" x="88" y="875"/>
+  <g fill="#d7ad60" fill-opacity=".8">
+    <circle cx="25" cy="152" r="1.1"/><circle cx="8" cy="330" r="1.3"/>
+    <circle cx="28" cy="514" r="1"/><circle cx="13" cy="704" r="1.2"/>
+    <circle cx="72" cy="80" r="1"/><circle cx="94" cy="261" r="1.2"/>
+    <circle cx="76" cy="465" r="1"/><circle cx="92" cy="647" r="1.3"/>
+    <circle cx="72" cy="816" r="1.1"/>
+  </g>
+</svg>

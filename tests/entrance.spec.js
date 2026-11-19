@@ -34,7 +34,7 @@ test("a swipe anywhere starts one reveal and one soundtrack", async ({ browser }
     window.musicStarts = 0;
     const play = HTMLMediaElement.prototype.play;
     HTMLMediaElement.prototype.play = function () {
-      if (this.tagName === "AUDIO") window.musicStarts++;
+      if (this.tagName === "AUDIO" && this.getAttribute("src") === this.dataset.src) window.musicStarts++;
       return play.call(this);
     };
   });
@@ -98,17 +98,17 @@ test("the 3D opening plays only after interaction and releases its decoder after
   expect(media.muted).toBe(true);
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await expect(page.locator(".entrance__film")).not.toHaveAttribute("src", /./);
-  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg");
+  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3");
 });
 
 test("an unavailable rendered clip falls back to the open scene without trapping guests", async ({ page }) => {
   const warnings = [];
   page.on("console", message => { if (message.type() === "warning") warnings.push(message.text()); });
-  await page.route("**/curtain-reveal.mp4", route => route.abort());
+  await page.route("**/curtain-reveal.mp4*", route => route.abort());
   await page.goto("/");
   await page.getByRole("button", { name: "Open invitation" }).click();
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
-  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg");
+  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3");
   await expect(page.locator("h1")).toBeFocused();
   expect(warnings.some(text => text.includes("rendered opening"))).toBe(true);
 });
@@ -124,7 +124,7 @@ test("an unresponsive video play request cannot leave the entrance locked", asyn
   await page.getByRole("button", { name: "Open invitation" }).click();
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await expect(page.locator("h1")).toBeFocused();
-  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg");
+  await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3");
 });
 
 for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }, { width: 1440, height: 1000 }]) {
@@ -140,12 +140,14 @@ for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }
           x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height,
           background: style.backgroundColor, backgroundImage: getComputedStyle(element, "::before").backgroundImage,
           mediaIsInside: media.closest("dialog") === element,
-          mediaFit: getComputedStyle(media).objectFit
+          mediaFit: getComputedStyle(media).objectFit,
+          poster: media.getAttribute("poster")
         };
       });
       expect(coverage).toMatchObject({ x: 0, y: 0, ...viewport, mediaIsInside: true, mediaFit: "contain" });
       expect(coverage.background).toBe("rgb(0, 0, 0)");
-      expect(coverage.backgroundImage).toContain(viewport.width >= viewport.height ? "curtain-closed-wide.jpg" : "curtain-closed.jpg");
+      expect(coverage.backgroundImage).toContain("repeating-linear-gradient");
+      expect(coverage.poster).toContain(viewport.width >= viewport.height ? "curtain-closed-wide.jpg" : "curtain-closed.jpg");
     };
     await verifyCoverage();
     await page.mouse.click(viewport.width / 2, viewport.height / 2);
@@ -221,10 +223,10 @@ test("the final image is decoded before fading and video resets only after the d
   expect(await page.evaluate(() => window.videoResetVisibility.every(visible => !visible))).toBe(true);
 });
 
-test("subtle trail and scene sparkles stop after the opening and the scroll cue is clear", async ({ page }) => {
+test("gold trail and scene highlights stop after the opening and the scroll cue is clear", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".entrance__trail .spark")).toHaveCount(0);
-  await expect(page.locator(".entrance__glints .spark")).toHaveCount(7);
+  await expect(page.locator(".entrance__glints .spark")).toHaveCount(24);
   const trailHasPixels = () => page.locator(".entrance__trail").evaluate(canvas =>
     canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data.some((value, index) => index % 4 === 3 && value > 5)
   );
@@ -232,7 +234,7 @@ test("subtle trail and scene sparkles stop after the opening and the scroll cue 
   await page.getByRole("button", { name: "Open invitation" }).click();
   await expect.poll(() => page.locator("video").evaluate(video => video.currentTime)).toBeGreaterThan(2.9);
   expect(await trailHasPixels()).toBe(true);
-  expect(await page.locator(".entrance__glints").evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(7);
+  expect(await page.locator(".entrance__glints").evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(25);
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   for (const selector of [".entrance__trail", ".entrance__glints"]) {
     expect(await page.locator(selector).evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(0);
@@ -283,21 +285,24 @@ for (const viewport of [
 }
 
 for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1000 }]) {
-  test(`only the selected ${viewport.width}px opening movie loads after interaction`, async ({ page }) => {
+  test(`only the selected ${viewport.width}px movie is prepared, without autoplay`, async ({ page }) => {
     await page.setViewportSize(viewport);
     const movies = new Set();
     page.on("request", request => {
       if (new URL(request.url()).pathname.endsWith(".mp4")) movies.add(request.url());
     });
+    const prepared = page.waitForResponse(response => new URL(response.url()).pathname.endsWith(".mp4"));
     await page.goto("/");
-    await page.evaluate(() => document.fonts.ready);
-    expect(movies.size).toBe(0);
+    await (await prepared).finished();
+    expect(movies.size).toBe(1);
+    await expect(page.locator("video")).not.toHaveAttribute("src", /./);
+    expect(await page.locator("video").evaluate(video => video.paused && video.currentTime === 0)).toBe(true);
     await page.getByRole("button", { name: "Open invitation" }).click();
     await expect.poll(() => page.locator("video").evaluate(video => video.currentTime)).toBeGreaterThan(.3);
     expect(movies.size).toBe(1);
     const source = await page.locator("video").evaluate(video => video.currentSrc);
-    expect([...movies]).toEqual([source]);
-    expect(source).toContain(viewport.width > viewport.height ? "curtain-reveal-wide.mp4" : "curtain-reveal.mp4");
+    expect(source).toMatch(/^blob:/);
+    expect([...movies][0]).toContain(viewport.width > viewport.height ? "curtain-reveal-wide.mp4" : "curtain-reveal.mp4");
     await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   });
 
@@ -322,8 +327,8 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1000
       });
       await image.decode();
       const canvas = document.createElement("canvas");
-      canvas.width = 240;
-      canvas.height = Math.round(240 * movie.videoHeight / movie.videoWidth);
+      canvas.width = movie.videoWidth;
+      canvas.height = movie.videoHeight;
       const context = canvas.getContext("2d");
       context.drawImage(movie, 0, 0, canvas.width, canvas.height);
       const lastFrame = context.getImageData(0, 0, canvas.width, canvas.height).data;

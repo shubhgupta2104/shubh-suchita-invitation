@@ -11,6 +11,7 @@ const types = {
   ".js": "text/javascript; charset=utf-8",
   ".svg": "image/svg+xml",
   ".jpg": "image/jpeg",
+  ".webp": "image/webp",
   ".m4a": "audio/mp4",
   ".mp4": "video/mp4",
   ".woff": "font/woff",
@@ -35,7 +36,7 @@ const server = http.createServer(async (request, response) => {
     return;
   }
   if (pathname === "/") pathname = "/index.html";
-  const asset = /^\/assets\/(?:artwork|fonts|audio|video)\/[a-zA-Z0-9._-]+\.(?:svg|jpg|woff|txt|m4a|mp4)$/.test(pathname);
+  const asset = /^\/assets\/(?:artwork|fonts|audio|video)\/[a-zA-Z0-9._-]+\.(?:svg|jpg|webp|woff|txt|m4a|mp4)$/.test(pathname);
   if (!pages.has(pathname) && !asset) {
     respond(404, "Not found");
     return;

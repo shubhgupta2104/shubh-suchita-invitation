@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const output = join(root, "dist");
-const extensions = new Set([".svg", ".jpg", ".woff", ".txt", ".m4a", ".mp4"]);
+const extensions = new Set([".svg", ".jpg", ".webp", ".woff", ".txt", ".m4a", ".mp4"]);
 
 async function copyAssets(directory) {
   await mkdir(join(output, directory), { recursive: true });

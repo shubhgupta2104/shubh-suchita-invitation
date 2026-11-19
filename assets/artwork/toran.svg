@@ -1,18 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="180" viewBox="0 0 1200 180">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
   <defs>
-    <g id="bloom">
-      <path d="M0-9C4-16 11-13 12-7C20-5 18 2 13 6C14 14 6 16 1 11C-5 17-14 13-12 7C-20 3-17-5-11-7C-10-15-3-16 0-9Z" fill="#cd9346" stroke="#a87532" stroke-width="1"/>
-      <path d="M-5-5Q0-10 6-4T4 6Q-3 12-7 3T0-4Q8-3 3 4" fill="none" stroke="#f0c477" stroke-width="1.2"/>
+    <radialGradient id="gold"><stop stop-color="#ae752b"/><stop offset=".5" stop-color="#dda345"/><stop offset="1" stop-color="#f6ce79"/></radialGradient>
+    <linearGradient id="green" x2="1" y2="1"><stop stop-color="#a7ad72"/><stop offset=".6" stop-color="#718651"/><stop offset="1" stop-color="#4f6845"/></linearGradient>
+    <g id="marigold">
+      <path d="M0-19C7-27 17-22 18-14C28-12 29-1 22 5C25 16 15 23 7 21C0 31-12 25-15 18C-26 19-31 7-24 0C-30-10-21-20-13-19C-10-28-1-26 0-19Z" fill="url(#gold)" stroke="#bc8938"/>
+      <path d="M-14-8Q-4-23 11-13Q25-3 11 12Q-3 25-15 10Q-25-3-11-12M-8-4Q1-16 12-4Q16 9 1 12Q-13 10-10-2M-4-3Q7-7 6 3Q0 11-5 4Z" fill="none" stroke="#f9da8e" stroke-width="1.3"/>
+      <circle r="4" fill="#b98433"/>
     </g>
-    <g id="leaf"><path d="M0 0C-18 9-17 29-8 44C7 29 13 11 0 0Z" fill="#6c7850" stroke="#536143"/><path d="M0 3-8 40M-2 12-10 16M-4 22 3 17" fill="none" stroke="#adad7c"/></g>
-    <g id="strand">
-      <path d="M0 0Q100 130 200 0" fill="none" stroke="#8c7847" stroke-width="2"/>
-      <use href="#bloom" x="9" y="12"/><use href="#bloom" x="23" y="28"/><use href="#bloom" x="40" y="43"/><use href="#bloom" x="60" y="55"/><use href="#bloom" x="80" y="63"/><use href="#bloom" x="101" y="66"/><use href="#bloom" x="122" y="62"/><use href="#bloom" x="142" y="54"/><use href="#bloom" x="160" y="42"/><use href="#bloom" x="177" y="27"/><use href="#bloom" x="190" y="11"/>
-      <use href="#leaf" x="43" y="46"/><use href="#leaf" x="103" y="71"/><use href="#leaf" x="163" y="44"/>
+    <g id="leaf">
+      <path d="M0 0C-18 12-18 39-2 65C18 40 23 15 0 0Z" fill="url(#green)" stroke="#647a4c"/>
+      <path d="M0 4-2 59M0 17-10 26M0 29 11 21M-1 40-9 45" fill="none" stroke="#d0c28a" stroke-width="1"/>
+    </g>
+    <g id="rosette">
+      <path d="M0-18C12-27 25-13 19-5C31 7 14 25 6 19C-4 31-24 18-19 7C-30-5-15-24-5-18Z" fill="#d8999a" stroke="#a95e6f"/>
+      <path d="M-13-4C-8-19 15-17 16-2C15 16-6 22-13 7C-24-7 4-18 7-5C14 9-6 13-7 2C-10-5-1-7 3-2" fill="none" stroke="#f5d1bd" stroke-width="1.4"/>
+    </g>
+    <g id="jasmine">
+      <g fill="#fff5df" stroke="#c6b88b" stroke-width=".8">
+        <ellipse cy="-6" rx="4" ry="8"/><ellipse cy="-6" rx="4" ry="8" transform="rotate(72)"/>
+        <ellipse cy="-6" rx="4" ry="8" transform="rotate(144)"/><ellipse cy="-6" rx="4" ry="8" transform="rotate(216)"/>
+        <ellipse cy="-6" rx="4" ry="8" transform="rotate(288)"/>
+      </g>
+      <circle r="2.8" fill="#d2ab5d"/>
+    </g>
+    <g id="swag">
+      <path d="M0 0Q95 146 190 0" fill="none" stroke="#8e965b" stroke-width="3"/>
+      <path d="M2 23Q95 170 188 23" fill="none" stroke="#c5a363" stroke-width="1.3"/>
+      <path d="M3 30Q95 183 187 30" fill="none" stroke="#ebd5a4" stroke-width="4" stroke-dasharray=".1 12" stroke-linecap="round"/>
+      <use href="#leaf" transform="translate(33 42) rotate(24) scale(.68)"/>
+      <use href="#leaf" transform="translate(93 76) rotate(-5) scale(.82)"/>
+      <use href="#leaf" transform="translate(155 42) rotate(-26) scale(.69)"/>
+      <use href="#marigold" transform="translate(9 11) rotate(-10) scale(.76)"/>
+      <use href="#marigold" transform="translate(28 32) rotate(17) scale(.8)"/>
+      <use href="#marigold" transform="translate(49 51) rotate(-18) scale(.84)"/>
+      <use href="#marigold" transform="translate(72 65) rotate(14) scale(.84)"/>
+      <use href="#marigold" transform="translate(96 72) rotate(-12) scale(.88)"/>
+      <use href="#marigold" transform="translate(120 65) rotate(21) scale(.84)"/>
+      <use href="#marigold" transform="translate(143 51) rotate(-12) scale(.85)"/>
+      <use href="#marigold" transform="translate(165 32) rotate(18) scale(.8)"/>
+      <use href="#marigold" transform="translate(183 11) scale(.76)"/>
+      <use href="#jasmine" x="48" y="91"/><use href="#jasmine" x="142" y="91"/>
+    </g>
+    <g id="pendant">
+      <path d="M0 0V139" fill="none" stroke="#b69859" stroke-width="1.4"/>
+      <path d="M0 17V106" fill="none" stroke="#eddbb6" stroke-width="5" stroke-dasharray=".1 13" stroke-linecap="round"/>
+      <use href="#leaf" transform="translate(-8 29) rotate(20) scale(.5)"/>
+      <use href="#leaf" transform="translate(7 42) rotate(-19) scale(.48)"/>
+      <use href="#jasmine" x="0" y="80"/>
+      <use href="#marigold" transform="translate(0 118) scale(.74)"/>
+      <path d="M0 136C-6 141-5 149 0 155C5 149 6 141 0 136Z" fill="#d1ad66"/>
     </g>
   </defs>
-  <path d="M0 6Q600 53 1200 6" fill="none" stroke="#a48954" stroke-width="2"/>
-  <use href="#strand" x="0" y="8"/><use href="#strand" x="200" y="21"/><use href="#strand" x="400" y="28"/><use href="#strand" x="600" y="28"/><use href="#strand" x="800" y="21"/><use href="#strand" x="1000" y="8"/>
-  <g fill="none" stroke="#aa8b52" stroke-width="2"><path d="M200 25v93M400 30v104M600 31v113M800 30v104M1000 25v93"/></g>
-  <g><use href="#bloom" x="200" y="115"/><use href="#bloom" x="400" y="132"/><use href="#bloom" x="600" y="140"/><use href="#bloom" x="800" y="132"/><use href="#bloom" x="1000" y="115"/></g>
+  <path d="M24 45Q600 125 1176 45" fill="none" stroke="#b6985b" stroke-width="2"/>
+  <path d="M25 51Q600 133 1175 51" fill="none" stroke="#eddbb4" stroke-width="3.5" stroke-dasharray=".1 12" stroke-linecap="round"/>
+  <g>
+    <use href="#swag" x="30" y="48"/><use href="#swag" x="220" y="71"/>
+    <use href="#swag" x="410" y="83"/><use href="#swag" x="600" y="83"/>
+    <use href="#swag" x="790" y="71"/><use href="#swag" x="980" y="48"/>
+  </g>
+  <g>
+    <use href="#pendant" transform="translate(220 75) scale(.9)"/>
+    <use href="#pendant" transform="translate(410 88)"/>
+    <use href="#pendant" transform="translate(600 92) scale(1.12)"/>
+    <use href="#pendant" transform="translate(790 88)"/>
+    <use href="#pendant" transform="translate(980 75) scale(.9)"/>
+  </g>
+  <g>
+    <use href="#rosette" transform="translate(30 45) scale(1.2)"/><use href="#jasmine" x="52" y="29"/>
+    <use href="#rosette" transform="translate(220 72) rotate(-14) scale(1.1)"/>
+    <use href="#rosette" transform="translate(410 85) rotate(17)"/>
+    <use href="#rosette" transform="translate(600 90) rotate(-8) scale(1.3)"/>
+    <use href="#jasmine" x="574" y="72"/><use href="#jasmine" x="626" y="74"/>
+    <use href="#rosette" transform="translate(790 85) rotate(-17)"/>
+    <use href="#rosette" transform="translate(980 72) rotate(14) scale(1.1)"/>
+    <use href="#rosette" transform="translate(1170 45) scale(1.2)"/><use href="#jasmine" x="1148" y="29"/>
+  </g>
 </svg>

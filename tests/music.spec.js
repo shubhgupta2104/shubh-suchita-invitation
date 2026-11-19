@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
+import { readFile } from "node:fs/promises";
 
-const soundtrack = "/assets/audio/vaaroon-forever.m4a";
+const musicRecord = JSON.parse(await readFile(new URL("fixtures/music.json", import.meta.url), "utf8"));
+const soundtrack = `/${musicRecord.output}`;
 
 async function openWithMusic(page) {
   await page.getByRole("button", { name: "Open invitation" }).click();
@@ -11,7 +13,7 @@ async function openWithMusic(page) {
 test("music is lazy, user-started, looped and reset by refresh", async ({ page }) => {
   const musicRequests = [];
   page.on("request", (request) => {
-    if (request.url().includes(soundtrack)) musicRequests.push(request.url());
+    if (new URL(request.url()).pathname.endsWith(".m4a")) musicRequests.push(request.url());
   });
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
@@ -20,13 +22,15 @@ test("music is lazy, user-started, looped and reset by refresh", async ({ page }
   await expect(page.locator(".seal-caption")).toHaveCount(0);
   await expect(page.locator("audio[controls], audio[autoplay]")).toHaveCount(0);
   await openWithMusic(page);
+  expect(musicRequests.length).toBeGreaterThan(0);
+  expect(musicRequests.every(url => url.includes(soundtrack))).toBe(true);
   const media = await page.locator("audio").evaluate((audio) => ({
     paused: audio.paused, duration: audio.duration, volume: audio.volume, loop: audio.loop
   }));
   expect(media.paused).toBe(false);
   // Chromium's media duration includes AAC padding; decoded PCM is checked separately.
-  expect(media.duration).toBeGreaterThanOrEqual(61);
-  expect(media.duration).toBeLessThan(61.15);
+  expect(media.duration).toBeGreaterThanOrEqual(musicRecord.duration_seconds);
+  expect(media.duration).toBeLessThan(musicRecord.duration_seconds + .15);
   expect(media.volume).toBe(0.65);
   expect(media.loop).toBe(true);
   await page.locator("#schedule").scrollIntoViewIfNeeded();
@@ -42,7 +46,7 @@ test("Escape and script failure keep the soundtrack silent", async ({ page }) =>
   await page.keyboard.press("Escape");
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await expect(page.locator("audio")).not.toHaveAttribute("src", /./);
-  await page.route("**/app.js", (route) => route.abort());
+  await page.route("**/app.js*", (route) => route.abort());
   await page.reload();
   await expect(page.locator("h1")).toBeVisible();
   await expect(page.locator("audio")).not.toHaveAttribute("src", /./);
@@ -78,8 +82,8 @@ test("audio failure cannot block the invitation", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Open invitation" }).click();
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
-  await page.getByRole("link", { name: "Schedule", exact: true }).click();
-  await expect(page.locator("#schedule")).toBeInViewport();
+  await page.getByRole("link", { name: "Venue", exact: true }).click();
+  await expect(page.locator("#venue")).toBeInViewport();
   await expect.poll(() => warnings.some((message) => message.includes("Invitation music could not"))).toBe(true);
 });
 
@@ -99,7 +103,7 @@ test("returning during the curtain animation resumes music after the reveal", as
   await expect.poll(() => page.locator("audio").evaluate((audio) => !audio.paused && audio.currentTime > 0.1)).toBe(true);
 });
 
-test("the 61-second excerpt decodes with safe levels and faded edges", async ({ page }) => {
+test("the instrumental starts at the music, with safe levels and smooth loop edges", async ({ page }) => {
   await page.goto("/");
   const audio = await page.evaluate(async (url) => {
     const response = await fetch(url);
@@ -109,30 +113,78 @@ test("the 61-second excerpt decodes with safe levels and faded edges", async ({ 
     let squares = 0;
     let boundary = 0;
     let edgePeak = 0;
+    let tailPeak = 0;
     for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
       const samples = decoded.getChannelData(channel);
       boundary = Math.max(boundary, Math.abs(samples[0] - samples[samples.length - 1]));
-      for (let index = 0; index < decoded.sampleRate * 0.05; index++) {
+      for (let index = 0; index < decoded.sampleRate * 0.003; index++) {
         edgePeak = Math.max(edgePeak, Math.abs(samples[index]), Math.abs(samples[samples.length - 1 - index]));
+      }
+      for (let index = 0; index < decoded.sampleRate * 0.05; index++) {
+        tailPeak = Math.max(tailPeak, Math.abs(samples[samples.length - 1 - index]));
       }
       for (const sample of samples) {
         peak = Math.max(peak, Math.abs(sample));
         squares += sample * sample;
       }
     }
+    const windowFrames = Math.round(decoded.sampleRate * .01);
+    let onset = null;
+    for (let window = 0; window < 100; window++) {
+      let energy = 0;
+      for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
+        const samples = decoded.getChannelData(channel);
+        for (let frame = window * windowFrames; frame < (window + 1) * windowFrames; frame++) {
+          energy += samples[frame] ** 2;
+        }
+      }
+      if (Math.sqrt(energy / (windowFrames * decoded.numberOfChannels)) >= .005) {
+        onset = window * .01;
+        break;
+      }
+    }
     return {
       channels: decoded.numberOfChannels, duration: decoded.duration,
-      peak, rms: Math.sqrt(squares / (decoded.length * decoded.numberOfChannels)), boundary, edgePeak
+      peak, rms: Math.sqrt(squares / (decoded.length * decoded.numberOfChannels)), boundary, edgePeak, tailPeak, onset
     };
   }, soundtrack);
   console.log("Decoded soundtrack:", JSON.stringify(audio));
   expect(audio.channels).toBe(2);
-  expect(audio.duration).toBeCloseTo(61, 2);
+  expect(audio.duration).toBeCloseTo(musicRecord.duration_seconds, 2);
+  expect(musicRecord.trimmed_samples_all_zero).toBe(true);
+  expect(musicRecord.source_start_frame).toBe(musicRecord.first_nonzero_source_frame - musicRecord.preroll_frames);
+  expect(audio.onset).not.toBeNull();
+  expect(audio.onset).toBeLessThanOrEqual(.35);
+  expect(musicRecord.opening_roundtrip_correlation).toBeGreaterThan(.95);
   expect(audio.peak).toBeLessThan(0.6);
   expect(audio.rms).toBeGreaterThan(0.03);
   expect(audio.rms).toBeLessThan(0.15);
   expect(audio.boundary).toBeLessThan(0.03);
   expect(audio.edgePeak).toBeLessThan(0.01);
+  expect(audio.tailPeak).toBeLessThan(0.01);
+});
+
+test("music playback begins alongside the curtain movie without an added timer", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.mediaStarts = [];
+    document.addEventListener("playing", event => {
+      if (event.target instanceof HTMLMediaElement) {
+        window.mediaStarts.push({ tag: event.target.tagName, src: event.target.currentSrc, at: performance.now() });
+      }
+    }, true);
+  });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open invitation" }).click();
+  await expect.poll(() => page.evaluate(url =>
+    window.mediaStarts.some(start => start.tag === "AUDIO" && start.src.endsWith(url)), soundtrack)).toBe(true);
+  const offset = await page.evaluate(url => {
+    const movie = window.mediaStarts.find(start => start.tag === "VIDEO");
+    const music = window.mediaStarts.find(start => start.tag === "AUDIO" && start.src.endsWith(url));
+    if (!movie || !music) throw new Error("Missing movie or soundtrack playback event");
+    return music.at - movie.at;
+  }, soundtrack);
+  console.log("Music playback offset from movie (ms):", offset);
+  expect(Math.abs(offset)).toBeLessThan(750);
 });
 
 test("audio delivery supports browser byte ranges and rejects invalid requests", async ({ request }) => {

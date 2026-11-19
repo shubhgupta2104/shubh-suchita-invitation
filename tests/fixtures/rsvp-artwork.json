@@ -1,0 +1,102 @@
+{
+  "sourceSha256": "7b0fc9529928f31a1cceb6cb6c35ca4818598a7a121f985609ccfd62ff678030",
+  "sourceDimensions": [
+    1448,
+    1086
+  ],
+  "textPatches": [
+    [
+      440,
+      210,
+      580,
+      105,
+      0
+    ],
+    [
+      455,
+      305,
+      555,
+      65,
+      0
+    ],
+    [
+      610,
+      367,
+      228,
+      61,
+      0
+    ],
+    [
+      637,
+      422,
+      183,
+      58,
+      0
+    ],
+    [
+      518,
+      465,
+      420,
+      72,
+      0
+    ],
+    [
+      616,
+      533,
+      221,
+      54,
+      0
+    ],
+    [
+      570,
+      573,
+      310,
+      54,
+      0
+    ],
+    [
+      511,
+      923,
+      425,
+      92,
+      1
+    ]
+  ],
+  "sourcePixelsChangedOutsideLettering": 0,
+  "method": "Replace printed lettering and the raster button with locally sampled paper texture. Preserve the dogs, envelope, lining, ribbon and seal. Extend only the blank paper between intact top/middle layers; the separate decorative footer reserves space for the real button.",
+  "width": 960,
+  "height": 720,
+  "quality": 0.86,
+  "totalBytes": 95850,
+  "assets": [
+    {
+      "path": "assets/artwork/rsvp-envelope-top.webp",
+      "width": 960,
+      "height": 265,
+      "bytes": 20944,
+      "sha256": "e20b06081267380ec7426e4726ecf0013a838e980f5b07d0f0aa3a3e9d27dfec"
+    },
+    {
+      "path": "assets/artwork/rsvp-envelope-letter-strip.webp",
+      "width": 960,
+      "height": 256,
+      "bytes": 10802,
+      "sha256": "143a1022bec30a65341a923e0bfa9f5af40d64553bf42eb678a2911e78713196"
+    },
+    {
+      "path": "assets/artwork/rsvp-envelope-middle.webp",
+      "width": 960,
+      "height": 345,
+      "bytes": 56740,
+      "sha256": "5a19aa8de925b2d6a2983f011730d9c2a781e2f472a7aca359e93f580ad2c371"
+    },
+    {
+      "path": "assets/artwork/rsvp-envelope-bottom.webp",
+      "width": 960,
+      "height": 110,
+      "bytes": 7364,
+      "sha256": "1cac299d1bd693858d9e2f05c04a00a9a568c2155751ac25cee6726cd76a596d"
+    }
+  ],
+  "scope": "User-approved website artwork; supplied references and full concept PNG remain private."
+}
