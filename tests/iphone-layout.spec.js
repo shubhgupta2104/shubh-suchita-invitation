@@ -29,6 +29,12 @@ for (const viewport of viewports) {
       const heading = document.querySelector("h1").getBoundingClientRect();
       const header = document.querySelector(".site-header").getBoundingClientRect();
       const cue = document.querySelector(".scroll-invitation").getBoundingClientRect();
+      const coupleFont = parseFloat(getComputedStyle(document.querySelector(".hero .name")).fontSize);
+      const parents = [...document.querySelectorAll(".hero .parentage__name")].map(element => ({
+        text: element.textContent, font: parseFloat(getComputedStyle(element).fontSize),
+        weight: Number(getComputedStyle(element).fontWeight), left: element.getBoundingClientRect().left,
+        right: element.getBoundingClientRect().right
+      }));
       const [left, top, right, bottom] = measurement.bounds;
       const figures = {
         left: frame.x + frame.width * left, top: frame.y + frame.height * top,
@@ -45,7 +51,8 @@ for (const viewport of viewports) {
         headerBottom: header.bottom,
         left: venue.left,
         right: venue.right,
-        overflow: document.documentElement.scrollWidth > innerWidth
+        overflow: document.documentElement.scrollWidth > innerWidth,
+        parents, coupleFont
       };
     }, measurement);
     expect(layout.clearance).toBeGreaterThanOrEqual(20);
@@ -59,6 +66,14 @@ for (const viewport of viewports) {
     expect(layout.left).toBeGreaterThanOrEqual(0);
     expect(layout.right).toBeLessThanOrEqual(viewport.width);
     expect(layout.overflow).toBe(false);
+    expect(layout.parents.map(parent => parent.text)).toEqual(["Rekha Gupta", "Ajay Gupta", "Madhu Sharma", "Harish Kant Sharma"]);
+    for (const parent of layout.parents) {
+      expect(parent.font).toBeGreaterThanOrEqual(viewport.width > viewport.height ? 11 : 12);
+      expect(parent.font / layout.coupleFont).toBeLessThanOrEqual(1 / 3);
+      expect(parent.weight).toBeGreaterThanOrEqual(600);
+      expect(parent.left).toBeGreaterThanOrEqual(0);
+      expect(parent.right).toBeLessThanOrEqual(viewport.width);
+    }
     await expect(page.locator(".site-header")).toHaveCSS("opacity", "1");
     await mkdir(screenshots, { recursive: true });
     await page.screenshot({ path: resolve(screenshots, `iphone-15-pro-${viewport.width}x${viewport.height}.png`) });

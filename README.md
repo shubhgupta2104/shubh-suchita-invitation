@@ -1,7 +1,7 @@
 # Shubh & Suchita's invitation
 
 Owner: Shubh & Suchita  
-Date: 19 November 2026
+Date: 22 November 2026
 
 ## TL;DR
 
@@ -43,11 +43,13 @@ The final still is decoded before dissolving into it, using the same captured vi
 
 Phone text spacing uses the actual captured viewport height, not the hardware screen height. This accounts for the iPhone 15 Pro's 393x659 Safari viewport with browser bars visible. The venue line stays at least 20px above the measured figure bounds across all 162 poses, the short landscape layout places the names side by side, and the scroll cue moves to the side when vertical space is tight. `tests/fixtures/opening-bounds.json` ties those geometry measurements to the exact movie/poster hashes so changing the artwork requires rechecking its clearance.
 
+Venue and RSVP use prominent, gold-accented navigation buttons with 44px minimum touch targets. Parent names have brighter, bolder type while relationship labels remain quieter. Portrait phones use 12px parent text; short landscape views use 11px to preserve the couple-name hierarchy and safe spacing. The header height, movie framing and figure scale remain unchanged.
+
 The wedding countdown reads its target directly from the Phere entry's `datetime` in the canonical programme: 26 January 2027 at 4:00 PM IST. It stops ticking offscreen or in a hidden tab. Without JavaScript, the confirmed date remains visible.
 
 The supplied "Ishq Wala Love" instrumental starts only when a guest activates the opening. Its 2.6106875-second digital-silence prefix is removed without cutting musical samples. A 50ms fade-in preserves the quiet pickup; the first audible window is 0.26 seconds into the delivered track. The 254.722625-second AAC retains the quiet playback volume and two-second fade-out. It loops, pauses in a hidden tab, resumes when the guest returns, and resets on refresh. There are no music switches or extra music labels. Browser or device restrictions may keep it silent without blocking the invitation. Delivery supports byte ranges. Public website use of this supplied recording was confirmed by the user on 19 November 2026.
 
-The page uses ivory, burgundy and gold framing, fuller floral banners and restrained scroll-linked edge sparkles. Sparkles stay outside the central text, stop moving when scrolling stops, and are hidden for reduced motion and forced colours.
+The page uses ivory, burgundy and gold framing, fuller floral banners and restrained scroll-linked edge sparkles. Short, faint gold rules separate sections instead of repeated patterned strips. Sparkles stay outside the central text, stop moving when scrolling stops, and are hidden for reduced motion and forced colours.
 
 The RSVP envelope retains the approved dogs, burgundy lining, embossed paper, ribbon and wax seal. Printed lettering and the raster button were replaced with local paper texture so the heading, signature, date, venue and button are real HTML. Blank paper expands through container queries on smaller screens and at zoom without stretching the figures. The decorative footer reserves space for the 44px-minimum button. High contrast keeps the live text and link without decorative imagery. Source concepts and supplied pet references are not shipped.
 

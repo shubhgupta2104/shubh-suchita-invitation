@@ -6,6 +6,33 @@ test.beforeEach(async ({ context }) => {
   }));
 });
 
+test("section dividers use quiet rules without loading the removed pattern", async ({ page, request }) => {
+  await page.setViewportSize({ width: 393, height: 659 });
+  const patternRequests = [];
+  page.on("request", request => {
+    if (request.url().includes("embroidery.svg")) patternRequests.push(request.url());
+  });
+  await page.goto("/");
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".embroidered-divider")).toHaveCount(0);
+  const dividers = page.locator(".section-divider");
+  await expect(dividers).toHaveCount(3);
+  for (const divider of await dividers.all()) {
+    await divider.scrollIntoViewIfNeeded();
+    await expect(divider).toHaveAttribute("aria-hidden", "true");
+    const style = await divider.evaluate(element => ({
+      width: element.getBoundingClientRect().width,
+      height: element.getBoundingClientRect().height,
+      background: getComputedStyle(element).backgroundImage
+    }));
+    expect(style.width).toBeLessThanOrEqual(80);
+    expect(style.height).toBeLessThanOrEqual(1);
+    expect(style.background).not.toContain("url(");
+  }
+  expect(patternRequests).toEqual([]);
+  expect((await request.get("/assets/artwork/embroidery.svg")).status()).toBe(404);
+});
+
 for (const viewport of [
   { width: 320, height: 568 }, { width: 393, height: 659 }, { width: 393, height: 852 },
   { width: 734, height: 343 }, { width: 1440, height: 1000 }
@@ -16,6 +43,20 @@ for (const viewport of [
     await page.keyboard.press("Escape");
     await page.evaluate(() => document.fonts.ready);
     await expect(page.getByRole("navigation", { name: "Invitation" }).getByRole("link")).toHaveText(["Venue", "RSVP"]);
+    const navigation = await page.locator(".site-header nav a").evaluateAll(links => links.map(link => ({
+      width: link.getBoundingClientRect().width, height: link.getBoundingClientRect().height,
+      left: link.getBoundingClientRect().left, right: link.getBoundingClientRect().right,
+      font: parseFloat(getComputedStyle(link).fontSize), border: parseFloat(getComputedStyle(link).borderTopWidth)
+    })));
+    const logo = await page.locator(".wordmark").boundingBox();
+    for (const link of navigation) {
+      expect(link.width).toBeGreaterThanOrEqual(60);
+      expect(link.height).toBeGreaterThanOrEqual(44);
+      expect(link.font).toBeGreaterThanOrEqual(13);
+      expect(link.border).toBeGreaterThan(0);
+      expect(link.left).toBeGreaterThan(logo.x + logo.width);
+      expect(link.right).toBeLessThanOrEqual(viewport.width);
+    }
     await expect(page.locator('[data-event="phere"] time')).toHaveText("4:00 PM");
     const layout = await page.evaluate(() => {
       const failures = [];
@@ -69,4 +110,12 @@ test("foil lettering remains readable in forced-colour mode", async ({ page }) =
     expect(item.background).toBe("none");
     expect(item.color).not.toBe(item.backplate);
   }
+  const parents = await page.locator(".hero .parentage__name").evaluateAll(elements => elements.map(element => ({
+    color: getComputedStyle(element).color, background: getComputedStyle(element.parentElement).backgroundColor
+  })));
+  for (const parent of parents) expect(parent.color).not.toBe(parent.background);
+  const linkPaint = await page.locator(".site-header nav a").evaluateAll(links => links.map(link => ({
+    color: getComputedStyle(link).color, background: getComputedStyle(link).backgroundColor
+  })));
+  for (const link of linkPaint) expect(link.color).not.toBe(link.background);
 });

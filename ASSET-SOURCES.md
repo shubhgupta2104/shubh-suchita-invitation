@@ -1,7 +1,7 @@
 # Invitation asset sources
 
 Owner: Shubh & Suchita  
-Date: 19 November 2026
+Date: 22 November 2026
 
 ## TL;DR
 
@@ -28,7 +28,7 @@ The visual references guide the composition, not the reuse or tracing of another
 | `butterfly.svg` | Original scalable pearl-and-gold butterfly with veined wings, fine gilt edges, wing spots, body and antennae. CSS wingbeats and flight are synchronised to the opening movie's frame time where supported. No downloaded butterfly artwork. |
 | Butterfly trail and scene highlights | Original layered gold wake and drifting dust drawn along the butterfly's actual path, with random spread, size, lifetime and gentle twinkling. Capped at 320 particles. Twenty-four finite scene glints and a masked foreground stage-light bloom fade out before the handoff. No particle library, external effect assets or reference-video pixels are used. |
 | `toran.svg` | Original layered marigold swags, rose knots, mango leaves and gold pendants joining the programme days. |
-| `botanical.svg`, `flower.svg`, `vine-border.svg`, `embroidery.svg` | Original curved botanical stems, veined leaves, roses, layered marigold petals and decorative stitching. |
+| `botanical.svg`, `flower.svg`, `vine-border.svg` | Original curved botanical stems, veined leaves, roses and layered marigold petals. The former repeating embroidery strips were removed; section separators are now faint CSS gold rules. |
 | `ceremonies.svg` | Original matching Haldi bowl, rings and dhol, decorated horse, Jai Mala flower garlands, Phere fire and candlelit Gala Dinner table illustrations. No downloaded icons or illustration libraries. |
 | `floral-bridge.svg` | Original layered roses, marigolds, jasmine, foliage and hanging blooms with pearl/gold chains above the countdown. |
 | `page-sparkle.svg` | Original sparse gold edge glints. CSS ties their movement to scrolling, with a static fallback and no pointer interception. Reduced motion and forced colours disable the effect. |

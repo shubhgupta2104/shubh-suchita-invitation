@@ -77,16 +77,18 @@ main::before { left: max(14px, calc(50% - 590px)); }
 main::after { right: max(14px, calc(50% - 590px)); transform: scaleX(-1); }
 .wordmark { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; text-decoration: none; padding: 4px 0; }
 .wordmark img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; }
-nav { display: flex; gap: 30px; }
-nav a { display: grid; place-items: center; min-height: 44px; font-size: 12px; text-decoration: none; }
-nav a:hover { text-decoration: underline; }
+nav { display: flex; gap: 12px; }
+nav a { display: grid; place-items: center; min-height: 44px; padding: 0 16px; border: 1px solid #d6ad659c; border-radius: 24px; background: #ffeac910; font-size: 14px; font-weight: 700; line-height: 1.2; text-decoration: none; }
+nav a[href="#rsvp"] { color: #4a1025; border-color: #e3c18b; background: linear-gradient(135deg, #fff1d0, #ddb573); box-shadow: 0 2px 10px #0003; }
+nav a:hover { border-color: #fff0d0; text-decoration: none; }
 .site-header a:focus-visible, .hero a:focus-visible { outline-color: #edccad; }
 .hero { position: relative; isolation: isolate; overflow: clip; min-height: var(--scene-height); text-align: center; padding: 0 28px 22px; color: #f6dfc7; background: #000; }
 .hero__copy { position: relative; z-index: 1; max-width: 520px; margin: auto; padding: 88px 12px 0; text-align: center; text-shadow: 0 2px 18px #120208; }
 .hero__intro { margin-bottom: 18px; color: #e8c9b0; font-size: 12px; letter-spacing: 1.8px; text-wrap: balance; }
 .couple-names { display: flex; flex-direction: column; align-items: center; font-family: var(--serif); font-weight: 500; }
 .name { font-size: clamp(64px, 6vw, 82px); font-style: italic; line-height: .9; color: #ffecd7; letter-spacing: -2px; }
-.parentage { font: 12px/1.6 Georgia, serif; color: #e2c6b5; margin-top: 8px; letter-spacing: .1px; }
+.parentage { font: 13px/1.45 Georgia, serif; color: #e2c6b5; margin-top: 8px; letter-spacing: .1px; }
+.parentage__name { color: #fff1d2; font-weight: 700; white-space: nowrap; }
 .ampersand { font-size: 29px; font-style: italic; line-height: .9; color: #d3a68a; margin: 8px 0; }
 .wedding-date { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 18px 0 8px; }
 .wedding-date time { font-family: var(--serif); font-size: 27px; color: #f0ceb0; }
@@ -109,7 +111,7 @@ nav a:hover { text-decoration: underline; }
 .welcome__vine { position: absolute; top: -50px; bottom: 30px; width: 130px; background: url("assets/artwork/botanical.svg") center / 100% auto no-repeat; opacity: .7; pointer-events: none; }
 .welcome__vine--left { left: -10px; }
 .welcome__vine--right { right: -10px; transform: scaleX(-1); }
-.embroidered-divider { display: block; height: 24px; width: 190px; margin: 45px auto 0; background: url("assets/artwork/embroidery.svg") center / auto 24px repeat-x; }
+.section-divider { display: block; height: 1px; width: 72px; margin: 32px auto 0; background: linear-gradient(90deg, transparent, #b8924b80, transparent); }
 .countdown { position: relative; max-width: 860px; padding: 5px 70px 45px; text-align: center; margin: auto; }
 .countdown__garland { height: 125px; width: 100%; max-width: 650px; margin: 0 auto 15px; background: url("assets/artwork/floral-bridge.svg") center / 100% auto no-repeat; }
 .countdown .eyebrow { margin-bottom: 17px; }
@@ -143,7 +145,7 @@ nav a:hover { text-decoration: underline; }
 .function p { color: var(--ink); font-size: 13px; line-height: 1.8; margin-top: 15px; }
 .day-interlude { margin: 45px auto; max-width: 440px; }
 .day-interlude img { width: 100%; height: auto; }
-.venue .embroidered-divider { margin: 0 auto 50px; }
+.venue .section-divider { margin: 0 auto 32px; }
 .venue p:not(.eyebrow) { margin-top: 15px; font-size: 14px; }
 .text-link { display: inline-flex; align-items: center; gap: 20px; min-height: 44px; margin-top: 16px; color: var(--wine); font-size: 13px; }
 .venue__landscape { width: 100%; height: auto; margin: -5px auto -65px; pointer-events: none; }
@@ -243,14 +245,14 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   main::before { left: 3px; }
   main::after { right: 3px; }
   .site-header { padding: 0 23px; min-height: 55px; margin-bottom: -55px; }
-  nav { gap: 24px; }
-  nav a { font-size: 11px; }
+  nav { gap: 10px; }
+  nav a { padding-inline: 13px; font-size: 13px; }
   .wordmark img { width: 44px; height: 44px; }
   .hero { padding: 0 20px 14px; }
   .hero__copy { --hero-room: clamp(0px, calc(var(--scene-height) - 650px), 100px); max-width: 350px; padding-top: calc(56px + var(--hero-room) * .26); }
   .hero__intro { max-width: 260px; margin-inline: auto; font-size: 11px; letter-spacing: 1.4px; margin-bottom: calc(8px + var(--hero-room) * .08); }
   .name { font-size: 64px; }
-  .parentage { font-size: 11px; line-height: 1.6; margin-top: calc(4px + var(--hero-room) * .04); }
+  .parentage { font-size: 12px; line-height: 1.5; margin-top: calc(4px + var(--hero-room) * .04); }
   .ampersand { font-size: 24px; margin: calc(3px + var(--hero-room) * .04) 0; }
   .wedding-date { margin-top: calc(10px + var(--hero-room) * .06); gap: 14px; }
   .wedding-date time { font-size: 25px; }
@@ -265,7 +267,7 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   .welcome__vine { width: 87px; top: -20px; bottom: 0; opacity: .6; }
   .welcome__vine--left { left: -57px; }
   .welcome__vine--right { right: -57px; }
-  .embroidered-divider { margin-top: 37px; }
+  .section-divider { margin-top: 28px; }
   .countdown { padding: 0 25px 35px; }
   .countdown__garland { height: 93px; width: 145%; margin: 0 -22.5% 12px; background-size: 100% auto; }
   .countdown .eyebrow { font-size: 8px; letter-spacing: 1.8px; }
@@ -301,10 +303,9 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
 }
 
 @media (max-width: 350px) {
-  nav { gap: 18px; }
+  nav { gap: 8px; }
   .hero__intro { max-width: 230px; font-size: 10px; letter-spacing: 1.2px; }
   .entrance__invitation { font-size: 19px; }
-  .parentage { font-size: 11px; }
   .welcome { padding-inline: 29px; }
   .welcome h2 { font-size: 33px; }
   .entrance h2 { font-size: 38px; }
@@ -328,7 +329,7 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   .hero__copy { padding-top: 64px; }
   .hero__intro { display: none; }
   .name { font-size: 50px; }
-  .parentage { font-size: 10px; line-height: 1.5; margin-top: 5px; }
+  .parentage { font-size: 12px; line-height: 1.4; margin-top: 5px; }
   .ampersand { font-size: 20px; margin: 5px 0; }
   .wedding-date { margin-top: 8px; }
   .wedding-date time { font-size: 22px; }
@@ -351,7 +352,7 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   .couple-names > :nth-child(4) { grid-column: 3; grid-row: 1; }
   .couple-names > :nth-child(5) { grid-column: 3; grid-row: 2; }
   .name { font-size: 36px; }
-  .parentage { margin-top: 3px; }
+  .parentage { font-size: 11px; line-height: 1.45; margin-top: 3px; }
   .wedding-date { margin-top: 6px; }
 }
 
@@ -367,7 +368,7 @@ nav a { letter-spacing: .45px; }
 .hero__intro { color: #e7c68f; }
 .name { color: #ffe6b7; text-shadow: 0 2px 14px #0009; }
 .ampersand { color: #e1bb77; }
-.parentage { color: #f0dcc7; }
+.parentage { color: #d6bd9c; }
 .wedding-date time { color: #f8d99e; }
 .wedding-date__rule { background: linear-gradient(90deg, #cda45c22, #eac57b, #cda45c22); box-shadow: 0 0 8px #dbb57347; }
 .hero__location { color: #f6e5cb; }
@@ -385,7 +386,6 @@ nav a { letter-spacing: .45px; }
 .welcome__message { color: #f1dfcf; }
 .welcome__flower { filter: drop-shadow(0 4px 12px #ecbb6259); }
 .welcome__vine { opacity: .42; filter: sepia(.4) saturate(.8) brightness(1.7); }
-.welcome .embroidered-divider { filter: brightness(1.6); }
 .countdown { padding-top: 20px; }
 .countdown__garland { filter: drop-shadow(0 3px 3px #71352224); }
 .countdown__numbers > span { border-color: #c9a265; background: linear-gradient(145deg, #75243c, #3e0c20); box-shadow: inset 0 0 0 4px #f3d9a30a, 0 8px 18px #561a3024; }
@@ -425,6 +425,9 @@ footer a:focus-visible, footer summary:focus-visible { outline-color: #f5d69c; }
 }
 
 @media (forced-colors: active) {
+  nav a, nav a[href="#rsvp"] { color: LinkText; background: Canvas; border-color: LinkText; box-shadow: none; }
+  .parentage { color: CanvasText; background: Canvas; }
+  .parentage__name { color: CanvasText; }
   .name { background: Canvas; color: CanvasText; filter: none; }
   .hero__stage::after, .entrance::after { background: none; border-color: CanvasText; outline: none; }
 }

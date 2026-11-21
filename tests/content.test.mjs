@@ -75,12 +75,13 @@ test("the canonical schedule contains five functions and six meals", () => {
 });
 
 test("confirmed names, venue and exact directions are retained", () => {
+  const textContent = html.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, "");
   for (const text of [
     "S/O Rekha Gupta and Ajay Gupta",
-    "D/O Madhu Sharma<br>and Harish Kant Sharma",
-    "Evara Resort", "Jim Corbett, Uttarakhand",
-    "https://maps.app.goo.gl/PL4M48uGDFwTjAJs6"
-  ]) assert.ok(html.includes(text), text);
+    "D/O Madhu Sharma and Harish Kant Sharma",
+    "Evara Resort", "Jim Corbett, Uttarakhand"
+  ]) assert.ok(textContent.includes(text), text);
+  assert.ok(html.includes("https://maps.app.goo.gl/PL4M48uGDFwTjAJs6"));
   assert.doesNotMatch(html, /Varmala|11:00 AM|Palms|Shubh Gupta|Suchita Sharma/);
 });
 
