@@ -89,31 +89,42 @@
     <use href="#petals" x="169" y="222"/>
   </symbol>
   <symbol id="baraat" viewBox="0 0 300 260">
-    <ellipse cx="153" cy="239" rx="109" ry="9" fill="#b6a780" opacity=".18"/>
-    <use href="#sprig" transform="translate(41 224) rotate(-32) scale(.6)"/>
-    <path d="M214 111Q248 111 240 158Q235 172 244 187Q228 184 225 165Q230 135 214 133" fill="#9b816a" stroke="#80614c"/>
-    <path d="M90 128Q118 108 148 117Q178 102 217 118L224 160Q201 181 174 172L119 167Q91 159 84 146Z" fill="#e6d6b8" stroke="#ad9474" stroke-width="1.3"/>
-    <path d="m109 156-8 47-10 31H80l6-40-2-41M132 167l4 34 12 30h-11l-19-29-8-34M199 163l-5 31 10 38h-11l-14-36 1-33M217 155l-2 43 12 33h-11l-19-33 4-35" fill="#e6d6b8" stroke="#ad9474" stroke-width="1.3"/>
-    <path d="m79 231-2 7h15l1-6m42-1 2 7h16l-5-7m43 0 1 7h15l-4-7m12-1 1 7h16l-5-7" fill="#8c7155"/>
-    <path d="M84 153Q75 134 81 105L72 82 56 85Q44 82 48 72L73 44 82 29 91 31 101 61Q107 91 120 117" fill="#edddc1" stroke="#ad9474" stroke-width="1.3"/>
-    <path d="m75 45 7-24 6 5 1 21" fill="#d0b998" stroke="#a88a6a"/>
-    <path d="m82 39 3-10 1 11" stroke="#b0886e"/>
-    <path d="M94 41Q113 57 115 82T127 115L115 122Q101 95 102 78T92 47" fill="#a4896c" stroke="#886b52"/>
-    <path d="M101 51q8 6 9 13M104 69q9 7 9 13M107 86q8 7 9 14" stroke="#d6ba94" fill="none"/>
-    <path d="M51 72 68 78 90 52M65 79q14 15 36 11" fill="none" stroke="#a35650" stroke-width="3"/>
-    <circle cx="72" cy="57" r="2" fill="#544536"/><path d="m67 53 9-1" stroke="#9d805f" fill="none"/>
-    <path d="M117 117Q155 126 195 114L204 170Q158 186 112 165Z" fill="url(#silk)" stroke="#c49a55" stroke-width="2"/>
-    <path d="M124 124Q155 133 190 123L197 163Q158 175 120 159Z" fill="none" stroke="#d9b677" stroke-width="1"/>
-    <path d="M120 168q42 20 83 3" fill="none" stroke="#bd965a" stroke-width="6" stroke-dasharray="2 5"/>
-    <g fill="none" stroke="#d7b16b" stroke-width=".8">
-      <path d="M151 160C135 146 149 135 155 144C163 130 177 147 158 160ZM154 144v16"/>
-      <path d="m128 141 4-4 4 4-4 4Zm53 0 4-4 4 4-4 4Z"/>
+    <defs>
+      <linearGradient id="ghodi-coat" x2=".6" y2="1"><stop stop-color="#fffdf3"/><stop offset=".55" stop-color="#fbefd8"/><stop offset="1" stop-color="#d8bfa0"/></linearGradient>
+      <linearGradient id="ghodi-mane" x2=".3" y2="1"><stop stop-color="#fff6dd"/><stop offset=".5" stop-color="#e8cda2"/><stop offset="1" stop-color="#b49371"/></linearGradient>
+    </defs>
+    <ellipse cx="146" cy="237" rx="102" ry="7" fill="#b6a780" opacity=".19"/>
+    <g stroke="#967a60" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+      <!-- Far legs recede behind the lifted foreleg and rounded quarters. -->
+      <path fill="#d9c7ac" d="M114 145Q128 148 125 170L118 190Q115 197 115 205L116 225 111 232 102 232 109 222 107 199Q105 195 109 188L108 168ZM196 144Q218 146 215 163L204 183 216 197Q220 201 217 208L208 226 199 231 196 228 203 219 209 205 190 188Q183 184 184 176Z"/>
+      <!-- A long, high-set tail with separate curling locks. -->
+      <path fill="url(#ghodi-mane)" d="M204 109C223 96 241 104 249 123S259 161 282 159Q270 169 252 157Q258 174 275 174C253 185 240 159 236 148Q234 172 248 184C222 175 230 144 219 132L207 129Z"/>
+      <path fill="none" stroke="#ffebca" d="M221 110C246 113 238 149 263 159M225 116Q240 128 242 149"/>
+      <!-- The near outline runs continuously from poll and muzzle through the neck, barrel and croup. -->
+      <path fill="url(#ghodi-coat)" d="M78 54C91 37 110 42 122 58C132 71 133 88 148 97C161 104 172 106 185 102C202 96 218 99 225 114C234 133 226 151 214 165Q215 178 226 189Q230 193 225 201L218 224 213 232 204 232 211 220 216 198Q202 191 192 179L179 157C157 159 141 162 122 155Q109 152 104 147C97 155 89 162 78 166L66 172 78 184Q82 188 78 193L73 198 66 193 67 188 53 176Q49 171 54 165L78 145Q89 131 90 118C91 102 100 86 91 76Q84 82 77 81L62 97Q60 103 54 102L46 98Q42 94 46 89L56 77Q61 65 66 59Z"/>
+      <path fill="#6a5548" stroke="none" d="m67 188 11 4-4 8-9-6Zm142 40 8-1-3 9h-15q2-5 10-8Zm-102 0 9-2-3 9h-14Zm92-3 7 0-5 8-11 1Z"/>
+      <path fill="none" stroke="#c3a486" d="M98 85q12 11 7 29m-9 25q8-6 10-17m87 28q16-1 23-17m-24 40q6 10 16 16"/>
+      <path fill="url(#ghodi-mane)" d="M81 51C99 34 118 46 127 59C134 71 138 85 157 94Q148 98 136 90Q139 98 147 102C121 99 120 69 106 59Q112 70 112 76Q101 60 92 57Q83 61 76 65Q81 56 81 51Z"/>
+      <path fill="none" stroke="#fff1d5" d="M99 48q19 4 27 27t21 20m-42-44q12 6 17 18"/>
+      <path fill="#f7e9cd" d="M76 56Q68 48 69 38Q77 42 81 51M83 51Q80 41 86 34Q88 43 93 46L89 54"/>
+      <path fill="none" stroke="#ba9584" d="m73 45 4 7m9-11 1 7"/>
     </g>
-    <path d="M91 96q-4 21-2 30" fill="none" stroke="#d19c4b" stroke-width="7" stroke-dasharray="3 2"/>
-    <path d="M91 98q18 4 25 14" fill="none" stroke="#d19c4b" stroke-width="7" stroke-dasharray="3 2"/>
-    <path d="M84 36Q77 12 89 5Q99 18 90 33" fill="#b86b64" stroke="#86414c"/>
-    <path d="m87 30 3-18" stroke="#dcac88"/>
-    <use href="#marigold" transform="translate(66 231) scale(.55)"/><use href="#petals" x="159" y="232"/>
+    <!-- Burgundy silk jhool with a scalloped gilt fringe, lotus and breast collar. -->
+    <path d="M130 94Q153 110 183 102L191 142Q181 157 164 151Q148 161 126 145Z" fill="url(#silk)" stroke="#ac8247" stroke-width="2"/>
+    <path d="M134 101Q158 114 180 109L185 139Q175 150 164 145Q148 154 132 141Z" fill="none" stroke="#f3d495" stroke-width="1.4"/>
+    <path d="M147 135q1-10 11-5-3-8 3-14 6 7 4 14 8-6 12 2-7 12-15 11-8 1-15-8Z" fill="#d4ad68" stroke="#f9dfa4" stroke-width=".8"/>
+    <path d="M131 147q26 13 37 4 12 4 22-7" fill="none" stroke="#b8904b" stroke-width="5" stroke-dasharray="2 5"/>
+    <path d="M132 95q4-8 13-4 15 10 29 7 7-5 11 1-22 16-54 1Z" fill="#813948" stroke="#ccaa6e"/>
+    <path d="M128 95q-8 28-32 40" fill="none" stroke="#954554" stroke-width="5"/>
+    <path d="M127 98q-10 32-32 42" fill="none" stroke="#bb9152" stroke-width="3" stroke-dasharray="2 4"/>
+    <use href="#marigold" transform="translate(105 131) scale(.24)"/>
+    <path d="M51 83l12 9m-5-4 25-30m-15 3q9 7 18 4" fill="none" stroke="#914653" stroke-width="2.6"/>
+    <path d="M59 92q21 29 67 7" fill="none" stroke="#af884c" stroke-width="1.4"/>
+    <path d="M68 69q3-4 7-2-2 5-7 2Zm-21 24q2-4 5-3 0 4-5 3Z" fill="#4f4037"/>
+    <circle cx="71" cy="68" r=".7" fill="white"/>
+    <g fill="#eac77b" stroke="#a88449" stroke-width=".8"><circle cx="60" cy="91" r="2.4"/><circle cx="79" cy="59" r="2.8"/></g>
+    <use href="#garland-rose" transform="translate(80 53) scale(.42)"/>
+    <use href="#marigold" transform="translate(46 231) scale(.44)"/><use href="#petals" x="58" y="225"/>
   </symbol>
   <symbol id="phere" viewBox="0 0 300 260">
     <ellipse cx="151" cy="228" rx="108" ry="12" fill="#b6a780" opacity=".18"/>

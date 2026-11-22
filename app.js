@@ -18,6 +18,8 @@
       typeof entrance.showModal !== "function") return;
 
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const turnStartsAt = 2;
+  const turnPlaybackRate = 1.5;
   let destination = window.location.hash;
   let closing = false;
   let closeTimer;
@@ -207,21 +209,24 @@
   }
 
   function stopVisualSync() {
-    if (videoFrame !== undefined) film?.cancelVideoFrameCallback?.(videoFrame);
+    if (videoFrame !== undefined) {
+      if (typeof film.requestVideoFrameCallback === "function") film.cancelVideoFrameCallback(videoFrame);
+      else cancelAnimationFrame(videoFrame);
+    }
     videoFrame = undefined;
     butterflyAnimations = [];
   }
 
   function startVisualSync() {
-    if (butterfly && typeof film?.requestVideoFrameCallback === "function") {
-      butterflyAnimations = [butterfly, sceneGlints].filter(Boolean)
-        .flatMap(element => element.getAnimations({ subtree: true }));
-      for (const animation of butterflyAnimations) animation.pause();
-      syncVisuals();
-    }
+    butterflyAnimations = [butterfly, sceneGlints].filter(Boolean)
+      .flatMap(element => element.getAnimations?.({ subtree: true }) || []);
+    for (const animation of butterflyAnimations) animation.pause();
+    syncVisuals();
   }
 
   function syncVisuals() {
+    const rate = film.currentTime < turnStartsAt ? 1 : turnPlaybackRate;
+    if (film.playbackRate !== rate) film.playbackRate = rate;
     for (const animation of butterflyAnimations) animation.currentTime = film.currentTime * 1000;
     drawTrail(film.currentTime);
     if (film.duration > 0) {
@@ -229,8 +234,9 @@
       const progress = Math.min(1, film.currentTime / clearTime);
       entrance.style.setProperty("--curtain-edge-opacity", String(1 - progress * progress * (3 - 2 * progress)));
     }
-    if (closing && !film.paused && !document.hidden && typeof film.requestVideoFrameCallback === "function") {
-      videoFrame = film.requestVideoFrameCallback(syncVisuals);
+    if (closing && !film.paused && !document.hidden) {
+      videoFrame = typeof film.requestVideoFrameCallback === "function"
+        ? film.requestVideoFrameCallback(syncVisuals) : requestAnimationFrame(syncVisuals);
     }
   }
 
@@ -560,9 +566,6 @@
     if (closing) finishOpening();
   });
   film?.addEventListener("timeupdate", () => {
-    if (closing && typeof film.requestVideoFrameCallback !== "function" && film.duration > 0) {
-      syncVisuals();
-    }
     if (closing && film.duration > 0 && film.currentTime / film.duration >= 0.4) {
       entrance.classList.add("has-scene-copy");
     }
@@ -732,10 +735,6 @@
     return;
   }
 
-  const help = document.createElement("p");
-  help.className = "rsvp__help";
-  help.textContent = "If the form does not load below, use the separate-tab link above.";
-  embed.before(help);
   embed.classList.add("rsvp-embed--ready");
 
   function loadForm() {

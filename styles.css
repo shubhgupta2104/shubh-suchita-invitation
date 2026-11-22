@@ -127,7 +127,6 @@ nav a:hover { border-color: #fff0d0; text-decoration: none; }
 .programme .eyebrow, .venue .eyebrow { margin-bottom: 14px; }
 .programme h2 { font-size: clamp(33px, 4vw, 47px); }
 .programme__intro { margin-top: 16px; font-size: 12px; line-height: 1.8; }
-.programme__intro span { margin: 0 5px; }
 .programme__days { padding: 50px 0 0; }
 .programme__days h3 { display: flex; flex-direction: column; font-size: 24px; color: var(--wine); }
 .programme__days h3 .day__number { font-size: 92px; line-height: 1; }
@@ -154,11 +153,12 @@ nav a:hover { border-color: #fff0d0; text-decoration: none; }
 .rsvp h2 { margin: 18px 0; }
 .rsvp__intro { font-size: 15px; line-height: 1.7; }
 .rsvp__pending { font-family: system-ui, sans-serif; font-size: 12px; line-height: 1.9; margin: 28px auto 0; padding: 22px 12px; border-block: 1px dashed #a7824566; max-width: 410px; }
-#rsvp-link:not([href]) { display: none; }
-#rsvp-link[href] + .rsvp__pending { display: none; }
+.rsvp__help:not(:has(a[href])), .rsvp__help:has(a[href]) + .rsvp__pending { display: none; }
+#rsvp-embed:not(.rsvp-embed--ready) + .rsvp__help span { display: none; }
 .rsvp-embed--ready { min-height: 1125px; display: flow-root; }
 .rsvp iframe { display: block; width: 100%; min-height: 1100px; border: 1px solid #a7824555; margin-top: 25px; background: white; }
 .rsvp__help { font-size: 12px; line-height: 1.8; margin-top: 16px; }
+.rsvp__help a { display: inline-flex; align-items: center; min-height: 44px; }
 footer { text-align: center; padding: 38px 20px; }
 footer img { width: 110px; height: 110px; margin: 0 auto 25px; border-radius: 50%; }
 footer p { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--wine); }
@@ -238,9 +238,10 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   82% { transform: translate(calc(-50% - 38vw), calc(-50% - 45vh)) rotate(10deg) scale(.7); opacity: .8; }
   100% { transform: translate(-50%, calc(-50% - 58vh)) rotate(-8deg) scale(.45); opacity: 0; }
 }
-@keyframes reveal-writing { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes reveal-writing { from { opacity: 0; transform: translateY(var(--writing-rise, 10px)); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 700px) {
+  .hero__location { --writing-rise: 0px; }
   main::before, main::after { top: 900px; width: 17px; background-size: 17px auto; opacity: .5; }
   main::before { left: 3px; }
   main::after { right: 3px; }
@@ -252,7 +253,7 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   .hero__copy { --hero-room: clamp(0px, calc(var(--scene-height) - 650px), 100px); max-width: 350px; padding-top: calc(56px + var(--hero-room) * .26); }
   .hero__intro { max-width: 260px; margin-inline: auto; font-size: 11px; letter-spacing: 1.4px; margin-bottom: calc(8px + var(--hero-room) * .08); }
   .name { font-size: 64px; }
-  .parentage { font-size: 12px; line-height: 1.5; margin-top: calc(4px + var(--hero-room) * .04); }
+  .parentage { font-size: 12px; line-height: 1.35; margin-top: calc(4px + var(--hero-room) * .04); }
   .ampersand { font-size: 24px; margin: calc(3px + var(--hero-room) * .04) 0; }
   .wedding-date { margin-top: calc(10px + var(--hero-room) * .06); gap: 14px; }
   .wedding-date time { font-size: 25px; }
@@ -405,7 +406,7 @@ nav a { letter-spacing: .45px; }
 .function time { color: #784d24; }
 .ceremony-art { filter: drop-shadow(0 7px 7px #62331d21); }
 .day-interlude { max-width: 520px; }
-.venue .text-link, .rsvp > .text-link { padding-inline: 20px; border: 1px solid #b58b4f; border-radius: 28px; background: #fff8eb; box-shadow: inset 0 0 0 3px #b58b4f0d, 0 4px 12px #5d321914; }
+.venue .text-link { padding-inline: 20px; border: 1px solid #b58b4f; border-radius: 28px; background: #fff8eb; box-shadow: inset 0 0 0 3px #b58b4f0d, 0 4px 12px #5d321914; }
 .rsvp { width: calc(100% - 32px); margin-top: 40px; padding: 40px 32px 30px; border: 1px solid #c6a16b; border-radius: 28px; background: linear-gradient(145deg, #fffaf0, #f8e7d2); box-shadow: 0 16px 36px #5e342019; }
 .rsvp iframe { border-color: #c6a16b; border-radius: 12px; }
 footer { margin-top: 48px; padding-top: 48px; background: linear-gradient(145deg, #4c1229, #230713); border-top: 3px double #c49d60; color: #ead1b1; }
@@ -453,7 +454,7 @@ footer a:focus-visible, footer summary:focus-visible { outline-color: #f5d69c; }
 }
 
 .rsvp { display: grid; grid-template-columns: minmax(0, 1fr); container-type: inline-size; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
-.rsvp__card { grid-area: 1 / 1; position: relative; }
+.rsvp__card { position: relative; }
 .rsvp__art img { width: 100%; height: auto; }
 .rsvp__letter-extension { display: block; height: 0; background: url("assets/artwork/rsvp-envelope-letter-strip.webp?v=envelope-v1") no-repeat; background-size: 100% 100%; }
 .rsvp__letter { position: absolute; top: 13.6cqi; left: 27%; width: 46%; color: var(--wine); }
@@ -464,22 +465,17 @@ footer a:focus-visible, footer summary:focus-visible { outline-color: #f5d69c; }
 .rsvp__signature strong { display: block; margin-top: 2px; font: 500 clamp(18px, 4cqi, 32px)/1.1 var(--serif); }
 .rsvp__details { margin-top: 8px; font-size: clamp(12px, 1.8cqi, 16px); line-height: 1.3; }
 .rsvp__details span { display: block; margin-top: 2px; }
-.rsvp > .text-link { grid-area: 1 / 1; align-self: end; justify-self: center; z-index: 1; margin: 0 0 clamp(24px, 5.25cqi, 42px); min-height: 44px; }
 .rsvp > .rsvp__help { padding-inline: 16px; }
 @container (max-width: 700px) {
-  .rsvp__letter-extension { height: 70px; }
-  .rsvp__art .rsvp__art-bottom { height: calc(11.458333cqi + 48px); }
+  /* Expand only blank paper as narrower cards wrap the live letter text. */
+  .rsvp__letter-extension { height: max(70px, calc(250px - 50cqi)); }
   .rsvp__letter .rsvp__intro { margin-top: 6px; }
   .rsvp__rule { margin-block: 6px; }
   .rsvp__details { margin-top: 4px; }
-}
-@container (max-width: 326px) {
-  .rsvp__letter-extension { height: 90px; }
 }
 @media (forced-colors: active) {
   .rsvp__art { display: none; }
   .rsvp__card { border: 1px solid CanvasText; background: Canvas; }
   .rsvp__letter { position: static; width: auto; padding: 24px; color: CanvasText; }
   .rsvp__letter h2 { color: CanvasText; text-shadow: none; }
-  .rsvp > .text-link { grid-area: auto; margin: 16px auto 0; }
 }

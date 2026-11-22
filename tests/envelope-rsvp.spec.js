@@ -6,7 +6,7 @@ const artwork = JSON.parse(await readFile(new URL("fixtures/rsvp-artwork.json", 
 const originalForm = "https://docs.google.com/forms/d/e/1FAIpQLSf_344lGr0NDc0JVhV59THlmWfkQJUz_X-Tk1L3YIpR10HnkA/viewform";
 test.beforeEach(async ({ context }) => {
   await context.route("https://docs.google.com/**", route => route.fulfill({
-    contentType: "text/html", body: "<!doctype html><title>Local form fixture</title><p>RSVP fixture</p>"
+    contentType: "text/html", body: '<!doctype html><title>Local form fixture</title><label>Guest name <input></label>'
   }));
 });
 
@@ -46,7 +46,7 @@ async function expectReadableLetter(page) {
       fonts: [...letter.querySelectorAll("h2, p, strong")].map(element => ({
         tag: element.tagName, size: parseFloat(getComputedStyle(element).fontSize)
       })),
-      images: [...card.querySelectorAll("img:not(.rsvp__art-bottom)")].map(image => ({
+      images: [...card.querySelectorAll("img")].map(image => ({
         ratio: image.getBoundingClientRect().width / image.getBoundingClientRect().height,
         expected: image.naturalWidth / image.naturalHeight
       }))
@@ -61,7 +61,7 @@ for (const viewport of [
   { width: 320, height: 568 }, { width: 393, height: 659 }, { width: 393, height: 700 },
   { width: 393, height: 759 }, { width: 393, height: 852 }, { width: 1440, height: 1000 }
 ]) {
-  test(`envelope text and real RSVP button fit at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+  test(`envelope leads to the form with one fallback link below at ${viewport.width}x${viewport.height}`, async ({ page }) => {
     await page.setViewportSize(viewport);
     const imageRequests = [];
     page.on("request", request => {
@@ -75,19 +75,24 @@ for (const viewport of [
     await expectReadableLetter(page);
     const card = await page.locator(".rsvp__card").boundingBox();
     const header = await page.locator(".site-header").boundingBox();
-    const button = await page.locator("#rsvp-link").boundingBox();
+    await expect(page.locator("#rsvp").getByRole("link")).toHaveCount(1);
     expect(card.y).toBeGreaterThanOrEqual(header.y + header.height);
     expect(card.y + card.height).toBeLessThanOrEqual(viewport.height);
-    expect(button.height).toBeGreaterThanOrEqual(44);
-    expect(button.y + button.height).toBeLessThan(card.y + card.height);
     await expect(page.getByRole("heading", { name: "Will you join us?" })).toBeInViewport();
     await expect(page.locator("#rsvp-link")).toHaveAttribute("href", originalForm);
     await expect(page.locator("iframe")).toHaveAttribute("src", `${originalForm}?embedded=true`);
+    const form = await page.locator("#rsvp-embed iframe").boundingBox();
+    const fallback = await page.locator(".rsvp__help a").boundingBox();
+    expect(form.y).toBeGreaterThanOrEqual(card.y + card.height);
+    expect(fallback.y).toBeGreaterThanOrEqual(form.y + form.height);
+    expect(fallback.height).toBeGreaterThanOrEqual(44);
     await expect(page.locator(".rsvp__signature")).toHaveText("With love,Shubh & Suchita");
     await expect(page.locator(".rsvp__details time")).toHaveAttribute("datetime", "2027-01-26");
     await expect(page.locator(".rsvp")).not.toContainText(/Oreo|Zylo|humans|furry family|Please follow the/i);
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
     await expect(page.locator("#rsvp")).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(page.frameLocator("#rsvp-embed iframe").getByRole("textbox")).toBeFocused();
     await page.keyboard.press("Tab");
     await expect(page.locator("#rsvp-link")).toBeFocused();
   });
@@ -102,7 +107,7 @@ test("the envelope remains readable at 200 percent zoom", async ({ page }) => {
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 });
 
-test("direct navigation and the real RSVP button open the original form", async ({ page }) => {
+test("the fallback below the embedded RSVP opens the original form", async ({ page }) => {
   await page.goto("/#rsvp");
   await page.keyboard.press("Escape");
   await expect(page.locator("#rsvp")).toBeFocused();

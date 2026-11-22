@@ -61,14 +61,17 @@ test("a first tap on an empty-cache 1 Mbps connection completes the rear movie w
   await page.route("https://docs.google.com/**", route => route.abort());
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.locator("video").evaluate(video => {
-    window.coldPlayback = { started: 0, ended: 0, stalls: 0 };
+    window.coldPlayback = { started: 0, ended: 0, stalls: 0, endFrameTime: 0 };
     video.addEventListener("playing", () => {
       if (!window.coldPlayback.started) window.coldPlayback.started = performance.now();
     });
     video.addEventListener("waiting", () => {
       if (window.coldPlayback.started) window.coldPlayback.stalls++;
     });
-    video.addEventListener("ended", () => { window.coldPlayback.ended = performance.now(); });
+    video.addEventListener("ended", () => {
+      window.coldPlayback.ended = performance.now();
+      window.coldPlayback.endFrameTime = video.currentTime;
+    });
   });
   await page.getByRole("button", { name: "Open invitation" }).click();
   await expect(page.locator(".entrance__status")).toBeVisible();
@@ -76,7 +79,11 @@ test("a first tap on an empty-cache 1 Mbps connection completes the rear movie w
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 40000 });
   const playback = await page.evaluate(() => window.coldPlayback);
   expect(playback.started).toBeGreaterThan(0);
-  expect(playback.ended - playback.started).toBeGreaterThan(6500);
+  expect(playback.endFrameTime).toBeCloseTo(6.75, 2);
+  expect(playback.ended - playback.started).toBeGreaterThan(4900);
+  expect(playback.ended - playback.started).toBeLessThan(6000);
+  await page.mouse.wheel(0, 350);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(100);
   expect(playback.stalls).toBe(0);
 });
 

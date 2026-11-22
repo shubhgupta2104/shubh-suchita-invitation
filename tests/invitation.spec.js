@@ -102,11 +102,13 @@ test("disabled JavaScript leaves all content and directions usable", async ({ br
   await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3");
   await expect(page.locator(".entrance__film")).not.toHaveAttribute("src", /./);
   await expect(page.locator('[data-kind="function"]')).toHaveCount(5);
-  await expect(page.locator('[data-kind="meal"]')).toHaveCount(6);
+  await expect(page.locator('[data-kind="meal"]')).toHaveCount(5);
   await expect(page.locator(".countdown__numbers")).not.toBeVisible();
   await expect(page.locator(".countdown__fallback")).toHaveText("A date to hold close.");
   await expect(page.locator("#rsvp-link")).toHaveAttribute("href", /\/viewform$/);
   await expect(page.locator("iframe")).toHaveCount(0);
+  await expect(page.locator(".rsvp__help a")).toBeVisible();
+  await expect(page.getByText("Form not loading?", { exact: true })).toBeHidden();
   await expect(page.getByRole("link", { name: /Find your way/ })).toHaveAttribute("href", "https://maps.app.goo.gl/PL4M48uGDFwTjAJs6");
   await page.getByRole("link", { name: "Venue", exact: true }).click();
   await expect(page.locator("#venue")).toBeInViewport();
@@ -139,7 +141,7 @@ test("canonical programme and approved RSVP are present without console errors",
   await expect(page.locator('[data-kind="function"] h4')).toHaveText(["Haldi", "Ring Ceremonyand Sangeet", "Baraat", "Jai Mala", "Phere"]);
   expect(await page.locator('[data-kind="meal"]').evaluateAll(meals =>
     meals.map(meal => meal.querySelector("h4, span").textContent)
-  )).toEqual(["Breakfast", "Lunch", "Dinner", "Breakfast", "Lunch", "Gala Dinner"]);
+  )).toEqual(["Lunch", "Dinner", "Breakfast", "Lunch", "Gala Dinner"]);
   expect(requests.every((url) => url.startsWith("http://127.0.0.1:4197/") || url.startsWith("https://docs.google.com/forms/"))).toBe(true);
   expect(errors).toEqual([]);
 });
@@ -159,7 +161,9 @@ test("form integration lazy-loads an iframe and retains a separate-tab fallback"
   await expect(page.locator("iframe")).toHaveAttribute("src", `${fixture}?embedded=true`);
   await expect(page.locator("#rsvp-link")).toHaveAttribute("href", fixture);
   await expect(page.locator("#rsvp-link")).toHaveAttribute("target", "_blank");
-  await expect(page.getByText("If the form does not load below", { exact: false })).toBeVisible();
+  const fallback = page.getByRole("link", { name: "Open the RSVP form in a new tab" });
+  await expect(fallback).toHaveAttribute("href", fixture);
+  await expect(fallback).toHaveAttribute("target", "_blank");
   await expect(page.locator(".rsvp__pending")).not.toBeVisible();
 });
 
@@ -173,6 +177,7 @@ test("invalid form URL fails visibly and never creates an iframe", async ({ page
   await open(page);
   await expect(page.locator("iframe")).toHaveCount(0);
   await expect(page.locator(".rsvp__pending")).toHaveText("The RSVP link is unavailable. Please contact the hosts.");
+  await expect(page.locator(".rsvp__help")).toBeHidden();
 });
 
 test("only intended public files can be served", async ({ request }) => {
@@ -342,17 +347,34 @@ test("countdown never becomes negative after the wedding", async ({ page }) => {
   await expect(page.locator(".countdown__fallback")).toHaveText("Celebrating Shubh & Suchita.");
 });
 
+test("link previews use the same square logo as the invitation without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL: "http://127.0.0.1:4197" });
+  try {
+    const page = await context.newPage();
+    await page.goto("/");
+    const canonical = "https://shubhgupta2104.github.io/shubh-suchita-invitation/";
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", canonical);
+    const logo = await page.locator(".wordmark img").getAttribute("src");
+    for (const selector of ['meta[property="og:image"]', 'meta[name="twitter:image"]']) {
+      await expect(page.locator(selector)).toHaveAttribute("content", new URL(logo, canonical).href);
+    }
+    expect(await page.locator(".wordmark img").evaluate(img => [img.naturalWidth, img.naturalHeight])).toEqual([400, 400]);
+  } finally {
+    await context.close();
+  }
+});
+
 test("26 January has the revised ordered itinerary with featured Gala Dinner", async ({ page }) => {
   await page.goto("/");
   await open(page);
   const day = page.locator('section[aria-labelledby="day-two"]');
-  await expect(day.locator("time")).toHaveText(["8:00 AM", "12:00 PM", "1:00 PM", "3:00 PM", "4:00 PM", "8:00 PM"]);
+  await expect(day.locator("time")).toHaveText(["8:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "4:00 PM", "8:00 PM"]);
   await expect(day.locator('li[data-event="jai-mala"] h4')).toHaveText("Jai Mala");
   await expect(day.locator('li[data-event="phere"] time')).toHaveAttribute("datetime", "2027-01-26T16:00:00+05:30");
   await expect(day.locator('li[data-event="gala-dinner"]')).toHaveAttribute("data-kind", "meal");
   await expect(day.locator('li[data-event="gala-dinner"]')).toHaveClass("timeline__featured");
   for (const event of ["jai-mala", "gala-dinner"]) {
-    await expect(day.locator(`[data-event="${event}"] .ceremony-art use`)).toHaveAttribute("href", `assets/artwork/ceremonies.svg#${event}`);
+    await expect(day.locator(`[data-event="${event}"] .ceremony-art use`)).toHaveAttribute("href", new RegExp(`^assets/artwork/ceremonies\\.svg(?:\\?[^#]+)?#${event}$`));
   }
   await expect(day.locator('[data-event="gala-dinner"] time')).toHaveAttribute("datetime", "2027-01-26T20:00:00+05:30");
 });

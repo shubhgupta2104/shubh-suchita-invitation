@@ -66,7 +66,7 @@ for (const viewport of viewports) {
     expect(layout.left).toBeGreaterThanOrEqual(0);
     expect(layout.right).toBeLessThanOrEqual(viewport.width);
     expect(layout.overflow).toBe(false);
-    expect(layout.parents.map(parent => parent.text)).toEqual(["Rekha Gupta", "Ajay Gupta", "Madhu Sharma", "Harish Kant Sharma"]);
+    expect(layout.parents.map(parent => parent.text)).toEqual(["Mrs. Rekha Gupta", "Mr. Ajay Gupta", "Mrs. Madhu Sharma", "Mr. Harish Kant Sharma"]);
     for (const parent of layout.parents) {
       expect(parent.font).toBeGreaterThanOrEqual(viewport.width > viewport.height ? 11 : 12);
       expect(parent.font / layout.coupleFont).toBeLessThanOrEqual(1 / 3);

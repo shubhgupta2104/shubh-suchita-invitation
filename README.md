@@ -8,7 +8,7 @@ Date: 22 November 2026
 - Independent static invitation with a ruby-glitter opening, original theatre artwork, restartable curtains and native scrolling.
 - The opening uses Timo77's licensed dancing couple, with authored materials, contact-preserving rig changes and gentle sway.
 - `index.html` is the canonical source for names, dates, programme and directions.
-- The grand envelope uses approved dog artwork, live text and a real RSVP button linked to the unchanged original form.
+- The grand envelope uses approved dog artwork and live text. The original RSVP form follows it.
 - GitHub Pages publishes only the generated public files. The old website and original form are not modified.
 
 ## Why this matters
@@ -27,7 +27,7 @@ Open `http://127.0.0.1:4186/`. `PORT=4188 npm run dev` selects another loopback 
 
 The opening is a fully opaque, viewport-sized native dialog. It selects a 720x1440 portrait or 1600x900 landscape render, both 6.75 seconds at 24 fps. The movie stays inside that dialog, so the header and underlying page cannot show through before the curtains finish opening. Touching or swiping anywhere starts the 3D scene. Both the movie and the settled hero use the same contained media frame, preserving the complete figures rather than cropping their heads, gowns or feet.
 
-Glitter is part of the rendered fabric, not a separate canvas layer disappearing ahead of it. The couple starts turning at 2 seconds, half a second before the curtains fully clear, and moves steadily through 75 degrees until 6 seconds. The final 0.75-second hold is unchanged. Warm directional lighting, a soft floor pool and rim light are rendered into the scene.
+Glitter is part of the rendered fabric. In the source movies the couple turns 75 degrees from 2 to 6 seconds, followed by a 0.75-second hold. The invitation plays the first two seconds at normal speed, then plays the remaining turn and hold at 1.5x. The turn takes about 2.7 seconds on screen and native scrolling returns about 5.6 seconds after playback starts, including the dissolve. Music stays at normal speed.
 
 The approved 150-to-225-degree sweep keeps both partners readable. Actual upper-body sway and wrist-contact IK complement the turn; this is not stepping choreography or cloth simulation. The original model's missing photographic textures are not restored: skin, hair, suit and gown use newly authored materials. The licensed figures are not a likeness of Shubh and Suchita.
 
@@ -51,11 +51,11 @@ The supplied "Ishq Wala Love" instrumental starts only when a guest activates th
 
 The page uses ivory, burgundy and gold framing, fuller floral banners and restrained scroll-linked edge sparkles. Short, faint gold rules separate sections instead of repeated patterned strips. Sparkles stay outside the central text, stop moving when scrolling stops, and are hidden for reduced motion and forced colours.
 
-The RSVP envelope retains the approved dogs, burgundy lining, embossed paper, ribbon and wax seal. Printed lettering and the raster button were replaced with local paper texture so the heading, signature, date, venue and button are real HTML. Blank paper expands through container queries on smaller screens and at zoom without stretching the figures. The decorative footer reserves space for the 44px-minimum button. High contrast keeps the live text and link without decorative imagery. Source concepts and supplied pet references are not shipped.
+The RSVP envelope retains the approved dogs, burgundy lining, embossed paper, ribbon and wax seal. Printed lettering and the raster button were replaced with local paper texture. The heading, signature, date and venue are live HTML. Blank paper expands on smaller screens and at zoom without stretching the artwork. High contrast keeps the live text and fallback link without decorative imagery. Source concepts and supplied pet references are not shipped.
 
 | File | Edit here |
 |---|---|
-| `index.html` | Names, parents, eleven chronological programme entries, venue, directions and responder URL |
+| `index.html` | Names, parents, ten programme entries, venue, directions, responder URL and share-card metadata. If the public domain changes, update the absolute Open Graph and Twitter image URLs and `og:url`. |
 | `styles.css` | Responsive composition, fonts, paper, framing and curtain motion |
 | `app.js` | Entrance and music lifecycle, countdown and deferred form embed |
 | `assets/artwork/` | Local logo and original SVG illustrations |
@@ -84,7 +84,7 @@ The couple explicitly chose to use the original published form unchanged. Its ol
 
 The **`href` attribute** on `<a id="rsvp-link">` in `index.html` is the only URL configuration field. If the owner later supplies an updated form, replace that value with its verified HTTPS Google Forms `/forms/d/e/.../viewform` URL, never an editor URL.
 
-The same anchor is the visible separate-tab fallback, including without JavaScript. `app.js` validates the URL and adds `embedded=true` to the iframe URL. The iframe is created only near the RSVP section. There is no cross-origin autoheight, hidden Google branding, submission interception or simulated confirmation.
+The embedded form follows the envelope. The only separate-tab RSVP link is in the “Form not loading?” line below the form. Without JavaScript, the same link is available without the loading prompt. `app.js` validates its URL and adds `embedded=true` only for the iframe, which loads near the RSVP section. There is no cross-origin autoheight, hidden Google branding, submission interception or simulated confirmation.
 
 ### GitHub Pages
 
@@ -108,7 +108,7 @@ Browser tests use an existing local Google Chrome installation. On Apple Silicon
 
 ## Impact
 
-Five functions and six meal entries are available without JavaScript. The 26 January programme includes Jai Mala at 3 PM, Phere at 4 PM and Gala Dinner at 8 PM. Date-time values use the venue's `+05:30` offset, Asia/Kolkata. Rendering assets remain below 1.5 MB, excluding Google's form payload. Background preparation downloads only the selected responsive movie before interaction, trading earlier data transfer for uninterrupted first-click playback.
+Five functions and five meal entries are available without JavaScript. The programme starts with Haldi at noon on 25 January. On 26 January, breakfast is at 8 AM, Jai Mala at 2 PM, Phere at 4 PM and Gala Dinner at 8 PM. Date-time values use the venue's `+05:30` offset, Asia/Kolkata. Background preparation downloads only the selected responsive movie before interaction, trading earlier data transfer for uninterrupted first-click playback.
 
 ## Risks and open questions
 

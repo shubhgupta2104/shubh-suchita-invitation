@@ -60,16 +60,16 @@ test("responsive opening movies are silent fast-start H.264 with exactly 162 fra
   }
 });
 
-test("the canonical schedule contains five functions and six meals", () => {
+test("the canonical schedule contains five functions and five meals", () => {
   assert.equal((html.match(/data-kind="function"/g) || []).length, 5);
-  assert.equal((html.match(/data-kind="meal"/g) || []).length, 6);
+  assert.equal((html.match(/data-kind="meal"/g) || []).length, 5);
   const times = [...html.matchAll(/datetime="(2027-\d\d-\d\dT[^"]+)"/g)].map((match) => match[1]);
   assert.deepEqual(times, [
-    "2027-01-25T08:00:00+05:30", "2027-01-25T12:00:00+05:30",
+    "2027-01-25T12:00:00+05:30",
     "2027-01-25T13:00:00+05:30", "2027-01-25T18:00:00+05:30",
     "2027-01-25T20:00:00+05:30", "2027-01-26T08:00:00+05:30",
     "2027-01-26T12:00:00+05:30", "2027-01-26T13:00:00+05:30",
-    "2027-01-26T15:00:00+05:30", "2027-01-26T16:00:00+05:30",
+    "2027-01-26T14:00:00+05:30", "2027-01-26T16:00:00+05:30",
     "2027-01-26T20:00:00+05:30"
   ]);
 });
@@ -77,8 +77,8 @@ test("the canonical schedule contains five functions and six meals", () => {
 test("confirmed names, venue and exact directions are retained", () => {
   const textContent = html.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, "");
   for (const text of [
-    "S/O Rekha Gupta and Ajay Gupta",
-    "D/O Madhu Sharma and Harish Kant Sharma",
+    "S/O Mrs. Rekha Gupta and Mr. Ajay Gupta",
+    "D/O Mrs. Madhu Sharma and Mr. Harish Kant Sharma",
     "Evara Resort", "Jim Corbett, Uttarakhand"
   ]) assert.ok(textContent.includes(text), text);
   assert.ok(html.includes("https://maps.app.goo.gl/PL4M48uGDFwTjAJs6"));
@@ -89,7 +89,7 @@ test("new celebrations have matching original illustrations", async () => {
   const artwork = await readFile(new URL("../assets/artwork/ceremonies.svg", import.meta.url), "utf8");
   for (const event of ["jai-mala", "gala-dinner"]) {
     assert.ok(html.includes(`data-event="${event}"`));
-    assert.ok(html.includes(`ceremonies.svg#${event}`));
+    assert.match(html, new RegExp(`ceremonies\\.svg(?:\\?[^"#]+)?#${event}"`));
     assert.ok(artwork.includes(`<symbol id="${event}"`));
   }
   assert.doesNotMatch(html, /2027-01-26T(?:16:30|19:00):00/);
