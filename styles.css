@@ -91,7 +91,7 @@ nav a:hover { border-color: #fff0d0; text-decoration: none; }
 .parentage__name { color: #fff1d2; font-weight: 700; white-space: nowrap; }
 .ampersand { font-size: 29px; font-style: italic; line-height: .9; color: #d3a68a; margin: 8px 0; }
 .wedding-date { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 18px 0 8px; }
-.wedding-date time { font-family: var(--serif); font-size: 27px; color: #f0ceb0; }
+.wedding-date__label { font-family: var(--serif); font-size: 27px; color: #f0ceb0; }
 .wedding-date__rule { height: 1px; width: 28px; background: #bd8a6966; }
 .hero__location { font-size: 12px; letter-spacing: .7px; }
 .hero__location span { margin: 0 6px; }
@@ -256,7 +256,7 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   .parentage { font-size: 12px; line-height: 1.35; margin-top: calc(4px + var(--hero-room) * .04); }
   .ampersand { font-size: 24px; margin: calc(3px + var(--hero-room) * .04) 0; }
   .wedding-date { margin-top: calc(10px + var(--hero-room) * .06); gap: 14px; }
-  .wedding-date time { font-size: 25px; }
+  .wedding-date__label { font-size: 25px; }
   .wedding-date__rule { width: 20px; }
   .hero__location { font-size: 10px; letter-spacing: .5px; }
   .welcome { padding: 110px 37px 25px; }
@@ -333,7 +333,7 @@ footer .artwork-credit { max-width: 520px; margin: 26px auto 0; color: #67503f; 
   .parentage { font-size: 12px; line-height: 1.4; margin-top: 5px; }
   .ampersand { font-size: 20px; margin: 5px 0; }
   .wedding-date { margin-top: 8px; }
-  .wedding-date time { font-size: 22px; }
+  .wedding-date__label { font-size: 22px; }
 }
 
 @media (max-height: 800px) {
@@ -370,7 +370,7 @@ nav a { letter-spacing: .45px; }
 .name { color: #ffe6b7; text-shadow: 0 2px 14px #0009; }
 .ampersand { color: #e1bb77; }
 .parentage { color: #d6bd9c; }
-.wedding-date time { color: #f8d99e; }
+.wedding-date__label { color: #f8d99e; }
 .wedding-date__rule { background: linear-gradient(90deg, #cda45c22, #eac57b, #cda45c22); box-shadow: 0 0 8px #dbb57347; }
 .hero__location { color: #f6e5cb; }
 .scroll-invitation { border-color: #d3ae6d9c; background: linear-gradient(135deg, #4a1428e8, #200810e8); box-shadow: inset 0 0 0 3px #d6af6714, 0 5px 18px #0005; color: #fff0cf; }

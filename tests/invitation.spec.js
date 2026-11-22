@@ -25,6 +25,9 @@ test("closed entrance, keyboard trap, animated opening and focus", async ({ page
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(page.locator("dialog")).toBeVisible();
+  const dates = "25 & 26 January 2027";
+  await expect(page).toHaveTitle(`Shubh & Suchita | ${dates}`);
+  await expect(page.locator("#entrance-description")).toHaveText(dates);
   await expect(page.locator("#entrance-welcome")).toContainText("we warmly invite you to our wedding.");
   await expect(page.locator("dialog")).toHaveAttribute("aria-describedby", "entrance-welcome entrance-description");
   await expect(page.getByRole("button", { name: "Open invitation" })).toBeFocused();
@@ -36,6 +39,7 @@ test("closed entrance, keyboard trap, animated opening and focus", async ({ page
   await page.keyboard.press("Enter");
   await expect(page.locator("dialog")).not.toBeVisible({ timeout: 12000 });
   await expect(page.locator("h1")).toBeFocused();
+  await expect(page.locator(".hero .wedding-date")).toHaveText(dates);
   await page.mouse.wheel(0, 600);
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
   expect(errors).toEqual([]);
