@@ -199,4 +199,29 @@
     <use href="#jasmine" transform="translate(160 142) scale(.6)"/>
     <use href="#jasmine" transform="translate(136 145) scale(.55)"/>
   </symbol>
+  <symbol id="vidai" viewBox="0 0 300 260">
+    <ellipse cx="150" cy="224" rx="100" ry="9" fill="#b6a780" opacity=".18"/>
+    <g stroke="#936e40" stroke-width="1.5" stroke-linejoin="round">
+      <path d="M90 193h17l-8 25H88l6-19Zm103 0h17l-4 6 6 19h-11Z" fill="url(#brass)"/>
+      <path d="M75 106h150v75H75Z" fill="#ebcea3"/>
+      <path d="M80 108h140v66q-35-6-37-53-34 20-65 0-5 44-38 53Z" fill="#bd7c77" stroke="#a96764"/>
+      <path d="M92 169q59-12 116 0l-4 10H96Z" fill="url(#silk)"/>
+      <path d="M77 103h43q-4 31-28 47l10 26H76Zm146 0h-43q4 31 28 47l-10 26h26Z" fill="url(#silk)"/>
+      <path d="M84 111q0 22-3 37m28-36q-6 20-19 33m122-34q0 22 6 37m-28-36q5 18 17 33" fill="none" stroke="#dcac98"/>
+      <path d="m77 148 16-3 1 5-17 3Zm130-3 16 3v5l-17-3Z" fill="#e5c780"/>
+      <path d="M72 101h6v82h-6Zm150 0h6v82h-6Z" fill="url(#brass)"/>
+      <path d="M62 101q13-2 23-14c15-21 45-18 65-41 21 23 50 20 65 41q10 12 23 14-89 16-176 0Z" fill="url(#silk)"/>
+      <path d="M82 99q21-20 48-31m-16 32q7-24 36-50m37 50q-7-24-37-50m67 49q-21-20-48-31" fill="none" stroke="#e3ba7d"/>
+      <path d="M63 100q87 10 174 0v6q-87 12-174 0Zm83-54q-4-6 4-14 8 8 4 14Z" fill="url(#brass)"/>
+      <path d="M49 167q-7-11 0-13 6 0 7 7l20 11h148l20-11q1-7 7-7 7 2 0 13l-26 14H75Z" fill="url(#brass)"/>
+      <path d="M67 177q82 9 166 0l-18 22q-64 11-130 0Z" fill="url(#silk)"/>
+      <path d="M77 186q73 9 146 0m-138 13q65 10 130 0" fill="none" stroke="#e2be7e" stroke-width="3"/>
+    </g>
+    <path d="m109 189 4 4-4 3-4-4Zm20 2 4 4-4 3-4-4Zm21 0 5 4-5 4-5-4Zm21 0 4 3-4 4-4-3Zm20-2 4 3-4 4-4-3Z" fill="#efcf8d"/>
+    <use href="#garland-rose" transform="translate(75 106) scale(.62)"/>
+    <use href="#jasmine" transform="translate(84 110) scale(.48)"/>
+    <use href="#garland-rose" transform="translate(225 106) scale(.62)"/>
+    <use href="#jasmine" transform="translate(216 110) scale(.48)"/>
+    <use href="#petals" transform="translate(61 216) scale(.68)"/>
+  </symbol>
 </svg>

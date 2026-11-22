@@ -55,7 +55,7 @@ The RSVP envelope retains the approved dogs, burgundy lining, embossed paper, ri
 
 | File | Edit here |
 |---|---|
-| `index.html` | Names, parents, ten programme entries, venue, directions, responder URL and share-card metadata. If the public domain changes, update the absolute Open Graph and Twitter image URLs and `og:url`. |
+| `index.html` | Names, parents, programme entries, venue, directions, responder URL and share-card metadata. If the public domain changes, update the absolute Open Graph and Twitter image URLs and `og:url`. |
 | `styles.css` | Responsive composition, fonts, paper, framing and curtain motion |
 | `app.js` | Entrance and music lifecycle, countdown and deferred form embed |
 | `assets/artwork/` | Local logo and original SVG illustrations |
@@ -82,7 +82,7 @@ The local fonts use WOFF compression to keep the rendered opening within the exi
 
 The couple explicitly chose to use the original published form unchanged. Its older programme and venue wording differ from this invitation. The invitation's canonical programme contains the current timings; the extra schedule-note sentence and header Schedule link were removed at the couple's request.
 
-The **`href` attribute** on `<a id="rsvp-link">` in `index.html` is the only URL configuration field. If the owner later supplies an updated form, replace that value with its verified HTTPS Google Forms `/forms/d/e/.../viewform` URL, never an editor URL.
+The **`href` attribute** on `<a id="rsvp-link">` in `index.html` is the only URL configuration field. The current link prefills arrival for 25 January 2027 at 10:00 AM in both the embedded form and the separate tab. Guests can change it. When replacing the link, use the owner's HTTPS Google Forms `/forms/d/e/.../viewform` URL with its prefill parameters, never an editor URL.
 
 The embedded form follows the envelope. The only separate-tab RSVP link is in the “Form not loading?” line below the form. Without JavaScript, the same link is available without the loading prompt. `app.js` validates its URL and adds `embedded=true` only for the iframe, which loads near the RSVP section. There is no cross-origin autoheight, hidden Google branding, submission interception or simulated confirmation.
 
@@ -108,7 +108,7 @@ Browser tests use an existing local Google Chrome installation. On Apple Silicon
 
 ## Impact
 
-Five functions and five meal entries are available without JavaScript. The programme starts with Haldi at noon on 25 January. On 26 January, breakfast is at 8 AM, Jai Mala at 2 PM, Phere at 4 PM and Gala Dinner at 8 PM. Date-time values use the venue's `+05:30` offset, Asia/Kolkata. Background preparation downloads only the selected responsive movie before interaction, trading earlier data transfer for uninterrupted first-click playback.
+All programme entries are available without JavaScript. The programme starts with Haldi at noon on 25 January. On 26 January, breakfast is at 8 AM, Jai Mala at 2 PM, Phere at 4 PM and Gala Dinner at 8 PM. The timeline also lists Vidai at 7 AM and breakfast at 8 AM on 27 January; the invitation dates remain 25 and 26 January. Date-time values use the venue's `+05:30` offset, Asia/Kolkata. Background preparation downloads only the selected responsive movie before interaction, trading earlier data transfer for uninterrupted first-click playback.
 
 ## Risks and open questions
 

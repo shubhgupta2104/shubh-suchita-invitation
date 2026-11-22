@@ -100,24 +100,23 @@ for (const viewport of [{ width: 320, height: 568 }, { width: 393, height: 852 }
   test(`full floral banners fit without clipping or overflow at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport);
     await open(page);
-    await page.locator(".day-interlude").scrollIntoViewIfNeeded();
-    const result = await page.evaluate(async () => {
-      const image = document.querySelector(".day-interlude img");
-      await image.decode();
-      const banners = [image, document.querySelector(".countdown__garland")].map(element => {
-        const bounds = element.getBoundingClientRect();
-        return { left: bounds.left, right: bounds.right, width: bounds.width, height: bounds.height };
-      });
-      return { banners, native: [image.naturalWidth, image.naturalHeight],
-        overflow: document.documentElement.scrollWidth > innerWidth };
-    });
-    expect(result.native).toEqual([1200, 300]);
-    expect(result.overflow).toBe(false);
-    expect(result.banners[0].height / result.banners[0].width).toBeCloseTo(.25, 2);
-    for (const banner of result.banners) {
-      expect(banner.left).toBeGreaterThanOrEqual(0);
-      expect(banner.right).toBeLessThanOrEqual(viewport.width);
+    const images = page.locator(".day-interlude img");
+    await expect(images).toHaveCount(2);
+    for (const image of await images.all()) {
+      await image.scrollIntoViewIfNeeded();
+      expect(await image.evaluate(async img => {
+        await img.decode();
+        return [img.naturalWidth, img.naturalHeight];
+      })).toEqual([1200, 300]);
+      const bounds = await image.boundingBox();
+      expect(bounds.height / bounds.width).toBeCloseTo(.25, 2);
     }
+    for (const banner of await page.locator(".day-interlude img, .countdown__garland").all()) {
+      const bounds = await banner.boundingBox();
+      expect(bounds.x).toBeGreaterThanOrEqual(0);
+      expect(bounds.x + bounds.width).toBeLessThanOrEqual(viewport.width);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
   });
 }
 

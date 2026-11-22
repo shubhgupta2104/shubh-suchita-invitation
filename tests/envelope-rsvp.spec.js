@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { embeddedForm, prefilledForm } from "./fixtures/rsvp.mjs";
 
 const artwork = JSON.parse(await readFile(new URL("fixtures/rsvp-artwork.json", import.meta.url), "utf8"));
-const originalForm = "https://docs.google.com/forms/d/e/1FAIpQLSf_344lGr0NDc0JVhV59THlmWfkQJUz_X-Tk1L3YIpR10HnkA/viewform";
 test.beforeEach(async ({ context }) => {
   await context.route("https://docs.google.com/**", route => route.fulfill({
     contentType: "text/html", body: '<!doctype html><title>Local form fixture</title><label>Guest name <input></label>'
@@ -79,8 +79,8 @@ for (const viewport of [
     expect(card.y).toBeGreaterThanOrEqual(header.y + header.height);
     expect(card.y + card.height).toBeLessThanOrEqual(viewport.height);
     await expect(page.getByRole("heading", { name: "Will you join us?" })).toBeInViewport();
-    await expect(page.locator("#rsvp-link")).toHaveAttribute("href", originalForm);
-    await expect(page.locator("iframe")).toHaveAttribute("src", `${originalForm}?embedded=true`);
+    await expect(page.locator("#rsvp-link")).toHaveAttribute("href", prefilledForm);
+    await expect(page.locator("iframe")).toHaveAttribute("src", embeddedForm);
     const form = await page.locator("#rsvp-embed iframe").boundingBox();
     const fallback = await page.locator(".rsvp__help a").boundingBox();
     expect(form.y).toBeGreaterThanOrEqual(card.y + card.height);
@@ -107,14 +107,14 @@ test("the envelope remains readable at 200 percent zoom", async ({ page }) => {
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 });
 
-test("the fallback below the embedded RSVP opens the original form", async ({ page }) => {
+test("the fallback below the embedded RSVP opens the prefilled form", async ({ page }) => {
   await page.goto("/#rsvp");
   await page.keyboard.press("Escape");
   await expect(page.locator("#rsvp")).toBeFocused();
   const popupPromise = page.waitForEvent("popup");
   await page.locator("#rsvp-link").click();
   const popup = await popupPromise;
-  await expect(popup).toHaveURL(originalForm);
+  await expect(popup).toHaveURL(prefilledForm);
   await expect(popup).toHaveTitle("Local form fixture");
   await popup.close();
 });
@@ -133,7 +133,7 @@ test("reduced motion and high contrast retain all live invitation text", async (
   }));
   expect(styles.color).not.toBe(styles.background);
   expect(styles.running).toBe(0);
-  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", originalForm);
+  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", prefilledForm);
 });
 
 test("missing artwork does not hide the invitation text or block RSVP", async ({ page }) => {
@@ -143,7 +143,7 @@ test("missing artwork does not hide the invitation text or block RSVP", async ({
   await expect(page.getByRole("heading", { name: "Will you join us?" })).toBeVisible();
   await expect(page.locator(".rsvp__signature")).toBeVisible();
   await expect(page.locator("#rsvp-link")).toBeVisible();
-  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", originalForm);
+  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", prefilledForm);
 });
 
 test("only derived WebP layers are served, not private concept or authoring files", async ({ request }) => {

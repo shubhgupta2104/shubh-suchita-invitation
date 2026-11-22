@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { prefilledForm } from "./fixtures/rsvp.mjs";
 
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const script = await readFile(new URL("../app.js", import.meta.url), "utf8");
@@ -60,9 +61,9 @@ test("responsive opening movies are silent fast-start H.264 with exactly 162 fra
   }
 });
 
-test("the canonical schedule contains five functions and five meals", () => {
-  assert.equal((html.match(/data-kind="function"/g) || []).length, 5);
-  assert.equal((html.match(/data-kind="meal"/g) || []).length, 5);
+test("the canonical schedule contains six functions and six meals in time order", () => {
+  assert.equal((html.match(/data-kind="function"/g) || []).length, 6);
+  assert.equal((html.match(/data-kind="meal"/g) || []).length, 6);
   const times = [...html.matchAll(/datetime="(2027-\d\d-\d\dT[^"]+)"/g)].map((match) => match[1]);
   assert.deepEqual(times, [
     "2027-01-25T12:00:00+05:30",
@@ -70,7 +71,8 @@ test("the canonical schedule contains five functions and five meals", () => {
     "2027-01-25T20:00:00+05:30", "2027-01-26T08:00:00+05:30",
     "2027-01-26T12:00:00+05:30", "2027-01-26T13:00:00+05:30",
     "2027-01-26T14:00:00+05:30", "2027-01-26T16:00:00+05:30",
-    "2027-01-26T20:00:00+05:30"
+    "2027-01-26T20:00:00+05:30", "2027-01-27T07:00:00+05:30",
+    "2027-01-27T08:00:00+05:30"
   ]);
 });
 
@@ -87,7 +89,7 @@ test("confirmed names, venue and exact directions are retained", () => {
 
 test("new celebrations have matching original illustrations", async () => {
   const artwork = await readFile(new URL("../assets/artwork/ceremonies.svg", import.meta.url), "utf8");
-  for (const event of ["jai-mala", "gala-dinner"]) {
+  for (const event of ["jai-mala", "gala-dinner", "vidai"]) {
     assert.ok(html.includes(`data-event="${event}"`));
     assert.match(html, new RegExp(`ceremonies\\.svg(?:\\?[^"#]+)?#${event}"`));
     assert.ok(artwork.includes(`<symbol id="${event}"`));
@@ -135,7 +137,7 @@ test("entrance is progressive, restartable and not stored", () => {
 
 test("only the user-approved responder URL ships, without editor or private references", () => {
   assert.doesNotMatch(html + script, /1OCfOv0HdoC2xsxWgpx-oYi9X79HS982by22Ovy9lmMY/);
-  assert.match(html, /href="https:\/\/docs\.google\.com\/forms\/d\/e\/1FAIpQLSf_344lGr0NDc0JVhV59THlmWfkQJUz_X-Tk1L3YIpR10HnkA\/viewform"/);
+  assert.ok(html.includes(`href="${prefilledForm.replaceAll("&", "&amp;")}"`));
   assert.doesNotMatch(html, /\/edit|\/Users\/|WhatsApp|reference-contact-sheet/);
   assert.doesNotMatch(html, /<iframe/);
   assert.doesNotMatch(html, /RSVP is not open in this local preview/);

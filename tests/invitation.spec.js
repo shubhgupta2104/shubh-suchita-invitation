@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { mkdir, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { embeddedForm, prefilledForm } from "./fixtures/rsvp.mjs";
 
 const screenshots = process.env.SCREENSHOT_DIR || "test-results/screenshots";
 const root = new URL("../", import.meta.url);
@@ -105,11 +106,11 @@ test("disabled JavaScript leaves all content and directions usable", async ({ br
   await expect(page.locator("h1")).toBeVisible();
   await expect(page.locator(".hero__scene")).toHaveAttribute("src", "assets/artwork/curtain-open.jpg?v=free-dance-candidate-v3");
   await expect(page.locator(".entrance__film")).not.toHaveAttribute("src", /./);
-  await expect(page.locator('[data-kind="function"]')).toHaveCount(5);
-  await expect(page.locator('[data-kind="meal"]')).toHaveCount(5);
+  await expect(page.locator('[data-kind="function"]')).toHaveCount(6);
+  await expect(page.locator('[data-kind="meal"]')).toHaveCount(6);
   await expect(page.locator(".countdown__numbers")).not.toBeVisible();
   await expect(page.locator(".countdown__fallback")).toHaveText("A date to hold close.");
-  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", /\/viewform$/);
+  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", prefilledForm);
   await expect(page.locator("iframe")).toHaveCount(0);
   await expect(page.locator(".rsvp__help a")).toBeVisible();
   await expect(page.getByText("Form not loading?", { exact: true })).toBeHidden();
@@ -140,12 +141,12 @@ test("canonical programme and approved RSVP are present without console errors",
   await open(page);
   await page.locator("footer").scrollIntoViewIfNeeded();
   await expect(page.locator("iframe")).toHaveCount(1);
-  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", /\/viewform$/);
+  await expect(page.locator("#rsvp-link")).toHaveAttribute("href", prefilledForm);
   await expect(page.locator(".rsvp__pending")).not.toBeVisible();
-  await expect(page.locator('[data-kind="function"] h4')).toHaveText(["Haldi", "Ring Ceremonyand Sangeet", "Baraat", "Jai Mala", "Phere"]);
+  await expect(page.locator('[data-kind="function"] h4')).toHaveText(["Haldi", "Ring Ceremonyand Sangeet", "Baraat", "Jai Mala", "Phere", "Vidai"]);
   expect(await page.locator('[data-kind="meal"]').evaluateAll(meals =>
     meals.map(meal => meal.querySelector("h4, span").textContent)
-  )).toEqual(["Lunch", "Dinner", "Breakfast", "Lunch", "Gala Dinner"]);
+  )).toEqual(["Lunch", "Dinner", "Breakfast", "Lunch", "Gala Dinner", "Breakfast"]);
   expect(requests.every((url) => url.startsWith("http://127.0.0.1:4197/") || url.startsWith("https://docs.google.com/forms/"))).toBe(true);
   expect(errors).toEqual([]);
 });
@@ -383,6 +384,22 @@ test("26 January has the revised ordered itinerary with featured Gala Dinner", a
   await expect(day.locator('[data-event="gala-dinner"] time')).toHaveAttribute("datetime", "2027-01-26T20:00:00+05:30");
 });
 
+test("the farewell morning has illustrated Vidai followed by a plain breakfast entry", async ({ page }) => {
+  await page.goto("/");
+  await open(page);
+  const day = page.getByRole("region", { name: "27 January 2027" });
+  await day.scrollIntoViewIfNeeded();
+  const entries = day.getByRole("listitem");
+  await expect(entries).toHaveCount(2);
+  await expect(entries.first().getByRole("heading")).toHaveText("Vidai");
+  await expect(entries.first().locator("time")).toHaveText("7:00 AM");
+  await expect.poll(() => entries.first().locator("svg use").evaluate(use => use.getBBox().width)).toBeGreaterThan(0);
+  await expect(entries.last()).toHaveAttribute("data-kind", "meal");
+  await expect(entries.last().locator("time")).toHaveText("8:00 AM");
+  await expect(entries.last().locator("span")).toHaveText("Breakfast");
+  await expect(entries.last().locator("svg")).toHaveCount(0);
+});
+
 test("the header omits Schedule without removing the programme", async ({ page }) => {
   await page.goto("/");
   await open(page);
@@ -426,7 +443,7 @@ test("relative assets, entrance and RSVP work under a GitHub Pages project path"
   await page.goto(prefix);
   await open(page);
   await page.getByRole("link", { name: "RSVP", exact: true }).click();
-  await expect(page.locator("iframe")).toHaveAttribute("src", /viewform\?embedded=true$/);
+  await expect(page.locator("iframe")).toHaveAttribute("src", embeddedForm);
   expect(await page.evaluate(() => [...document.images].filter((image) => image.complete).every((image) => image.naturalWidth > 0))).toBe(true);
   await expect(page.locator("#rsvp-link")).toBeVisible();
 });
